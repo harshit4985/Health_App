@@ -1,6 +1,7 @@
 import cProfile
 from datetime import datetime
 from anvil.tables import app_tables
+from kivy.clock import Clock
 from kivy.lang import Builder
 from kivy.uix.screenmanager import SlideTransition
 from kivymd.app import MDApp
@@ -70,11 +71,11 @@ class Slot_Booking(MDScreen):
         app = MDApp.get_running_app()
         screen = app.root.get_screen('client_services')
         username = screen.ids.username.text
-        email = screen.ids.email.text
-        user = app_tables.users.get(email=email)
-        id = user['id']
-        row = app_tables.book_slot.search()
-        slot_id = len(row) + 1
+        # email = screen.ids.email.text
+        # user = app_tables.users.get(email=email)
+        # id = user['id']
+        # row = app_tables.book_slot.search()
+        # slot_id = len(row) + 1
         if len(session_date) == 10 and hasattr(self, 'session_time') and self.session_time:
             print(username, session_date, self.session_time)
             current_screen = app.root.get_screen('payment_page')
@@ -90,9 +91,12 @@ class Slot_Booking(MDScreen):
         else:
             self.show_validation_dialog("Select Date and Time")
     def show_validation_dialog(self, message):
-        # Display a dialog for invalid login or sign up
+        # Create the dialog asynchronously
+        Clock.schedule_once(lambda dt: self._create_dialog(message), 0)
+
+    def _create_dialog(self, message):
         dialog = MDDialog(
-            text=message,
+            text=f"Message: {message}",
             elevation=0,
             buttons=[MDFlatButton(text="OK", on_release=lambda x: dialog.dismiss())],
         )

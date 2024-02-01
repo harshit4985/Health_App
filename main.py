@@ -169,8 +169,7 @@ class LoginApp(MDApp):
 
 # Run the app
 if __name__ == '__main__':
-    LabelBase.register(name="MPoppins", fn_regular="Poppins/Poppins-Medium.ttf")
-    LabelBase.register(name="BPoppins", fn_regular="Poppins/Poppins-Bold.ttf")
+    LabelBase.register(name="Broboto", fn_regular="roboto/Roboto-Bold.ttf")
 
     app = LoginApp()
     Window.bind(on_request_close=app.stop)
