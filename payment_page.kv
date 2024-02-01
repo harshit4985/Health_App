@@ -1,6 +1,5 @@
-MDScreen:
+<Payment>:
     name: 'payment_page'
-
     BoxLayout:
         orientation: 'vertical'
 
@@ -23,7 +22,7 @@ MDScreen:
                 height: self.minimum_height
                 MDLabel:
                     text: "Payment Method"
-                    font_name: "Roboto"
+                    font_name: "Broboto"
                     theme_text_color: "Custom"
                     text_color: 0, 0, 0, 1
                     font_style: "H6"
@@ -129,7 +128,7 @@ MDScreen:
             font_name: "Roboto"
             bold: True
             on_release:
-                app.razor_pay(self)
+                root.razor_pay(self)
             canvas.before:
                 Color:
                     rgb: rgba(255, 0, 0, 255)

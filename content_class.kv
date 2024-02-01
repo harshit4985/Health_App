@@ -22,24 +22,50 @@
             hint_text_color:0,0,0,1
             hint_text_color_focus:0,0,0,.5
         MDTextField:
+            id:extra_info2
+            hint_text: "Established Year"
+#                        required: True
+            font_name: "Roboto"
+            font_size: "14sp"
+            pos_hint:{'center_x':.5}
+            size_hint:.9,None
+            write_tab: False
+            height: "30dp"
+            multiline: False
+            color_mode: 'custom'
+            line_color_focus: 0, 0, 0, 1
+            text_color_focus:0,0,0,1
+            hint_text_color:0,0,0,1
+            hint_text_color_focus:0,0,0,.4
+            on_focus: if self.focus: root.show_date_picker(self)
+        MDTextField:
             id: State
             hint_text: "State"
             pos_hint: {'center_x': 0.5}
-            on_focus: if self.focus: root.open_dropdown2(self)
             font_size: "14sp"
             size_hint:.9,None
             cursor_width: "2sp"
-            readonly: True
             write_tab: False
             theme_text_color: "Custom"
-            icon_right: 'chevron-down'
             color_mode: 'custom'
             line_color_focus: 0, 0, 0, 1
             text_color_focus:0,0,0,1
             hint_text_color:0,0,0,1
             hint_text_color_focus:0,0,0,.5
-            icon_right_color:0,0,0,1
-            icon_right_color_focus:0,0,0,.5
+        MDTextField:
+            id: District
+            hint_text: "District"
+            pos_hint: {'center_x': 0.5}
+            font_size: "14sp"
+            size_hint:.9,None
+            cursor_width: "2sp"
+            write_tab: False
+            theme_text_color: "Custom"
+            color_mode: 'custom'
+            line_color_focus: 0, 0, 0, 1
+            text_color_focus:0,0,0,1
+            hint_text_color:0,0,0,1
+            hint_text_color_focus:0,0,0,.5
         MDTextField:
             id:pincode
             hint_text: "PIN Code"
@@ -71,24 +97,6 @@
             text_color_focus:0,0,0,1
             hint_text_color:0,0,0,1
             hint_text_color_focus:0,0,0,.5
-
-        MDTextField:
-            id:extra_info2
-            hint_text: "Established Year"
-#                        required: True
-            font_name: "Roboto"
-            font_size: "14sp"
-            pos_hint:{'center_x':.5}
-            size_hint:.9,None
-            write_tab: False
-            height: "30dp"
-            multiline: False
-            color_mode: 'custom'
-            line_color_focus: 0, 0, 0, 1
-            text_color_focus:0,0,0,1
-            hint_text_color:0,0,0,1
-            hint_text_color_focus:0,0,0,.4
-            on_focus: if self.focus: root.show_date_picker(self)
         MDBoxLayout:
             size_hint_y: None
             padding: dp(10)
@@ -225,6 +233,7 @@
                         width: 1.2
                         rounded_rectangle: self.x, self.y, self.width, self.height, 5, 5, 5, 5, 100
 
+
 <MobileCareContent>
     MDBoxLayout:
         orientation: 'vertical'
@@ -269,21 +278,30 @@
             id: State
             hint_text: "State"
             pos_hint: {'center_x': 0.5}
-            on_focus: if self.focus: root.open_dropdown2(self)
             font_size: "14sp"
             size_hint:.9,None
             cursor_width: "2sp"
-            readonly: True
             write_tab: False
             theme_text_color: "Custom"
-            icon_right: 'chevron-down'
             color_mode: 'custom'
             line_color_focus: 0, 0, 0, 1
             text_color_focus:0,0,0,1
             hint_text_color:0,0,0,1
             hint_text_color_focus:0,0,0,.5
-            icon_right_color:0,0,0,1
-            icon_right_color_focus:0,0,0,.5
+        MDTextField:
+            id: District
+            hint_text: "District"
+            pos_hint: {'center_x': 0.5}
+            font_size: "14sp"
+            size_hint:.9,None
+            cursor_width: "2sp"
+            write_tab: False
+            theme_text_color: "Custom"
+            color_mode: 'custom'
+            line_color_focus: 0, 0, 0, 1
+            text_color_focus:0,0,0,1
+            hint_text_color:0,0,0,1
+            hint_text_color_focus:0,0,0,.5
         MDTextField:
             id:pincode
             hint_text: "PIN Code"
@@ -337,7 +355,7 @@
             height: self.minimum_height
             MDLabel:
                 id: Doc_1
-                text: "1.Medical Practitioner License"
+                text: "1.Vehicle RC "
                 font_name: "Roboto"
                 font_size: "13sp"
                 pos_hint: {"center_x": .5,'center_y':.5}
@@ -398,7 +416,7 @@
             height: self.minimum_height
             MDLabel:
                 id: Doc_2
-                text: "2.Building Permit and Licenses"
+                text: "2.Driving License"
                 font_name: "Roboto"
                 font_size: "13sp"
                 pos_hint: {"center_x": .5,'center_y':.4}
@@ -500,21 +518,31 @@
             id: State
             hint_text: "State"
             pos_hint: {'center_x': 0.5}
-            on_focus: if self.focus: root.open_dropdown2(self)
+            font_size: "14sp"
+            size_hint:.9,None
+            cursor_width: "2sp"
+            write_tab: False
+            theme_text_color: "Custom"
+            color_mode: 'custom'
+            line_color_focus: 0, 0, 0, 1
+            text_color_focus:0,0,0,1
+            hint_text_color:0,0,0,1
+            hint_text_color_focus:0,0,0,.5
+        MDTextField:
+            id: District
+            hint_text: "District"
+            pos_hint: {'center_x': 0.5}
             font_size: "14sp"
             size_hint:.9,None
             cursor_width: "2sp"
             readonly: True
             write_tab: False
             theme_text_color: "Custom"
-            icon_right: 'chevron-down'
             color_mode: 'custom'
             line_color_focus: 0, 0, 0, 1
             text_color_focus:0,0,0,1
             hint_text_color:0,0,0,1
             hint_text_color_focus:0,0,0,.5
-            icon_right_color:0,0,0,1
-            icon_right_color_focus:0,0,0,.5
         MDTextField:
             id:pincode
             hint_text: "PIN Code"
@@ -568,7 +596,7 @@
             height: self.minimum_height
             MDLabel:
                 id: Doc_1
-                text: "1.Medical Practitioner License"
+                text: "1.Gym License"
                 font_name: "Roboto"
                 font_size: "13sp"
                 pos_hint: {"center_x": .5,'center_y':.5}
