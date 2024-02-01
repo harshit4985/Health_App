@@ -1,4 +1,5 @@
 from kivymd.uix.navigationdrawer import MDNavigationLayout
+from kivymd.uix.screen import MDScreen
 
 from signup_login import Signup, Login
 from ServiceProvider import ServiceRegisterForm
@@ -6,6 +7,7 @@ from slot_booking import Slot_Booking
 from support_page import Support_page
 from fetch_pincode_page import Location
 from payment_page import Payment
+from client_services import Client_services, Profile, Booking, Notification, Report
 
 # from kivyauth.google_auth import initialize_google,login_google,logout_google
 from kivy.graphics import Mesh, Color
@@ -101,6 +103,8 @@ class OpenGLWidget(Widget):
 
 class ProfileCard(MDFloatLayout, FakeRectangularElevationBehavior):
     pass
+class NavigationDrawerScreen(MDScreen):
+    pass
 
 # Create the main app class
 class LoginApp(MDApp):
@@ -111,12 +115,12 @@ class LoginApp(MDApp):
         screen_manager.add_widget(Builder.load_file("main_sc.kv"))
         screen_manager.add_widget(Login("login"))
         screen_manager.add_widget(Signup("signup"))
-        screen_manager.add_widget(Builder.load_file("client_services.kv"))
+        screen_manager.add_widget(Client_services("client_services"))
         screen_manager.add_widget(Location("client_services1"))
-        screen_manager.add_widget(Builder.load_file("menu_profile.kv"))
-        screen_manager.add_widget(Builder.load_file("menu_notification.kv"))
-        screen_manager.add_widget(Builder.load_file("menu_bookings.kv"))
-        screen_manager.add_widget(Builder.load_file("menu_reports.kv"))
+        screen_manager.add_widget(Profile("menu_profile"))
+        screen_manager.add_widget(Notification("menu_notification"))
+        screen_manager.add_widget(Booking("menu_bookings"))
+        screen_manager.add_widget(Report("menu_reports"))
         screen_manager.add_widget(Support_page("menu_support"))
         screen_manager.add_widget(Builder.load_file("hospital_book.kv"))
         screen_manager.add_widget(Slot_Booking("slot_booking"))
@@ -136,9 +140,7 @@ class LoginApp(MDApp):
         self.root.transition.direction = 'left'
         self.root.current = 'client_services1'
 
-    def logout(self):
-        self.root.transition.direction = 'left'
-        self.root.current = 'login'
+
     def registration_submit(self):
         self.screen = Builder.load_file("service_register_form.kv")
         screen = self.root.current_screen

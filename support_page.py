@@ -6,6 +6,12 @@ from kivymd.uix.screen import MDScreen
 
 Builder.load_file("menu_support.kv")
 class Support_page(MDScreen):
+    def support_back(self):
+        app = MDApp.get_running_app()
+        app.root.transition.direction = 'right'
+        app.root.current = 'client_services'
+        screen = app.root.get_screen('client_services')
+        screen.ids.nav_drawer.set_state("close")
     def show_customer_support_dialog(self):
         dialog = MDDialog(
             title="Contact Customer Support",

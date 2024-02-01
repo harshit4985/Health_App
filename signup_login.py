@@ -191,14 +191,14 @@ class Signup(MDScreen,Connection):
         # All checks passed; the password is valid
         return True, "Password is valid"
 
-    def show_validation_dialog(self, message):
-        # Display a dialog for invalid login or sign up
-        dialog = MDDialog(
-            text=message,
-            elevation=0,
-            buttons=[MDFlatButton(text="OK", on_release=lambda x: dialog.dismiss())],
-        )
-        dialog.open()
+    # def show_validation_dialog(self, message):
+    #     # Display a dialog for invalid login or sign up
+    #     dialog = MDDialog(
+    #         text=message,
+    #         elevation=0,
+    #         buttons=[MDFlatButton(text="OK", on_release=lambda x: dialog.dismiss())],
+    #     )
+    #     dialog.open()
 
 class Login(MDScreen, Connection):
 
@@ -230,6 +230,9 @@ class Login(MDScreen, Connection):
                 connection.close()
         if user_anvil or user_sqlite:
             print("Login successful.")
+            app = MDApp.get_running_app()
+            app.root.transition.direction = "left"
+            app.root.current = "client_services"
             if user_anvil:
                 username = str(user_anvil["username"])
                 email = str(user_anvil["email"])
@@ -240,7 +243,6 @@ class Login(MDScreen, Connection):
                 email = str(user_sqlite[2])
                 phone = str(user_sqlite[4])
                 pincode = str(user_sqlite[5])
-            app = MDApp.get_running_app()
             screen = app.root.get_screen('menu_profile')
             screen.ids.username.text = f"Username : {username}"
             screen.ids.email.text = f"Email : {email}"
@@ -249,8 +251,7 @@ class Login(MDScreen, Connection):
             screen3 = app.root.get_screen('client_services')
             screen3.ids.username.text = username
             screen3.ids.email.text = email
-            app.root.transition.direction = "left"
-            app.root.current = "client_services"
+
         else:
             # Login failed
             self.ids.login_email.error = True

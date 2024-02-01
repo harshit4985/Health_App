@@ -1,9 +1,10 @@
-# client_services.kv
-MDScreen:
+<Client_services>:
     name: "client_services"
-    MDNavigationLayout:
-        ScreenManager:
-            Screen:
+    ScreenManager:
+        id: screen_manager
+        NavigationDrawerScreen:
+            name: "navigation_drawer"
+            MDScreen:
                 BoxLayout:
                     orientation: 'vertical'
 
@@ -246,138 +247,131 @@ MDScreen:
                                                         size: self.size
                                                         pos: self.pos
                                                         radius: [5]
+            MDNavigationLayout:
+                id: nav_layout
+                MDNavigationDrawer:
+                    id: nav_drawer
+                    orientation: 'vertical'
+                    size_hint_x:dp(290)
+                    size_hint_max_x: "270dp"
+                    padding: "0dp"
+                    spacing: "5dp"
 
-
-
-        MDNavigationDrawer:
-            id: nav_drawer
-            orientation: 'vertical'
-            size_hint_x:dp(290)
-            size_hint_max_x: "270dp"
-            padding: "0dp"
-            spacing: "5dp"
-
-            MDCard:
-                orientation: 'vertical'
-                size_hint: None, None
-                size: "268dp", "100dp"
-                elevation: 2
-                md_bg_color: 1, 1, 1, 1
-
-                BoxLayout:
-                    size_hint_y: None
-                    height: dp(90)
-                    padding: "15dp"
-
-                    BoxLayout:
+                    MDCard:
+                        orientation: 'vertical'
                         size_hint: None, None
-                        size: dp(60), dp(60)
-                        canvas:
-                            Color:
-                                rgb: 1, 1, 1
-                            Ellipse:
-                                pos: self.pos
-                                size: 60, 60
-                                source: 'images/doctor.jpg'
-                                angle_start: 0
-                                angle_end: 360
+                        size: "268dp", "100dp"
+                        elevation: 2
+                        md_bg_color: 1, 1, 1, 1
+
+                        BoxLayout:
+                            size_hint_y: None
+                            height: dp(90)
+                            padding: "15dp"
+
+                            BoxLayout:
+                                size_hint: None, None
+                                size: dp(60), dp(60)
+                                canvas:
+                                    Color:
+                                        rgb: 1, 1, 1
+                                    Ellipse:
+                                        pos: self.pos
+                                        size: 60, 60
+                                        source: 'images/doctor.jpg'
+                                        angle_start: 0
+                                        angle_end: 360
+                            BoxLayout:
+                                orientation: 'vertical'
+                                padding: "5dp"
+                                spacing: "5dp"
+
+                                MDLabel:
+                                    id: username
+                                    text: "username"
+                                    font_name: "Roboto"
+                                    theme_text_color: "Secondary"
+                                    pos_hint: {'center_x': 0.5,'center_y': 0.2}
+
+                                MDLabel:
+                                    id: email
+                                    text: "clientemail@gmail.com"
+                                    theme_text_color: "Hint"
+                                    font_name: "Roboto"
+                                    font_size:'12sp'
+                                    pos_hint: {'center_x': 0.5,'center_y': 0.1}
+
                     BoxLayout:
                         orientation: 'vertical'
-                        padding: "5dp"
-                        spacing: "5dp"
+                        ScrollView:
+                            MDList:
+                                id: md_list
+                                MDList:
+                                    OneLineIconListItem:
+                                        text: "Home"
+                                        on_release: root.home()
+                                        IconLeftWidget:
+                                            icon: "home"
+                                            on_release: root.home()
+                                    OneLineIconListItem:
+                                        text: "Profile"
+                                        on_release:
+                                            root.manager.transition.direction = "left"
+                                            root.manager.current = "menu_profile"
+                                        IconLeftWidget:
+                                            icon: "account-circle"
+                                            on_release:
+                                                root.manager.transition.direction = "left"
+                                                root.manager.current = "menu_profile"
+                                    OneLineIconListItem:
+                                        text: "Notification"
+                                        on_release:
+                                            root.manager.transition.direction = "left"
+                                            root.manager.current = "menu_notification"
+                                        IconLeftWidget:
+                                            icon: "bell-outline"
+                                            on_release:
+                                                root.manager.transition.direction = "left"
+                                                root.manager.current = "menu_notification"
 
-                        MDLabel:
-                            id: username
-                            text: "username"
-                            font_name: "Roboto"
-                            theme_text_color: "Secondary"
-                            pos_hint: {'center_x': 0.5,'center_y': 0.2}
+                                    OneLineIconListItem:
+                                        text: "Bookings"
+                                        on_release:
+                                            root.manager.transition.direction = "left"
+                                            root.manager.current = "menu_bookings"
+                                        IconLeftWidget:
+                                            icon: "book-account-outline"
+                                            on_release:
+                                                root.manager.transition.direction = "left"
+                                                root.manager.current = "menu_bookings"
 
-                        MDLabel:
-                            id: email
-                            text: "clientemail@gmail.com"
-                            theme_text_color: "Hint"
-                            font_name: "Roboto"
-                            font_size:'12sp'
-                            pos_hint: {'center_x': 0.5,'center_y': 0.1}
+                                    OneLineIconListItem:
+                                        text: "Reports"
+                                        on_release:
+                                            root.manager.transition.direction = "left"
+                                            root.manager.current = "menu_reports"
 
-            BoxLayout:
-                orientation: 'vertical'
-                ScrollView:
-                    MDList:
-                        id: md_list
-                        MDList:
-                            OneLineIconListItem:
-                                text: "Home"
-                                on_release:
-                                    root.manager.transition.direction = "right"
-                                    root.manager.current = "client_services"
-                                IconLeftWidget:
-                                    icon: "home"
-                                    on_release:
-                                        root.manager.transition.direction = "right"
-                                        root.manager.current = "client_services"
-                            OneLineIconListItem:
-                                text: "Profile"
-                                on_release:
-                                    root.manager.transition.direction = "left"
-                                    root.manager.current = "menu_profile"
-                                IconLeftWidget:
-                                    icon: "account-circle"
-                                    on_release:
-                                        root.manager.transition.direction = "left"
-                                        root.manager.current = "menu_profile"
-                            OneLineIconListItem:
-                                text: "Notification"
-                                on_release:
-                                    root.manager.transition.direction = "left"
-                                    root.manager.current = "menu_notification"
-                                IconLeftWidget:
-                                    icon: "bell-outline"
-                                    on_release:
-                                        root.manager.transition.direction = "left"
-                                        root.manager.current = "menu_notification"
+                                        IconLeftWidget:
+                                            icon: "file-multiple"
+                                            on_release:
+                                                root.manager.transition.direction = "left"
+                                                root.manager.current = "menu_reports"
 
-                            OneLineIconListItem:
-                                text: "Bookings"
-                                on_release:
-                                    root.manager.transition.direction = "left"
-                                    root.manager.current = "menu_bookings"
-                                IconLeftWidget:
-                                    icon: "book-account-outline"
-                                    on_release:
-                                        root.manager.transition.direction = "left"
-                                        root.manager.current = "menu_bookings"
+                                    OneLineIconListItem:
+                                        text: "Support"
+                                        on_release:
+                                            root.manager.transition.direction = "left"
+                                            root.manager.current = "menu_support"
+                                        IconLeftWidget:
+                                            icon: "book-information-variant"
+                                            on_release:
+                                                root.manager.transition.direction = "left"
+                                                root.manager.current = "menu_support"
 
-                            OneLineIconListItem:
-                                text: "Reports"
-                                on_release:
-                                    root.manager.transition.direction = "left"
-                                    root.manager.current = "menu_reports"
-
-                                IconLeftWidget:
-                                    icon: "file-multiple"
-                                    on_release:
-                                        root.manager.transition.direction = "left"
-                                        root.manager.current = "menu_reports"
-
-                            OneLineIconListItem:
-                                text: "Support"
-                                on_release:
-                                    root.manager.transition.direction = "left"
-                                    root.manager.current = "menu_support"
-                                IconLeftWidget:
-                                    icon: "book-information-variant"
-                                    on_release:
-                                        root.manager.transition.direction = "left"
-                                        root.manager.current = "menu_support"
-
-                            OneLineIconListItem:
-                                text: "Logout"
-                                on_release:
-                                    root.manager.transition.direction = "right"
-                                    root.manager.current = "login"
-                                IconLeftWidget:
-                                    icon: "logout"
-                                    on_release: app.logout()
+                                    OneLineIconListItem:
+                                        text: "Logout"
+                                        on_release: root.logout()
+                                        IconLeftWidget:
+                                            icon: "logout"
+                                            on_release: root.logout()
 

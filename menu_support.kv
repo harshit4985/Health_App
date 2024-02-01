@@ -7,9 +7,7 @@
         user_font_size: "20sp"
         theme_text_color: "Custom"
         text_color: rgba(35, 35, 35, 255)
-        on_release:
-            root.manager.transition.direction = "right"
-            root.manager.current = "client_services"
+        on_release: root.support_back()
 
     MDIconButton:
         icon: "dots-vertical"

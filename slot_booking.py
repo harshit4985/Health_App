@@ -96,7 +96,7 @@ class Slot_Booking(MDScreen):
 
     def _create_dialog(self, message):
         dialog = MDDialog(
-            text=f"Message: {message}",
+            text=f"{message}",
             elevation=0,
             buttons=[MDFlatButton(text="OK", on_release=lambda x: dialog.dismiss())],
         )
