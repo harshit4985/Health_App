@@ -134,7 +134,7 @@ class LoginApp(MDApp):
         screen_manager.add_widget(Support_page("menu_support"))
         screen_manager.add_widget(Builder.load_file("hospital_book.kv"))
         screen_manager.add_widget(Slot_Booking(name="slot_booking"))
-        screen_manager.add_widget(Builder.load_file("payment_page.kv"))
+        screen_manager.add_widget(Payment("payment_page.kv"))
         screen_manager.add_widget(ServiceProviderMain(name="service_provider_main_page"))
         screen_manager.add_widget(ServiceProfile(name="service_profile"))
         screen_manager.add_widget(ServiceNotification(name="service_notification"))
