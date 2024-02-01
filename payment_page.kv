@@ -1,6 +1,5 @@
-MDScreen:
+<Payment>:
     name: 'payment_page'
-
     BoxLayout:
         orientation: 'vertical'
 
@@ -129,7 +128,7 @@ MDScreen:
             font_name: "Roboto"
             bold: True
             on_release:
-                app.razor_pay(self)
+                root.razor_pay(self)
             canvas.before:
                 Color:
                     rgb: rgba(255, 0, 0, 255)

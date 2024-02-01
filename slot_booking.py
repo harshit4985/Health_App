@@ -1,3 +1,4 @@
+import cProfile
 from datetime import datetime
 from anvil.tables import app_tables
 from kivy.lang import Builder

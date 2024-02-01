@@ -1,4 +1,4 @@
-MDScreen:
+<Support_page>:
     name: "menu_support"
     md_bg_color: rgba(255, 255, 255, 255)
     MDIconButton:
@@ -28,14 +28,14 @@ MDScreen:
     OneLineIconListItem:
         text: "Contact customer care"
         pos_hint: {"center_x":0.55, "center_y":0.8}
-        on_release: app.show_customer_support_dialog()
+        on_release: root.show_customer_support_dialog()
         IconLeftWidget:
             icon: "face-agent"
 
     OneLineIconListItem:
         text: "Contact on-call Doctor"
         pos_hint: {"center_x":0.55, "center_y":0.70}
-        on_release: app.show_doctor_dialog()
+        on_release: root.show_doctor_dialog()
         IconLeftWidget:
             icon: "doctor"
 
@@ -62,7 +62,7 @@ MDScreen:
         cursor_width: "2sp"
         multiline: False
         write_tab: True
-        on_text_validate: app.clear_text_input()
+        on_text_validate: root.clear_text_input()
 
     TextInput:
         id: issue_description
@@ -80,7 +80,7 @@ MDScreen:
         cursor_width: "2sp"
         multiline: True
         write_tab: True
-        on_text_validate: app.clear_text_input()
+        on_text_validate: root.clear_text_input()
 
     Button:
         id: submit_ticket
@@ -97,8 +97,8 @@ MDScreen:
                 pos: self.pos
                 radius: [5]
         on_release:
-            app.submit_ticket()
-            app.show_ticket_popup()
+            root.submit_ticket()
+            root.show_ticket_popup()
 
 
 <MDDialog>:
