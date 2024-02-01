@@ -1,3 +1,13 @@
+import base64
+import json
+import re
+import webbrowser
+from kivymd.uix.navigationdrawer import MDNavigationLayout
+from ServiceProviderMainPage import ServiceProviderMain, ServiceProfile, ServiceNotification, ServiceSlotAdding, \
+    ServiceSupport
+from signup_login import Signup, Login
+from ServiceProvider import ServiceRegisterForm
+from slot_booking import Slot_Booking
 from kivymd.uix.navigationdrawer import MDNavigationLayout
 from kivymd.uix.screen import MDScreen
 
@@ -123,6 +133,13 @@ class LoginApp(MDApp):
         screen_manager.add_widget(Report("menu_reports"))
         screen_manager.add_widget(Support_page("menu_support"))
         screen_manager.add_widget(Builder.load_file("hospital_book.kv"))
+        screen_manager.add_widget(Slot_Booking(name="slot_booking"))
+        screen_manager.add_widget(Builder.load_file("payment_page.kv"))
+        screen_manager.add_widget(ServiceProviderMain(name="service_provider_main_page"))
+        screen_manager.add_widget(ServiceProfile(name="service_profile"))
+        screen_manager.add_widget(ServiceNotification(name="service_notification"))
+        screen_manager.add_widget(ServiceSlotAdding(name="service_slot_adding"))
+        screen_manager.add_widget(ServiceSupport(name="service_support"))
         screen_manager.add_widget(Slot_Booking("slot_booking"))
         screen_manager.add_widget(Payment("payment_page"))
         # screen_manager.add_widget(ServiceProviderMain(name="service_provider_main_page"))
