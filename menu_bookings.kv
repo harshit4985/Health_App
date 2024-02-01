@@ -1,4 +1,4 @@
-MDScreen:
+<Booking>:
     name: "menu_bookings"
     MDFloatLayout:
         md_bg_color: rgba(246, 250, 255, 255)
@@ -8,9 +8,7 @@ MDScreen:
             user_font_size: "20sp"
             theme_text_color: "Custom"
             text_color: rgba(34, 34, 34, 255)
-            on_release:
-                root.manager.transition.direction = "right"
-                root.manager.current = "client_services"
+            on_release: root.booking_back()
         MDIconButton:
             icon: "dots-vertical"
             pos_hint: {"center_x": .93, "center_y": .94}
