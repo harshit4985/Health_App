@@ -30,7 +30,7 @@ class Slot_Booking(MDScreen):
         selected_slot = label_text
         for slot in Slot_Booking.time_slots:
             if slot == selected_slot:
-                self.ids[slot].md_bg_color = (0, 1, 0, 1)
+                self.ids[slot].md_bg_color = (1, 1, 1, 1)
             else:
                 self.ids[slot].md_bg_color = (1, 0, 0, 1)
 
