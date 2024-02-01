@@ -1,4 +1,4 @@
-MDScreen:
+<Report>:
     name: "menu_reports"
     MDFloatLayout:
         md_bg_color: rgba(246, 250, 255, 255)
@@ -8,9 +8,7 @@ MDScreen:
             user_font_size: "20sp"
             theme_text_color: "Custom"
             text_color: rgba(34, 34, 34, 255)
-            on_release:
-                root.manager.transition.direction = "right"
-                root.manager.current = "client_services"
+            on_release: root.reports_back()
         MDIconButton:
             icon: "dots-vertical"
             pos_hint: {"center_x": .93, "center_y": .94}
@@ -19,7 +17,7 @@ MDScreen:
             text_color: rgba(34, 34, 34, 255)
         MDLabel:
             text: "Reports"
-            font_name: "Roboto"
+            font_name: "Broboto"
             font_size: "20sp"
             pos_hint: {"center_x": .56, "center_y": .88}
             color: rgba(34, 34, 34, 255)

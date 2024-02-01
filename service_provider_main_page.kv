@@ -10,7 +10,7 @@
                     MDTopAppBar:
                         id:topbar
                         title: "Service Provider"
-                        font_name: "BPoppins"
+                        font_name: "Broboto"
                         md_bg_color: 1, 0, 0, 1
                         left_action_items: [["menu", lambda x: nav_drawer.set_state()]]
                         right_action_items: [["dots-vertical", lambda x: root.service_button(x)]]
@@ -49,7 +49,7 @@
                                         MDLabel:
                                             text: 'Empty Slots'
                                             halign: 'center'
-                                            font_name: 'MPoppins'
+                                            font_name: 'Roboto'
                                             theme_text_color: 'Custom'
                                             text_color: 0, 0, 0, 1
                                             size_hint_x: 0.5
@@ -61,7 +61,7 @@
                                             id: empty_slots
                                             text: '0'
                                             halign: 'center'
-                                            font_name: 'MPoppins'
+                                            font_name: 'Roboto'
                                             theme_text_color: 'Custom'
                                             text_color: 0, 0, 0, 1
                                             size_hint_x: 0.5
@@ -119,7 +119,7 @@
                                                 MDLabel:
                                                     id: pat_username
                                                     text: "username"
-                                                    font_name: "MPoppins"
+                                                    font_name: "Roboto"
                                                     theme_text_color: 'Custom'
                                                     text_color: 1, 1, 1, 1
                                                     pos_hint: {'center_x': 0.5, 'center_y': 0.3}
@@ -129,28 +129,9 @@
                                                     text: "clientemail@gmail.com"
                                                     theme_text_color: 'Custom'
                                                     text_color: 1, 1, 1, 1
-                                                    font_name: "MPoppins"
+                                                    font_name: "Roboto"
                                                     font_size: '12sp'
                                                     pos_hint: {'center_x': 0.5, 'center_y': 0.1}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         MDNavigationDrawer:
             id: nav_drawer
@@ -192,7 +173,7 @@
                         MDLabel:
                             id: srv_username
                             text: "username"
-                            font_name: "MPoppins"
+                            font_name: "Roboto"
                             theme_text_color: "Secondary"
                             pos_hint: {'center_x': 0.5,'center_y': 0.2}
 
@@ -200,7 +181,7 @@
                             id: srv_email
                             text: "clientemail@gmail.com"
                             theme_text_color: "Hint"
-                            font_name: "MPoppins"
+                            font_name: "Roboto"
                             font_size:'12sp'
                             pos_hint: {'center_x': 0.5,'center_y': 0.1}
 
@@ -228,7 +209,7 @@
                                     on_release:
                                         root.manager.transition.direction = "left"
                                         root.manager.current = "service_profile"
-                                    font_name: "MPoppins"
+                                    font_name: "Roboto"
                                     pos_hint:{'center_x':.3,'center_y':.7}
                             MDBoxLayout:
                                 size_hint_y:None
@@ -261,7 +242,7 @@
                                         root.manager.transition.direction = "left"
                                         root.manager.current = "service_slot_adding"
                                     halign: 'center'
-                                    font_name: "MPoppins"
+                                    font_name: "Roboto"
                                     pos_hint:{'center_x':.3,'center_y':.7}
 
                         GridLayout:
@@ -286,7 +267,7 @@
                                     on_release:
                                         root.manager.transition.direction = "left"
                                         root.manager.current = "service_support"
-                                    font_name: "MPoppins"
+                                    font_name: "Roboto"
                                     pos_hint:{'center_x':.5,'center_y':.7}
                             MDBoxLayout:
                                 size_hint_y:None
@@ -299,7 +280,7 @@
                                     text: 'Sign Out'
                                     on_release: root.sign_out_button_action()
                                     pos_hint:{'center_x':.5,'center_y':.7}
-                                    font_name: "MPoppins"
+                                    font_name: "Roboto"
 
 
 #----------------------------Service-Profile---------------------------------------------------------------
@@ -330,7 +311,7 @@
                 text_color: rgba(34, 34, 34, 255)
             MDLabel:
                 text: "My Profile"
-                font_name: "BPoppins"
+                font_name: "Broboto"
                 font_size: "20sp"
                 pos_hint: {"center_x": .56, "center_y": .82}
                 color: rgba(34, 34, 34, 255)
@@ -349,25 +330,25 @@
                 MDLabel:
                     id: username
                     text: "username"
-                    font_name: "MPoppins"
+                    font_name: "Roboto"
                     pos_hint: {"center_x": .66,"center_y": 1.09}
                     color: rgba(34, 34, 34, 255)
                 MDLabel:
                     id: email
                     text: "clientemail@gmail.com"
-                    font_name: "MPoppins"
+                    font_name: "Roboto"
                     pos_hint: {"center_x": .66,"center_y": .97}
                     color: rgba(34, 34, 34, 255)
                 MDLabel:
                     id: phone
                     text: "912*******"
-                    font_name: "MPoppins"
+                    font_name: "Roboto"
                     pos_hint: {"center_x": .66,"center_y": .85}
                     color: rgba(34, 34, 34, 255)
                 MDLabel:
                     id: pincode
                     text: "56****"
-                    font_name: "MPoppins"
+                    font_name: "Roboto"
                     pos_hint: {"center_x": .66,"center_y": .73}
                     color: rgba(34, 34, 34, 255)
             MDFloatLayout:
@@ -408,7 +389,7 @@
 
         MDLabel:
             text: "Notification"
-            font_name: "BPoppins"
+            font_name: "Broboto"
             font_size: "20sp"
             pos_hint: {"center_x": .56, "center_y": .88}
             color: rgba(34, 34, 34, 255)
@@ -416,7 +397,7 @@
             text: "No current notifications"
             font_size: "25sp"
             halign:'center'
-            font_name: "MPoppins"
+            font_name: "Roboto"
             pos_hint: {"center_x": .5, "center_y": .5}
             color: rgba(94, 94, 94, 255)
 
@@ -447,7 +428,7 @@
 #                id:slot_no
 #                hint_text: "Slot No"
 #        #                        required: True
-#                font_name: "MPoppins"
+#                font_name: "Roboto"
 #                font_size: "14sp"
 #                pos_hint:{'center_x':.5}
 #                size_hint:.9,None
@@ -462,7 +443,7 @@
 #                id:add_date
 #                hint_text: "Date"
 #        #                        required: True
-#                font_name: "MPoppins"
+#                font_name: "Roboto"
 #                font_size: "14sp"
 #                pos_hint:{'center_x':.5}
 #                size_hint:.9,None
@@ -493,7 +474,7 @@
 #                    on_release: root.file_manager_open()
 #                    pos_hint: {"center_x":.3,'center_y':.5}
 #                    background_color: 0, 0, 0, 0
-#                    font_name: "BPoppins"
+#                    font_name: "Broboto"
 #                    font_size: "12sp"
 #                    background_color: 0, 0, 0, 0
 #                    color: rgba(1, 1, 1, 255)
@@ -511,7 +492,7 @@
 #                    width:dp(30)
 #                    pos_hint: {"center_x":.8,'center_y':.5}
 #                    background_color: 0, 0, 0, 0
-#                    font_name: "BPoppins"
+#                    font_name: "Broboto"
 #                    font_size: "12sp"
 #                    background_color: 0, 0, 0, 0
 #                    color: rgba(1, 1, 1, 255)
@@ -541,7 +522,7 @@
 #                height:dp(40)
 #                pos_hint: {"center_x": .5, "center_y": .34}
 #                background_color: 0, 0, 0, 0
-#                font_name: "BPoppins"
+#                font_name: "Broboto"
 #                on_release:
 #                    root.solt_permission(self)
 #                canvas.before:
@@ -573,7 +554,7 @@
 
     MDLabel:
         text: "Support"
-        font_name: "BPoppins"
+        font_name: "Broboto"
         font_size: "20sp"
         pos_hint: {"center_x": .55, "center_y":0.90}
         color: rgba(35, 35, 35, 255)
@@ -594,7 +575,7 @@
 
     MDLabel:
         text: "Raise a ticket"
-        font_name: "BPoppins"
+        font_name: "Broboto"
         font_size: "15sp"
         pos_hint: {"center_x": .55, "center_y": .60}
         color: rgba(35, 35, 35, 255)
@@ -602,7 +583,7 @@
     TextInput:
         id: issue_title
         hint_text: "Issue Title"
-        font_name: "MPoppins"
+        font_name: "Roboto"
         size_hint_y: 0.1
         helper_text:'Required'
         helper_text_mode:  'on_error'
@@ -620,7 +601,7 @@
     TextInput:
         id: issue_description
         hint_text: "Issue description"
-        font_name: "MPoppins"
+        font_name: "Roboto"
         size_hint_y: .1
         helper_text:'Required'
         helper_text_mode:  'on_error'
@@ -641,7 +622,7 @@
         size_hint: .5, .05
         pos_hint: {"center_x": .3, "center_y": .2}
         background_color: 0, 0, 0, 0
-        font_name: "BPoppins"
+        font_name: "Broboto"
         canvas.before:
             Color:
                 rgb: rgba(255, 0, 0, 255)

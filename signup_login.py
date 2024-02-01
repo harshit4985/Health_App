@@ -30,6 +30,58 @@ class Connection:
         else:
             # Use SQLite database connection
             return sqlite3.connect('users.db')
+
+    # def google_sign_in(self):
+    #     # Set up the OAuth 2.0 client ID and client secret obtained from the Google Cloud Console
+    #     client_id = "749362207551-tdoq2d8787csqqnbvpdgcc3m2sdtsnd1.apps.googleusercontent.com"
+    #     client_secret = "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"
+    #     redirect_uri = "https://oxivive.com/oauth/callback"
+    #     redirect_uri = "urn:ietf:wg:oauth:2.0:oob"
+    #
+    #     # Set up the Google OAuth flow
+    #     flow = InstalledAppFlow.from_client_secrets_file(
+    #         "client_secret.json",
+    #         scopes=["https://www.googleapis.com/auth/userinfo.email"],
+    #         redirect_uri=redirect_uri
+    #     )
+    #
+    #     # Get the authorization URL
+    #     auth_url, _ = flow.authorization_url(prompt="select_account")
+    #     print(f"Authorization URL: {auth_url}")
+    #
+    #     # Open a web browser to the authorization URL
+    #     webbrowser.open(auth_url)
+    #
+    #     # Get the authorization code from the user
+    #     authorization_code = input("Enter the authorization code: ")
+    #
+    #     # Exchange the authorization code for credentials
+    #     credentials = flow.fetch_token(
+    #         token_uri="https://oauth2.googleapis.com/token",
+    #         authorization_response=authorization_code
+    #     )
+    #
+    #     # Use the obtained credentials for further Google API requests
+    #     # Example: print the user's email address
+    #     user_email = credentials.id_token["email"]
+    #     print(f"User email: {user_email}")
+    #
+    # def exchange_code_for_tokens(self, authorization_code):
+    #     token_url = "https://oauth2.googleapis.com/token"
+    #
+    #     params = {
+    #         "code": authorization_code,
+    #         "client_id": "your_client_id",
+    #         "client_secret": "your_client_secret",
+    #         "redirect_uri": "urn:ietf:wg:oauth:2.0:oob",
+    #         "grant_type": "authorization_code"
+    #     }
+    #
+    #     response = requests.post(token_url, data=params)
+    #     token_data = response.json()
+    #
+    #     return token_data
+
 class Signup(MDScreen,Connection):
     def users(self, instance, *args):
 
@@ -139,16 +191,17 @@ class Signup(MDScreen,Connection):
         # All checks passed; the password is valid
         return True, "Password is valid"
 
-    def show_validation_dialog(self, message):
-        # Display a dialog for invalid login or sign up
-        dialog = MDDialog(
-            text=message,
-            elevation=0,
-            buttons=[MDFlatButton(text="OK", on_release=lambda x: dialog.dismiss())],
-        )
-        dialog.open()
+    # def show_validation_dialog(self, message):
+    #     # Display a dialog for invalid login or sign up
+    #     dialog = MDDialog(
+    #         text=message,
+    #         elevation=0,
+    #         buttons=[MDFlatButton(text="OK", on_release=lambda x: dialog.dismiss())],
+    #     )
+    #     dialog.open()
 
 class Login(MDScreen, Connection):
+
     def login_page(self, instance, *args):
         email = self.ids.login_email.text
         password = self.ids.login_password.text
@@ -177,6 +230,9 @@ class Login(MDScreen, Connection):
                 connection.close()
         if user_anvil or user_sqlite:
             print("Login successful.")
+            app = MDApp.get_running_app()
+            app.root.transition.direction = "left"
+            app.root.current = "client_services"
             if user_anvil:
                 username = str(user_anvil["username"])
                 email = str(user_anvil["email"])
@@ -187,25 +243,15 @@ class Login(MDScreen, Connection):
                 email = str(user_sqlite[2])
                 phone = str(user_sqlite[4])
                 pincode = str(user_sqlite[5])
-            app = MDApp.get_running_app()
             screen = app.root.get_screen('menu_profile')
             screen.ids.username.text = f"Username : {username}"
             screen.ids.email.text = f"Email : {email}"
             screen.ids.phone.text = f"Phone no : {phone}"
             screen.ids.pincode.text = f"Pincode : {pincode}"
-            screen2 = app.root.get_screen('menu_profile_second')
-            screen2.ids.username.text = f"Username : {username}"
-            screen2.ids.email.text = f"Email : {email}"
-            screen2.ids.phone.text = f"Phone no : {phone}"
-            screen2.ids.pincode.text = f"Pincode : {pincode}"
             screen3 = app.root.get_screen('client_services')
             screen3.ids.username.text = username
             screen3.ids.email.text = email
-            screen4 = app.root.get_screen('hospital_book')
-            screen4.ids.username.text = username
-            screen4.ids.email.text = email
-            app.root.transition.direction = "left"
-            app.root.current = "client_services"
+
         else:
             # Login failed
             self.ids.login_email.error = True

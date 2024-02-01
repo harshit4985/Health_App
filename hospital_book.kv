@@ -9,8 +9,7 @@ MDScreen:
 
                     MDTopAppBar:
                         md_bg_color: 1, 0, 0, 1
-                        left_action_items: [["menu", lambda x: nav_drawer.set_state()]]
-                        right_action_items: [["arrow-left", lambda x: app.back_button_hospital_book()]]
+                        left_action_items: [["arrow-left", lambda x: app.back_button_hospital_book()]]
 
                     BoxLayout:
                         orientation: 'vertical'
@@ -167,122 +166,5 @@ MDScreen:
                                 pos: self.pos
                                 radius: [0]
 
-        MDNavigationDrawer:
-            id: nav_drawer
-            orientation: 'vertical'
-            size_hint_max_x: "250dp"
-            padding: "5dp"
-            spacing: "5dp"
-
-            MDCard:
-                orientation: 'vertical'
-                size_hint: None, None
-                size: "250dp", "100dp"
-                elevation: 2
-
-                BoxLayout:
-                    Image:
-                        source: 'images/doctor.jpg'
-                        size_hint: (.4,.5)
-                        pos_hint:{'center_x':.2,'center_y':.6}
-
-                    BoxLayout:
-                        orientation: 'vertical'
-                        padding: "5dp"
-                        spacing: "5dp"
-
-                        MDLabel:
-                            id: username
-                            text: "username"
-                            theme_text_color: "Secondary"
-                            pos_hint: {'center_x': 0.5,'center_y': 0.2}
-
-                        MDLabel:
-                            id: email
-                            text: "clientemail@gmail.com"
-                            theme_text_color: "Hint"
-                            pos_hint: {'center_x': 0.5,'center_y': 0.1}
-
-            BoxLayout:
-                orientation: 'vertical'
-                ScrollView:
-                    MDList:
-                        id: md_list
-                        MDList:
-                            OneLineIconListItem:
-                                text: "Home"
-                                on_release:
-                                    root.manager.transition.direction = "right"
-                                    root.manager.current = "client_services"
-                                IconLeftWidget:
-                                    icon: "home"
-                                    on_release:
-                                        root.manager.transition.direction = "right"
-                                        root.manager.current = "client_services"
-                            OneLineIconListItem:
-                                text: "Profile"
-                                on_release:
-                                    root.manager.transition.direction = "left"
-                                    root.manager.current = "menu_profile_second"
-                                IconLeftWidget:
-                                    icon: "account-circle"
-                                    on_release:
-                                        root.manager.transition.direction = "left"
-                                        root.manager.current = "menu_profile_second"
-                            OneLineIconListItem:
-                                text: "Notification"
-                                on_release:
-                                    root.manager.transition.direction = "left"
-                                    root.manager.current = "menu_notification_second"
-                                IconLeftWidget:
-                                    icon: "bell-outline"
-                                    on_release:
-                                        root.manager.transition.direction = "left"
-                                        root.manager.current = "menu_notification_second"
-
-                            OneLineIconListItem:
-                                text: "Bookings"
-                                on_release:
-                                    root.manager.transition.direction = "left"
-                                    root.manager.current = "menu_bookings_second"
-                                IconLeftWidget:
-                                    icon: "book-account-outline"
-                                    on_release:
-                                        root.manager.transition.direction = "left"
-                                        root.manager.current = "menu_bookings_second"
-
-                            OneLineIconListItem:
-                                text: "Reports"
-                                on_release:
-                                    root.manager.transition.direction = "left"
-                                    root.manager.current = "menu_reports_second"
-
-                                IconLeftWidget:
-                                    icon: "file-multiple"
-                                    on_release:
-                                        root.manager.transition.direction = "left"
-                                        root.manager.current = "menu_reports_second"
-
-                            OneLineIconListItem:
-                                text: "Support"
-                                on_release:
-                                    root.manager.transition.direction = "left"
-                                    root.manager.current = "menu_support_second"
-                                IconLeftWidget:
-                                    icon: "book-information-variant"
-                                    on_release:
-                                        root.manager.transition.direction = "left"
-                                        root.manager.current = "menu_support_second"
-
-                            OneLineIconListItem:
-                                text: "Logout"
-                                on_release:
-                                    root.manager.transition.direction = "right"
-                                    root.manager.current = "login"
-                                IconLeftWidget:
-                                    icon: "logout"
-                                    on_release:
-                                        root.manager.transition.direction = "right"
-                                        root.manager.current = "login"
 
 

@@ -1,4 +1,4 @@
-MDScreen:
+<Profile>:
     name: "menu_profile"
     MDFloatLayout:
         md_bg_color: rgba(246, 250, 255, 255)
@@ -14,9 +14,7 @@ MDScreen:
                 user_font_size: "20sp"
                 theme_text_color: "Custom"
                 text_color: rgba(34, 34, 34, 255)
-                on_release:
-                    root.manager.transition.direction = "right"
-                    root.manager.current = "client_services"
+                on_release: root.profile_back()
             MDIconButton:
                 icon: "dots-vertical"
                 pos_hint: {"center_x": .93, "center_y": .91}
@@ -25,7 +23,7 @@ MDScreen:
                 text_color: rgba(34, 34, 34, 255)
             MDLabel:
                 text: "My Profile"
-                font_name: "Roboto"
+                font_name: "Broboto"
                 font_size: "20sp"
                 pos_hint: {"center_x": .56, "center_y": .82}
                 color: rgba(34, 34, 34, 255)
