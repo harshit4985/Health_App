@@ -1,3 +1,5 @@
+import webbrowser
+
 import razorpay
 from anvil.tables import app_tables
 from kivy.lang import Builder
@@ -57,9 +59,11 @@ class Payment(MDScreen):
         except Exception as e:
             print("An error occurred while creating the order:", str(e))
 
-    def open_payment_gateway(self, payment_url):
+    def open_payment_gateway(self):
         # Replace this with actual code to open the payment gateway URL
-        print(f"Opening Razorpay payment gateway: {payment_url}")
+        print(f"Opening Razorpay payment gateway")
+        website_url = 'https://rzp.io/l/iJyrLCI'
+        webbrowser.open(website_url)
         # # Create the Razorpay checkout URL
         # razorpay_key_id = 'rzp_test_kOpS7Ythlfb1Ho'
         # razorpay_checkout_url = f'https://checkout.razorpay.com/v1/checkout.js?key={razorpay_key_id}'
