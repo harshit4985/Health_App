@@ -1,4 +1,7 @@
+import anvil
+from anvil import Timer
 from kivy.clock import Clock
+from kivymd.uix.dialog import MDDialog
 from kivymd.uix.label import MDLabel
 from kivymd.uix.spinner import MDSpinner
 
@@ -111,23 +114,14 @@ class ProfileCard(MDFloatLayout, FakeRectangularElevationBehavior):
 class NavigationDrawerScreen(MDScreen):
     pass
 
-
-class MDSpinnerDoubleRing:
-    pass
-
-
-class LoadingScreen(Screen):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.add_widget(MDSpinner(size_hint=(None, None), size=(48, 48), pos_hint={'center_x': 0.5, 'center_y': 0.5}))
-# Create the main app class
 class LoginApp(MDApp):
+
     def build(self):
         self.icon = "images/shot.png"
         self.theme_cls.theme_style = "Light"
+        self.check_internet_status_timer = Timer(interval=5000, repeating=True, enabled=True,
+                                                 tick=self.check_internet_status)
         screen_manager = ScreenManager()
-        loading_screen = LoadingScreen(name="loading")
-        screen_manager.add_widget(loading_screen)
         screen_manager.add_widget(Builder.load_file("main_sc.kv"))
         screen_manager.add_widget(Login("login"))
         screen_manager.add_widget(Signup("signup"))
@@ -158,12 +152,30 @@ class LoginApp(MDApp):
         # Create the OpenGL screen and add it to the ScreenManager
         opengl_screen = OpenGLScreen(name="opengl_screen")
         screen_manager.add_widget(opengl_screen)
-        Clock.schedule_once(self.switch_to_main_screen, 3)
 
         return screen_manager
+    def check_internet_status(self, **event_args):
+        try:
+            anvil.server.call('check_internet_status')
+            # If the check is successful, update UI or enable features as needed
+        except anvil.server.AnvilWrappedError as e:
+            self.handle_network_error(e)
 
-    def switch_to_main_screen(self, dt):
-        self.root.current = "main_screen"
+    def handle_network_error(self, e):
+        # Handle specific errors and display appropriate messages to the user
+        self.show_validation_dialog("Network Error: Please check your internet connection.")
+
+    def show_validation_dialog(self, message):
+        # Create the dialog asynchronously
+        Clock.schedule_once(lambda dt: self._create_dialog(message), 0)
+
+    def _create_dialog(self, message):
+        dialog = MDDialog(
+            text=f"{message}",
+            elevation=0,
+        )
+        dialog.open()
+
     def client_services1(self):
         self.root.transition = SlideTransition(direction='left')
         self.root.current = 'client_services1'
