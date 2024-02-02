@@ -1,6 +1,13 @@
 import razorpay
+from anvil.tables import app_tables
 from kivy.lang import Builder
 from kivymd.uix.screen import MDScreen
+from kivymd.uix.button import MDFlatButton
+from kivymd.uix.dialog import MDDialog
+from kivy.clock import Clock
+from kivymd.app import MDApp
+import anvil
+
 
 Builder.load_file("payment_page.kv")
 
@@ -28,7 +35,25 @@ class Payment(MDScreen):
             # Construct the payment URL
             payment_url = f"https://rzp_test_kOpS7Ythlfb1Ho.api.razorpay.com/v1/checkout/{order_id}"
             self.open_payment_gateway(payment_url)
-
+            self.show_validation_dialog("Payment Successful")
+            anvil.server.connect("server_UY47LMUKBDUJMU4EA3RKLXCC-LP5NLIEYMCLMZ4NU")
+            app = MDApp.get_running_app()
+            screen = app.root.get_screen('client_services')
+            email = screen.ids.email.text
+            user_name = self.ids.user_name.text
+            book_date = self.ids.session_date.text
+            book_time = self.ids.session_time.text
+            user = app_tables.users.get(email=email)
+            user_id = user['id']
+            row = app_tables.book_slot.search()
+            slot_id = len(row) + 1
+            app_tables.book_slot.add_row(
+                slot_id=slot_id,
+                user_id=user_id,
+                username=user_name,
+                book_date=book_date,
+                book_time=book_time
+            )
         except Exception as e:
             print("An error occurred while creating the order:", str(e))
 
@@ -84,3 +109,15 @@ class Payment(MDScreen):
     #
     # def on_payment_success(self, payment):
     #     self.label.text = "Payment successful!"
+
+    def show_validation_dialog(self, message):
+        # Create the dialog asynchronously
+        Clock.schedule_once(lambda dt: self._create_dialog(message), 0)
+
+    def _create_dialog(self, message):
+        dialog = MDDialog(
+            text=f"{message}",
+            elevation=0,
+            buttons=[MDFlatButton(text="OK", on_release=lambda x: dialog.dismiss())],
+        )
+        dialog.open()
