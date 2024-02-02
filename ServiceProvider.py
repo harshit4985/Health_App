@@ -1,4 +1,6 @@
 import re
+import sqlite3
+
 # from android.permissions import request_permissions, Permission
 from anvil import BlobMedia
 from anvil.tables import app_tables
@@ -25,11 +27,62 @@ from kivymd.uix.scrollview import MDScrollView
 
 Builder.load_file('service_register.kv')
 Builder.load_file('content_class.kv')
+conn = sqlite3.connect("user.db")
+cursor = conn.cursor()
+
+# Creating the hospital_table
+cursor.execute('''
+    CREATE TABLE IF NOT EXISTS hospital_table (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        hospital_name TEXT,
+        established_year TEXT,
+        District TEXT,
+        State TEXT,
+        pincode TEXT,
+        address TEXT,
+        doc1 BLOB,
+        doc2 BLOB
+    )
+''')
+
+# Creating the mobile_hospital_table
+cursor.execute('''
+    CREATE TABLE IF NOT EXISTS mobile_hospital_table (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        vehicle_no TEXT,
+        model_year TEXT,
+        District TEXT,
+        State TEXT,
+        pincode TEXT,
+        address TEXT,
+        doc1 BLOB,
+        doc2 BLOB
+    )
+''')
+
+# Creating the oxi_gym_table
+cursor.execute('''
+    CREATE TABLE IF NOT EXISTS oxi_gym_table (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        oxi_gym_name TEXT,
+        established_year TEXT,
+        District TEXT,
+        State TEXT,
+        pincode TEXT,
+        address TEXT,
+        doc1 BLOB,
+        doc2 BLOB
+    )
+''')
+
+conn.commit()
+conn.close()
 
 
 class BaseRegistrationScreen(MDScrollView):
     def request_permissions(self):
         request_permissions([Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE])
+
     def show_date_picker(self, arg):
         date_dialog = MDDatePicker(size_hint=(None, None), size=(150, 150))
         date_dialog.bind(on_save=self.on_save, on_cancel=self.on_cancel)
@@ -52,7 +105,7 @@ class BaseRegistrationScreen(MDScrollView):
         self.file_manager = MDFileManager(
             exit_manager=self.exit_manager,
             select_path=self.select_path,
-            use_saf=True,
+            # use_saf=True,
 
         )
         self.file_manager.show('/')  # Initial directory when the file manager is opened
@@ -86,10 +139,12 @@ class BaseRegistrationScreen(MDScrollView):
                     self.file_data1 = file_data
                     self.file_name1 = file_name
                     self.field_id = None
+                    print(self.file_data1)
                 elif upload_id == "file_path2":
                     self.file_data2 = file_data
                     self.file_name2 = file_name
                     self.field_id = None
+                    print(self.file_data2)
         except:
             msg = "Please select a file."
             setattr(self.field_id, 'text', msg)
@@ -121,7 +176,7 @@ class BaseRegistrationScreen(MDScrollView):
     #     )
     #     dialog.open()
 
-    def validate_content(self):
+    def validate_content(self, tablename):
         extra_info = self.ids.extra_info.text
         extra_info2 = self.ids.extra_info2.text
         District = self.ids.District.text
@@ -152,13 +207,64 @@ class BaseRegistrationScreen(MDScrollView):
             self.ids.address.helper_text = "This field is required."
             self.ids.address.required = True
         else:
-            return True
-            # self.ids.address.text = ""
-            # self.ids.District.text = ""
-            # self.ids.State.text = ""
-            # self.ids.pincode.text = ""
-            # self.ids.extra_info.text = ""
-            # self.ids.extra_info2.text = ""
+            print('validation success')
+            self.ids.address.text = ""
+            self.ids.District.text = ""
+            self.ids.State.text = ""
+            self.ids.pincode.text = ""
+            self.ids.extra_info.text = ""
+            self.ids.extra_info2.text = ""
+            print(extra_info)
+            print(extra_info2)
+            print(State)
+            print(District)
+            print(pincode)
+            print(address)
+            print(self.file_data1)
+            print(self.file_data2)
+            if tablename == 'hospital':
+                print('HospitalContent')
+                conn = sqlite3.connect("user.db")
+                cursor = conn.cursor()
+                # Inserting data into the specified table
+                cursor.execute(f''' INSERT INTO hospital_table (hospital_name ,established_year , District, State, 
+                pincode, address, doc1, doc2) VALUES (?, ?, ?, ?, ?, ?, ?, ?) ''', (extra_info, extra_info2, District,
+                                                                                    State, pincode, address,
+                                                                                    self.file_data1,
+                                                                                    self.file_data2))
+
+                conn.commit()
+                conn.close()
+                return True
+            elif tablename == 'mobile_hospital':
+                print('MobileCareContent')
+                conn = sqlite3.connect("user.db")
+                cursor = conn.cursor()
+                # Inserting data into the specified table
+                cursor.execute(f'''
+                        INSERT INTO mobile_hospital_table (vehicle_no, model_year, District, State, pincode, address, doc1, doc2)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                    ''', (extra_info, extra_info2, District, State, pincode, address, self.file_data1,
+                          self.file_data2))
+
+                conn.commit()
+                conn.close()
+                return True
+
+            elif tablename == 'oxi_gym':
+                print('GymContent')
+                conn = sqlite3.connect("user.db")
+                cursor = conn.cursor()
+                # Inserting data into the specified table
+                cursor.execute(f'''
+                        INSERT INTO oxi_gym_table (oxi_gym_name ,established_year , District, State, pincode, address, doc1, doc2)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                    ''', (extra_info, extra_info2, District, State, pincode, address, self.file_data1,
+                          self.file_data2))
+
+                conn.commit()
+                conn.close()
+                return True
 
 
 # -----------------service-register-form----------------------
@@ -183,21 +289,32 @@ class ServiceRegisterForm(MDScreen):
         else:
             print(f"Selected service provider type: {checkbox_value}")
 
-    def show_branch_dialog(self, content_type):
+    def show_branch_dialog(self, content_type, list_button):
 
-        global content_cls
+        global content_cls, title
         if content_type == 'Hospital':
             content_cls = HospitalContent()
-        elif content_type == 'MobileCare':
+            title = f'Add {content_type}'
+        elif content_type == 'Mobile-Hospital':
             content_cls = MobileCareContent()
+            title = f'Add {content_type}'
         elif content_type == 'Oxi-Gym':
             content_cls = GymContent()
-        elif content_type == 'Hospital_List':
+            title = f'Add {content_type}'
+        elif content_type == 'Hospital List':
             content_cls = HospitalList()
+            title = content_type
+        elif content_type == 'Mobile-Hospital List':
+            content_cls = HospitalList()
+            title = content_type
+        elif content_type == 'Oxi-Gym List':
+            content_cls = HospitalList()
+            title = content_type
         self.dialog = MDDialog(
-            title=f'Add {content_type}',
+            title=title,
             type="custom",
             content_cls=content_cls,
+            padding='0dp',
             buttons=[
                 MDFlatButton(
                     text="CANCEL",
@@ -207,7 +324,7 @@ class ServiceRegisterForm(MDScreen):
                 MDFlatButton(
                     text="OK",
                     theme_text_color="Custom",
-                    on_release=lambda x: self.ok_dialog(content_cls),
+                    on_release=lambda x: self.ok_dialog(content_cls, list_button),
                 ),
             ],
             auto_dismiss=False,
@@ -219,15 +336,18 @@ class ServiceRegisterForm(MDScreen):
         print("CANCEL button clicked")
         self.dialog.dismiss()
 
-    def ok_dialog(self, content_cls):
+    button = None
+
+    def ok_dialog(self, content_cls, list_button):
+        self.button = list_button
         print("OK button clicked")
         if content_cls.validate_content():
             print("successful")
             self.checkbox.disabled = True
-            self.ids.hospital_list.disabled = False
+            self.button.disabled = False
+            self.ids.hint_label.text = ""
             self.dialog.dismiss()
-        else:
-            self.dialog.dismiss()
+
     def register_validation(self):
         service_provider_name = self.ids.service_provider_name.text
         service_provider_email = self.ids.service_provider_email.text
@@ -235,7 +355,7 @@ class ServiceRegisterForm(MDScreen):
         service_provider_phoneno = self.ids.service_provider_phoneno.text
         service_provider_address = self.ids.service_provider_address.text
         hospital_manager = self.ids.hospital_manager
-        mobile_care_manager = self.ids.mobile_care_manager
+        mobile_hospital_manager = self.ids.mobile_hospital_manager
         oxigym_manager = self.ids.oxigym_manager
         # Validation logic
         email_regex = r'^[\w\.-]+@[\w\.-]+\.\w+$'
@@ -261,9 +381,9 @@ class ServiceRegisterForm(MDScreen):
             self.ids.service_provider_address.error = True
             self.ids.service_provider_address.helper_text = "This field is required."
             self.ids.service_provider_address.required = True
-        elif not hospital_manager.active or mobile_care_manager.active or oxigym_manager.active:
+        elif not (hospital_manager.active or mobile_hospital_manager.active or oxigym_manager.active):
             self.ids.hint_label.text = "Please select at least one checkbox"
-        elif not hospital_manager.disabled or mobile_care_manager.disabled or oxigym_manager.disabled:
+        elif not (hospital_manager.disabled or mobile_hospital_manager.disabled or oxigym_manager.disabled):
             self.ids.hint_label.text = "Please add values"
         else:
             app = MDApp.get_running_app()
@@ -275,7 +395,7 @@ class ServiceRegisterForm(MDScreen):
             self.ids.service_provider_phoneno.text = ""
             self.ids.service_provider_address.text = ''
             self.ids.hospital_manager.active = False
-            self.ids.mobile_care_manager.active = False
+            self.ids.mobile_hospital_manager.active = False
             self.ids.oxigym_manager.active = False
             self.ids.hint_label.text = ""
 
@@ -317,6 +437,9 @@ class HospitalContent(BaseRegistrationScreen):
         self.size_hint_y = None
         self.height = "300dp"
 
+    def validate_content(self):
+        return super().validate_content(tablename='hospital')
+
 
 class MobileCareContent(BaseRegistrationScreen):
     def __init__(self, **kwargs):
@@ -324,6 +447,9 @@ class MobileCareContent(BaseRegistrationScreen):
         self.orientation = "vertical"
         self.size_hint_y = None
         self.height = "300dp"
+
+    def validate_content(self):
+        return super().validate_content(tablename='mobile_hospital')
 
 
 class GymContent(BaseRegistrationScreen):
@@ -333,42 +459,49 @@ class GymContent(BaseRegistrationScreen):
         self.size_hint_y = None
         self.height = "300dp"
 
+    def validate_content(self):
+        return super().validate_content(tablename='oxi_gym')
+
+
 class HospitalList(MDScrollView):
     def __init__(self, **kwargs):
         super(HospitalList, self).__init__(**kwargs)
         self.orientation = "vertical"
         self.size_hint_y = None
-        self.height = "300dp"
+        self.height = "400dp"
+        # self.size_hint_x=None
+        # self.width="280dp"
+        initial_data = self.fetch_initial_data()
         self.data_tables = MDDataTable(
-            pos_hint={"center_y": 0.5, "center_x": 0.5},
-            size_hint=(1, 1),
+            pos_hint={"center_y": 0.6, "center_x": 0.5},
+            size_hint=(1, 0.7),
             use_pagination=True,
+            elevation=0,
+            padding='0dp',
             check=True,
             column_data=[
-                ("No.", dp(30)),
                 ("Hospital Name", dp(40)),
                 ("City", dp(40)),
 
             ],
-            row_data=[("1", "A1", "Bangalore", )],
+            row_data=initial_data,
         )
 
         # Creating control buttons.
         button_box = MDBoxLayout(
-            pos_hint={"center_x": 0.5},
+            pos_hint={"center_x": .1},
             adaptive_size=True,
-            padding="24dp",
-            spacing="24dp",
+            # padding="24dp",
+            # spacing="24dp",
         )
 
-        for button_text in ["Add Slot", "Delete Checked Slots"]:
-            button_box.add_widget(
-                MDRaisedButton(
-                    text=button_text, on_release=self.on_button_press
-                )
+        button_box.add_widget(
+            MDFlatButton(
+                text='Delete', on_release=self.on_button_press
             )
+        )
 
-        layout = MDScreen()  # root layout
+        layout = MDFloatLayout(size_hint=(1, 1))  # root layout
         layout.add_widget(self.data_tables)
         layout.add_widget(button_box)
         self.add_widget(layout)
@@ -376,29 +509,48 @@ class HospitalList(MDScrollView):
     def on_button_press(self, instance_button):
         try:
             {
-                "Add Slot": self.add_row,
-                "Delete Checked Slots": self.delete_checked_rows,
+                "Delete": self.delete_checked_rows,
             }[instance_button.text]()
         except KeyError:
             pass
 
-    def add_row(self):
-        last_num_row = int(self.data_tables.row_data[-1][0])
-        new_row_data = (
-            str(last_num_row + 1),
-            "C1",
-            "Belagavi",
+    def fetch_initial_data(self):
+        # Connect to your database and fetch data
+        # Replace this with your actual database connection and query logic
+        connection = sqlite3.connect('user.db')
+        cursor = connection.cursor()
 
-        )
-        self.data_tables.row_data.append(list(new_row_data))
+        # Example query: Fetch all rows from the database
+        cursor.execute("SELECT hospital_name, District FROM hospital_table")
+        db_row_data = cursor.fetchall()
+
+        connection.close()
+
+        return [list(map(str, row)) for row in db_row_data]
 
     def delete_checked_rows(self):
         def deselect_rows(*args):
             self.data_tables.table_data.select_all("normal")
 
         checked_rows = self.data_tables.get_row_checks()
+
+        # Connect to the database and delete selected rows
+        connection = sqlite3.connect('user.db')
+        cursor = connection.cursor()
+
+        for checked_row in checked_rows:
+            hospital_name = checked_row[0]  # Assuming hospital_name is the first column
+            cursor.execute("DELETE FROM hospital_table WHERE hospital_name=?", (hospital_name,))
+
+        connection.commit()
+        connection.close()
+
+        # Remove the deleted rows from the data_tables
         for checked_row in checked_rows:
             if checked_row in self.data_tables.row_data:
                 self.data_tables.row_data.remove(checked_row)
 
         Clock.schedule_once(deselect_rows)
+
+    def validate_content(self):
+        return True
