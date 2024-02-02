@@ -105,6 +105,9 @@
             color: rgba(250, 87, 87, 255)
             font_size: "12sp"
             font_name:"Roboto"
+            on_release:
+                root.manager.transition.direction = "left"
+                root.manager.current = "forgot_password"
         MDLabel:
             text: "or"
             color: rgba(74, 73, 73, 255)

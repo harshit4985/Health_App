@@ -1,17 +1,12 @@
-import base64
-import json
-import re
-import webbrowser
-from kivymd.uix.navigationdrawer import MDNavigationLayout
+from kivy.clock import Clock
+from kivymd.uix.label import MDLabel
+from kivymd.uix.spinner import MDSpinner
+
 from ServiceProviderMainPage import ServiceProviderMain, ServiceProfile, ServiceNotification, ServiceSlotAdding, \
     ServiceSupport
-from signup_login import Signup, Login
-from ServiceProvider import ServiceRegisterForm
-from slot_booking import Slot_Booking
-from kivymd.uix.navigationdrawer import MDNavigationLayout
 from kivymd.uix.screen import MDScreen
 
-from signup_login import Signup, Login
+from signup_login import Signup, Login, Forgot_password
 from ServiceProvider import ServiceRegisterForm
 from slot_booking import Slot_Booking
 from support_page import Support_page
@@ -116,15 +111,27 @@ class ProfileCard(MDFloatLayout, FakeRectangularElevationBehavior):
 class NavigationDrawerScreen(MDScreen):
     pass
 
+
+class MDSpinnerDoubleRing:
+    pass
+
+
+class LoadingScreen(Screen):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.add_widget(MDSpinner(size_hint=(None, None), size=(48, 48), pos_hint={'center_x': 0.5, 'center_y': 0.5}))
 # Create the main app class
 class LoginApp(MDApp):
-
     def build(self):
+        self.icon = "images/shot.png"
+        self.theme_cls.theme_style = "Light"
         screen_manager = ScreenManager()
-
+        loading_screen = LoadingScreen(name="loading")
+        screen_manager.add_widget(loading_screen)
         screen_manager.add_widget(Builder.load_file("main_sc.kv"))
         screen_manager.add_widget(Login("login"))
         screen_manager.add_widget(Signup("signup"))
+        screen_manager.add_widget(Forgot_password("forgot_password"))
         screen_manager.add_widget(Client_services("client_services"))
         screen_manager.add_widget(Location("client_services1"))
         screen_manager.add_widget(Profile("menu_profile"))
@@ -151,12 +158,15 @@ class LoginApp(MDApp):
         # Create the OpenGL screen and add it to the ScreenManager
         opengl_screen = OpenGLScreen(name="opengl_screen")
         screen_manager.add_widget(opengl_screen)
+        Clock.schedule_once(self.switch_to_main_screen, 3)
 
         return screen_manager
-    def client_services1(self):
-        self.root.transition.direction = 'left'
-        self.root.current = 'client_services1'
 
+    def switch_to_main_screen(self, dt):
+        self.root.current = "main_screen"
+    def client_services1(self):
+        self.root.transition = SlideTransition(direction='left')
+        self.root.current = 'client_services1'
 
     def registration_submit(self):
         self.screen = Builder.load_file("service_register_form.kv")
@@ -183,7 +193,6 @@ class LoginApp(MDApp):
         conn.commit()
         self.root.transition = SlideTransition(direction='right')
         self.root.current = 'slot_booking'
-
 
 
 # Run the app

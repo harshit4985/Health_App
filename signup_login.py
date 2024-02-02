@@ -3,6 +3,7 @@ import re
 import anvil
 import requests
 from anvil.tables import app_tables
+from kivy.clock import Clock
 from kivy.lang import Builder
 from kivy.uix.screenmanager import SlideTransition
 from kivymd.app import MDApp
@@ -12,6 +13,7 @@ from kivymd.uix.screen import MDScreen
 
 Builder.load_file("signup.kv")
 Builder.load_file("login.kv")
+Builder.load_file("forgot_password.kv")
 
 class Connection:
     def is_connected(self):
@@ -26,10 +28,21 @@ class Connection:
     def get_database_connection(self):
         if self.is_connected():
             # Use Anvil's database connection
-            return anvil.server.connect("server_5A3KARKYEQYWILR6V65KWJU2-YRPGRW5ZQBBQXWYJ")
+            return anvil.server.connect("server_UY47LMUKBDUJMU4EA3RKLXCC-LP5NLIEYMCLMZ4NU")
         else:
             # Use SQLite database connection
             return sqlite3.connect('users.db')
+    def show_validation_dialog(self, message):
+        # Create the dialog asynchronously
+        Clock.schedule_once(lambda dt: self._create_dialog(message), 0)
+
+    def _create_dialog(self, message):
+        dialog = MDDialog(
+            text=f"{message}",
+            elevation=0,
+            buttons=[MDFlatButton(text="OK", on_release=lambda x: dialog.dismiss())],
+        )
+        dialog.open()
 
     # def google_sign_in(self):
     #     # Set up the OAuth 2.0 client ID and client secret obtained from the Google Cloud Console
@@ -140,7 +153,7 @@ class Signup(MDScreen,Connection):
             # If validation is successful, insert into the database
             try:
                 if self.is_connected():
-                    anvil.server.connect("server_5A3KARKYEQYWILR6V65KWJU2-YRPGRW5ZQBBQXWYJ")
+                    anvil.server.connect("server_UY47LMUKBDUJMU4EA3RKLXCC-LP5NLIEYMCLMZ4NU")
                     rows = app_tables.users.search()
                     # Get the number of rows
                     id = len(rows) + 1
@@ -257,4 +270,7 @@ class Login(MDScreen, Connection):
             self.ids.login_email.error = True
             self.ids.login_email.helper_text = "Invalid email or password"
             self.ids.login_password.error = True
+
+class Forgot_password(MDScreen):
+    pass
 
