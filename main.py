@@ -1,17 +1,15 @@
-import base64
-import json
-import re
-import webbrowser
-from kivymd.uix.navigationdrawer import MDNavigationLayout
+import anvil
+from anvil import Timer
+from kivy.clock import Clock
+from kivymd.uix.dialog import MDDialog
+from kivymd.uix.label import MDLabel
+from kivymd.uix.spinner import MDSpinner
+
 from ServiceProviderMainPage import ServiceProviderMain, ServiceProfile, ServiceNotification, ServiceSlotAdding, \
     ServiceSupport
-from signup_login import Signup, Login
-from ServiceProvider import ServiceRegisterForm
-from slot_booking import Slot_Booking
-from kivymd.uix.navigationdrawer import MDNavigationLayout
 from kivymd.uix.screen import MDScreen
 
-from signup_login import Signup, Login
+from signup_login import Signup, Login, Forgot_password
 from ServiceProvider import ServiceRegisterForm
 from slot_booking import Slot_Booking
 from support_page import Support_page
@@ -116,15 +114,18 @@ class ProfileCard(MDFloatLayout, FakeRectangularElevationBehavior):
 class NavigationDrawerScreen(MDScreen):
     pass
 
-# Create the main app class
 class LoginApp(MDApp):
 
     def build(self):
+        self.icon = "images/shot.png"
+        self.theme_cls.theme_style = "Light"
+        self.check_internet_status_timer = Timer(interval=5000, repeating=True, enabled=True,
+                                                 tick=self.check_internet_status)
         screen_manager = ScreenManager()
-
         screen_manager.add_widget(Builder.load_file("main_sc.kv"))
         screen_manager.add_widget(Login("login"))
         screen_manager.add_widget(Signup("signup"))
+        screen_manager.add_widget(Forgot_password("forgot_password"))
         screen_manager.add_widget(Client_services("client_services"))
         screen_manager.add_widget(Location("client_services1"))
         screen_manager.add_widget(Profile("menu_profile"))
@@ -153,10 +154,31 @@ class LoginApp(MDApp):
         screen_manager.add_widget(opengl_screen)
 
         return screen_manager
-    def client_services1(self):
-        self.root.transition.direction = 'left'
-        self.root.current = 'client_services1'
+    def check_internet_status(self, **event_args):
+        try:
+            anvil.server.call('check_internet_status')
+            # If the check is successful, update UI or enable features as needed
+        except anvil.server.AnvilWrappedError as e:
+            self.handle_network_error(e)
 
+    def handle_network_error(self, e):
+        # Handle specific errors and display appropriate messages to the user
+        self.show_validation_dialog("Network Error: Please check your internet connection.")
+
+    def show_validation_dialog(self, message):
+        # Create the dialog asynchronously
+        Clock.schedule_once(lambda dt: self._create_dialog(message), 0)
+
+    def _create_dialog(self, message):
+        dialog = MDDialog(
+            text=f"{message}",
+            elevation=0,
+        )
+        dialog.open()
+
+    def client_services1(self):
+        self.root.transition = SlideTransition(direction='left')
+        self.root.current = 'client_services1'
 
     def registration_submit(self):
         self.screen = Builder.load_file("service_register_form.kv")
@@ -183,7 +205,6 @@ class LoginApp(MDApp):
         conn.commit()
         self.root.transition = SlideTransition(direction='right')
         self.root.current = 'slot_booking'
-
 
 
 # Run the app

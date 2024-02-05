@@ -11,7 +11,7 @@
             text_color: rgba(26, 24, 58, 255)
             on_release:
                 root.manager.transition.direction = "right"
-                root.manager.current = "main"
+                root.manager.current = "main_screen"
         MDLabel:
             text: "W e l c o m e!"
             font_name: "Roboto"
@@ -105,6 +105,9 @@
             color: rgba(250, 87, 87, 255)
             font_size: "12sp"
             font_name:"Roboto"
+            on_release:
+                root.manager.transition.direction = "left"
+                root.manager.current = "forgot_password"
         MDLabel:
             text: "or"
             color: rgba(74, 73, 73, 255)

@@ -1,7 +1,6 @@
 from kivy.clock import Clock
 from kivy.lang import Builder
 from kivymd.app import MDApp
-from kivymd.uix.button import MDFlatButton
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.screen import MDScreen
 import json
@@ -42,6 +41,5 @@ class Location(MDScreen):
         dialog = MDDialog(
             text=f"{message}",
             elevation=0,
-            # buttons=[MDFlatButton(text="OK", on_release=lambda x: dialog.dismiss())],
         )
         dialog.open()

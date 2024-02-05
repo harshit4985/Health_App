@@ -12,6 +12,7 @@ from kivymd.uix.screen import MDScreen
 
 Builder.load_file("slot_booking.kv")
 
+
 class Slot_Booking(MDScreen):
     time_slots = ['9am - 11am', '11am - 1pm', '1pm - 3pm', '3pm - 5pm', '5pm - 7pm', '7pm - 9pm']
 
@@ -23,6 +24,9 @@ class Slot_Booking(MDScreen):
         for slots in Slot_Booking.time_slots:
             self.ids[slots].disabled = False
             self.ids[slots].md_bg_color = (1, 1, 1, 1)
+        if hasattr(self, 'session_time'):
+            delattr(self, 'session_time')
+        print("Back To Hospital Page")
 
     def select_timings(self, button, label_text):
         self.session_time = label_text
@@ -71,11 +75,6 @@ class Slot_Booking(MDScreen):
         app = MDApp.get_running_app()
         screen = app.root.get_screen('client_services')
         username = screen.ids.username.text
-        # email = screen.ids.email.text
-        # user = app_tables.users.get(email=email)
-        # id = user['id']
-        # row = app_tables.book_slot.search()
-        # slot_id = len(row) + 1
         if len(session_date) == 10 and hasattr(self, 'session_time') and self.session_time:
             print(username, session_date, self.session_time)
             current_screen = app.root.get_screen('payment_page')
@@ -86,10 +85,11 @@ class Slot_Booking(MDScreen):
             app.root.current = 'payment_page'
         elif len(session_date) == 13 and hasattr(self, 'session_time') and self.session_time:
             self.show_validation_dialog("Select Date")
-        elif not hasattr(self, 'session_time') and len(session_date) == 10:
+        elif hasattr(self, 'session_time') == False and len(session_date) == 10:
             self.show_validation_dialog("Select Time")
         else:
             self.show_validation_dialog("Select Date and Time")
+
     def show_validation_dialog(self, message):
         # Create the dialog asynchronously
         Clock.schedule_once(lambda dt: self._create_dialog(message), 0)
