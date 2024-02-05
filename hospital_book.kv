@@ -10,22 +10,6 @@ MDScreen:
                     MDTopAppBar:
                         md_bg_color: 1, 0, 0, 1
                         left_action_items: [["arrow-left", lambda x: app.back_button_hospital_book()]]
-
-                    BoxLayout:
-                        orientation: 'vertical'
-                        size_hint_y: None
-                        height: dp(145)
-
-                        MDSwiper:
-                            size_hint: None, None
-                            size: dp(270), dp(130)
-                            pos_hint: {"center_x": 0.5, "center_y": 0.5}
-
-                            MDSwiperItem:
-                                FitImage:
-                                    source: "images/doctor.png"
-                                    size_hint: None, None
-                                    size: dp(270), dp(130)
                     ScrollView:
                         GridLayout:
                             cols: 1
@@ -52,25 +36,6 @@ MDScreen:
                                     Line:
                                         points: self.x, self.y, self.x + self.width, self.y
                                         width: 3
-
-                            MDBoxLayout:
-                                orientation: 'horizontal'
-                                size_hint_y: None
-                                height: dp(30)
-
-                                MDIcon:
-                                    icon: "map-marker"
-                                    theme_text_color: "Custom"
-                                    text_color: 1, 0, 0, 1
-                                    size_hint_x: None
-                                    width: dp(24)
-
-                                MDLabel:
-                                    text: "Hospital Adresss:"
-                                    font_name: "Roboto"
-                                    theme_text_color: "Custom"
-                                    text_color: 0, 0, 0, 1
-
                             MDBoxLayout:
                                 orientation: 'horizontal'
                                 size_hint_y: None
@@ -132,26 +97,23 @@ MDScreen:
                                 orientation: 'horizontal'
                                 size_hint_y: None
                                 height: dp(30)
-                                MDLabel:
-                                    id: date_label
-                                    text: ""
 
-
-                            MDBoxLayout:
-                                orientation: 'horizontal'
-                                size_hint_y: None
-                                height: dp(30)
+                                MDIcon:
+                                    icon: "map-marker"
+                                    theme_text_color: "Custom"
+                                    text_color: 1, 0, 0, 1
+                                    size_hint_x: None
+                                    width: dp(24)
 
                                 MDLabel:
-                                    text: "Hospital \n Details \n about"
+                                    text: "Hospital Adresss:"
                                     font_name: "Roboto"
                                     theme_text_color: "Custom"
                                     text_color: 0, 0, 0, 1
-
                     Button:
                         id: book_slot
                         text: "Book Slot"
-                        size_hint_y:.15
+                        size_hint_y:.1
                         background_color: 0, 0, 0, 0
                         font_name: "Roboto"
                         bold: True
