@@ -62,46 +62,14 @@ class Slot_Booking(MDScreen):
     def slot_cancel(self, instance, value):
         print("cancel")
 
-    DATE_PICKER_SIZE = (150, 150)
-
     def slot_date_picker(self):
-        date_dialog = MDDatePicker(
-            year=datetime.now().date().year,
-            month=datetime.now().date().month,
-            day=datetime.now().date().day,
-            size_hint=(None, None),
-            size=self.DATE_PICKER_SIZE
-        )
-        date_dialog.bind(on_save=self.on_date_save, on_cancel=self.on_date_cancel)
+        current_date = datetime.now().date()
+        date_dialog = MDDatePicker(year=current_date.year, month=current_date.month, day=current_date.day,
+                                   size_hint=(None, None), size=(150, 150))
+        date_dialog.bind(on_save=self.slot_save, on_cancel=self.slot_cancel)
         date_dialog.open()
-
-    def on_date_save(self, instance, value, date_range):
-        # Handle save event here
         pass
 
-    def on_date_cancel(self, instance, value):
-        # Handle cancel event here
-        pass
-
-    # date_picker_initialized = False
-    # def initialize_date_picker(self, dt):
-    #     if not self.date_picker_initialized:
-    #         current_date = datetime.now().date()
-    #         self.date_dialog = MDDatePicker(
-    #             year=current_date.year,
-    #             month=current_date.month,
-    #             day=current_date.day,
-    #             size_hint=(None, None),
-    #             size=(150, 150)
-    #         )
-    #         self.date_dialog.bind(on_save=self.slot_save, on_cancel=self.slot_cancel)
-    #         self.date_picker_initialized = True
-    #
-    # def slot_date_picker(self):
-    #     # Schedule the initialization of the date picker with a slight delay
-    #     Clock.schedule_once(self.initialize_date_picker, 0.1)
-    #     # Open the date picker
-    #     Clock.schedule_once(lambda dt: self.date_dialog.open(), 0.2)
 
     def pay_now(self, instance, *args):
         session_date = self.ids.date_choosed.text
