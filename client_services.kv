@@ -31,17 +31,17 @@
 
                                 MDCard:
                                     orientation: 'horizontal'
-                                    size_hint: None, None
-                                    size: "380dp", "180dp"
+                                    size_hint: (1, 1)
                                     elevation: 2
                                     pos_hint: {"center_x": 0.5, "center_y": 0.5}
                                     BoxLayout:
                                         orientation: 'vertical'
-                                        size_hint_x: 0.5
+                                        size_hint: (0.5, 1)
+                                        padding: dp(2)
                                         AsyncImage:
                                             id: organization_image
                                             source: 'images/hospital.png'
-                                            size_hint: (0.8, 0.8)
+                                            size_hint: (1, 1)
                                             pos_hint: {'center_x': 0.5, 'center_y': 0.5}
 
                                     BoxLayout:

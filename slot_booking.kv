@@ -11,8 +11,6 @@
             text_color: rgba(71, 92, 119, 255)
             on_release:
                 root.slot_booking_back_button(self)
-#                root.manager.transition.direction = "right"
-#                root.manager.current = "hospital_book"
 
         ScrollView:
             GridLayout:
@@ -31,6 +29,7 @@
                         orientation: 'vertical'
                         size_hint: None, None
                         size: "280dp", "60dp"
+                        size_hint: (1, 1)
                         elevation: 2
                         pos_hint: {"center_x": 0.5, "center_y": 0.5}
                         canvas.before:
@@ -106,24 +105,18 @@
                     orientation: 'vertical'
                     spacing: 0
                     size_hint_y: None
-                    height: dp(240)
+                    height: dp(214)
                     md_bg_color: 1, 1, 1, 1
-
-
-                    MDCard:
-                        orientation: 'vertical'
+                    BoxLayout:
                         size_hint: None, None
-                        size: "280dp", "240dp"
-                        elevation: 2
-                        spacing: 5
-                        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                        size: dp(230), dp(214)
+                        pos_hint: {"center_x": 0.5, "center_y": 1}
+
                         GridLayout:
                             cols: 2
-                            spacing: dp(10)
-                            padding: dp(25)
+                            spacing: dp(20)
                             size_hint_y: None
-                            pos_hint: {"center_x":0.5}
-
+                            pos_hint: {"center_x": 0.5, "x": 0}
                             height: self.minimum_height
 
                             MDFlatButton:
