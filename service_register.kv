@@ -168,14 +168,14 @@
                             font_size:'16sp'
                             font_name: "Roboto"
                         MDTextButton:
-                            id:hospital_list
+                            id:hospital_list_button
                             text:'View'
                             font_size:'14sp'
                             font_name: "Roboto"
                             pos_hint: { 'center_y': .5}
                             color:1, 0, 0, 1
-#                            disabled: True
-                            on_release:root.show_branch_dialog('Hospital_List')
+                            disabled: True
+                            on_release:root.show_branch_dialog('Hospital List',add_hospital_button)
 
 
                         MDTextButton:
@@ -185,15 +185,8 @@
                             font_name: "Roboto"
                             pos_hint: { 'center_y': .5}
                             color:1, 0, 0, 1
-#                            icon: "plus"
-#                            type:'small'
-#                            md_bg_color: 1, 0, 0, 1
-#                            pos_hint: { 'center_y': .5}
-#                            size_hint: None, None
-#                            size: dp(20), dp(20)
-#                            icon_size:'16sp'
                             disabled: True  # Initially disabled
-                            on_release:root.show_branch_dialog('Hospital')
+                            on_release:root.show_branch_dialog('Hospital',hospital_list_button)
 
                     BoxLayout:
                         orientation: 'horizontal'
@@ -201,56 +194,82 @@
                         pos_hint:{'center_x':.5}
                         size_hint:.9,None
                         height: "60dp"
+                        spacing:dp(10)
                         MDCheckbox:
-                            id:mobile_care_manager
+                            id:mobile_hospital_manager
                             size_hint: None, None
                             size: dp(48), dp(48)
                             color_active: "red"
                             pos_hint: { 'center_y': .5}
-                            on_active: root.on_checkbox_active(mobile_care_manager,'Mobile-Hospital',add_mobileCare_button)
+                            on_active: root.on_checkbox_active(mobile_hospital_manager,'Mobile-Hospital',add_mobile_hospital_button)
                         MDLabel:
                             text: 'Mobile-Hospital'
                             font_size:'16sp'
                             font_name: "Roboto"
-                        MDIconButton:
-                            id: add_mobileCare_button
-                            icon: "plus"
-                            type:'small'
-                            md_bg_color: 1, 0, 0, 1
+
+                        MDTextButton:
+                            id:mobile_hospital_list_button
+                            text:'View'
+                            font_size:'14sp'
+                            font_name: "Roboto"
                             pos_hint: { 'center_y': .5}
-                            disabled: True  # Initially disabled
-                            size_hint: None, None
-                            size: dp(48), dp(48)
-                            icon_size:'16sp'
-                            on_release:root.show_branch_dialog('MobileCare')
+                            color:1, 0, 0, 1
+                            #disabled: True
+                            on_release:root.show_branch_dialog('Mobile-Hospital List',add_mobile_hospital_button)
+
+                        MDTextButton:
+                            id: add_mobile_hospital_button
+                            text:'Add'
+                            font_size:'14sp'
+                            font_name: "Roboto"
+                            pos_hint: { 'center_y': .5}
+                            color:1, 0, 0, 1
+                            disabled: True
+#                            icon: "plus"
+#                            type:'small'
+#                            md_bg_color: 1, 0, 0, 1
+#                            pos_hint: { 'center_y': .5}
+#                            disabled: True  # Initially disabled
+#                            size_hint: None, None
+#                            size: dp(48), dp(48)
+#                            icon_size:'16sp'
+                            on_release:root.show_branch_dialog('Mobile-Hospital',mobile_hospital_list_button)
                     BoxLayout:
                         orientation: 'horizontal'
                         font_name: "Roboto"
                         pos_hint:{'center_x':.5}
                         size_hint:.9,None
                         height: "60dp"
+                        spacing:dp(10)
                         MDCheckbox:
                             id:oxigym_manager
                             size_hint: None, None
                             size: dp(48), dp(48)
                             color_active: "red"
                             pos_hint: { 'center_y': .5}
-                            on_active: root.on_checkbox_active(oxigym_manager,'Oxi-Gym',add_gym_button)
+                            on_active: root.on_checkbox_active(oxigym_manager,'Oxi-Gym',add_oxigym_button)
                         MDLabel:
                             text: 'Oxi-Gym'
                             font_size:'16sp'
                             font_name: "Roboto"
-                        MDIconButton:
-                            id: add_gym_button
-                            icon: "plus"
-                            type:'small'
-                            md_bg_color: 1, 0, 0, 1
+                        MDTextButton:
+                            id:oxigym_list_button
+                            text:'View'
+                            font_size:'14sp'
+                            font_name: "Roboto"
                             pos_hint: { 'center_y': .5}
-                            disabled: True  # Initially disabled
-                            size_hint: None, None
-                            size: dp(48), dp(48)
-                            icon_size:'16sp'
-                            on_release:root.show_branch_dialog('Oxi-Gym')
+                            color:1, 0, 0, 1
+                            disabled: True
+                            on_release:root.show_branch_dialog('Oxi-Gym List',add_oxigym_button)
+                        MDTextButton:
+                            id: add_oxigym_button
+                            text:'Add'
+                            font_size:'14sp'
+                            font_name: "Roboto"
+                            pos_hint: { 'center_y': .5}
+                            color:1, 0, 0, 1
+                            disabled: True
+                            on_release:root.show_branch_dialog('Oxi-Gym',oxigym_list_button)
                     MDLabel:
                         id:hint_label
                         text: ''
@@ -268,182 +287,7 @@
                         HorizontalLineWidget:
                             size_hint:.9,None
                             pos_hint:{'center_y':.5}
-#                    BoxLayout:
-#                        orientation: 'horizontal'
-#                        font_name: "Roboto"
-#                        pos_hint:{'center_x':.5}
-#                        size_hint:.9,None
-#                        height: "15dp"
-#                        MDLabel:
-#                            pos_hint:{'center_x':.5}
-#                            text: 'Do you have Hospitals?'
-#                            font_size:'16sp'
-#                            font_name: "Roboto"
-#                    BoxLayout:
-#                        orientation: 'horizontal'
-#                        font_name: "Roboto"
-#                        pos_hint:{'center_x':.5}
-#                        size_hint:.9,None
-#                        height: "30dp"
-#                        MDCheckbox:
-#                            id:hospital_yes
-#                            group: 'branches'
-#                            disabled:False
-#                            size_hint: None, None
-#                            size: dp(48), dp(48)
-#                            pos_hint: {'center_x': .4, 'center_y': .5}
-#                            on_active: root.on_checkbox_active(hospital_yes,'hospital_yes',add_hospital_button)
 #
-#                        MDLabel:
-#                            text: 'Yes'
-#                            font_size:'14sp'
-#                            font_name: "Roboto"
-#
-#                        MDCheckbox:
-#                            id:hospital_no
-#                            disabled:False
-#                            group: 'branches'
-#                            size_hint: None, None
-#                            size: dp(48), dp(48)
-#                            pos_hint: {'center_x': .6, 'center_y': .5}
-#                            on_active: root.on_checkbox_active(hospital_no,'hospital_no',add_hospital_button)
-#                        MDLabel:
-#                            text: 'No'
-#                            font_size:'14sp'
-#                            font_name: "Roboto"
-#
-#                        MDFloatingActionButton:
-#                            id: add_hospital_button
-#                            icon: "plus"
-#                            text:'ADD'
-#                            md_bg_color: app.theme_cls.primary_color
-#                            pos_hint: {'center_x': .5}
-#                            disabled: True  # Initially disabled
-#                            size_hint:None,.5
-#                            icon_size:'16sp'
-#                            on_release:root.show_branch_dialog('Hospital')
-#                    BoxLayout:
-#                        orientation: 'horizontal'
-#                        font_name: "Roboto"
-#                        pos_hint:{'center_x':.5}
-#                        size_hint:.9,None
-#                        height: "20dp"
-#                        HorizontalLineWidget:
-#                            size_hint:.9,None
-#                            pos_hint:{'center_y':.5}
-#                    BoxLayout:
-#                        orientation: 'horizontal'
-#                        font_name: "Roboto"
-#                        pos_hint:{'center_x':.5}
-#                        size_hint:.9,None
-#                        height: "10dp"
-#                        MDLabel:
-#                            pos_hint:{'center_x':.5}
-#                            text: 'Do you have MobileCare?'
-#                            font_size:'16sp'
-#                            font_name: "Roboto"
-#                    BoxLayout:
-#                        orientation: 'horizontal'
-#                        font_name: "Roboto"
-#                        pos_hint:{'center_x':.5}
-#                        size_hint:.9,None
-#                        height: "30dp"
-#                        MDCheckbox:
-#                            id:mobileCare_yes
-#                            group: 'MobileCare'
-#                            size_hint: None, None
-#                            size: dp(48), dp(48)
-#                            pos_hint: {'center_x': .4, 'center_y': .5}
-#                            on_active: root.on_checkbox_active(mobileCare_yes,'mobileCare_yes',add_mobileCare_button)
-#
-#                        MDLabel:
-#                            text: 'Yes'
-#                            font_size:'14sp'
-#                            font_name: "Roboto"
-#
-#                        MDCheckbox:
-#                            id:mobileCare_no
-#                            group: 'MobileCare'
-#                            size_hint: None, None
-#                            size: dp(48), dp(48)
-#                            pos_hint: {'center_x': .6, 'center_y': .5}
-#                            on_active: root.on_checkbox_active(mobileCare_no,'mobileCare_no',add_mobileCare_button)
-#                        MDLabel:
-#                            text: 'No'
-#                            font_size:'14sp'
-#                            font_name: "Roboto"
-#
-#                        MDFloatingActionButton:
-#                            id: add_mobileCare_button
-#                            icon: "plus"
-#                            text:'ADD'
-#                            md_bg_color: app.theme_cls.primary_color
-#                            pos_hint: {'center_x': .5}
-#                            disabled: True  # Initially disabled
-#                            size_hint:None,.5
-#                            icon_size:'16sp'
-#                            on_release:root.show_branch_dialog('MobileCare')
-#                    BoxLayout:
-#                        orientation: 'horizontal'
-#                        font_name: "Roboto"
-#                        pos_hint:{'center_x':.5}
-#                        size_hint:.9,None
-#                        height: "20dp"
-#                        HorizontalLineWidget:
-#                            size_hint:.9,None
-#                            pos_hint:{'center_y':.5}
-#                    BoxLayout:
-#                        orientation: 'horizontal'
-#                        font_name: "Roboto"
-#                        pos_hint:{'center_x':.5}
-#                        size_hint:.9,None
-#                        height: "10dp"
-#                        MDLabel:
-#                            pos_hint:{'center_x':.5}
-#                            text: 'Do you have Oxivive Gym?'
-#                            font_size:'16sp'
-#                            font_name: "Roboto"
-#                    BoxLayout:
-#                        orientation: 'horizontal'
-#                        font_name: "Roboto"
-#                        pos_hint:{'center_x':.5}
-#                        size_hint:.9,None
-#                        height: "30dp"
-#                        MDCheckbox:
-#                            id:gym_yes
-#                            group: 'Gym'
-#                            size_hint: None, None
-#                            size: dp(48), dp(48)
-#                            pos_hint: {'center_x': .4, 'center_y': .5}
-#                            on_active: root.on_checkbox_active(gym_yes,'gym_yes',add_gym_button)
-#
-#                        MDLabel:
-#                            text: 'Yes'
-#                            font_size:'14sp'
-#                            font_name: "Roboto"
-#
-#                        MDCheckbox:
-#                            id:gym_no
-#                            group: 'Gym'
-#                            size_hint: None, None
-#                            size: dp(48), dp(48)
-#                            pos_hint: {'center_x': .6, 'center_y': .5}
-#                            on_active: root.on_checkbox_active(gym_no,'gym_no',add_gym_button)
-#                        MDLabel:
-#                            text: 'No'
-#                            font_size:'14sp'
-#                            font_name: "Roboto"
-#
-#                        MDFloatingActionButton:
-#                            id: add_gym_button
-#                            icon: "plus"
-#                            text:'ADD'
-#                            md_bg_color: app.theme_cls.primary_color
-#                            pos_hint: {'center_x': .5}
-#                            disabled: True  # Initially disabled
-#                            size_hint:None,.5
-#                            icon_size:'16sp'
-#                            on_release:root.show_branch_dialog('Gym')
                     BoxLayout:
                         orientation: 'vertical'
                         size_hint_y: None

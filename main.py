@@ -2,8 +2,6 @@ import anvil
 from anvil import Timer
 from kivy.clock import Clock
 from kivymd.uix.dialog import MDDialog
-from kivymd.uix.label import MDLabel
-from kivymd.uix.spinner import MDSpinner
 
 from ServiceProviderMainPage import ServiceProviderMain, ServiceProfile, ServiceNotification, ServiceSlotAdding, \
     ServiceSupport
@@ -25,7 +23,7 @@ from kivymd.app import MDApp
 from kivy.core.window import Window
 from kivy.uix.screenmanager import ScreenManager, SlideTransition, Screen
 from kivy.core.text import LabelBase
-from kivymd.uix.behaviors import FakeRectangularElevationBehavior
+from kivymd.uix.behaviors import FakeRectangularElevationBehavior, CommonElevationBehavior
 
 # from kivy.uix.webview import WebView
 # from google_auth_oauthlib.flow import InstalledAppFlow
@@ -36,7 +34,6 @@ import razorpay
 # from crosswalk import WebView
 import sqlite3
 from kivymd.uix.floatlayout import MDFloatLayout
-
 
 Window.size = (320, 580)
 
@@ -67,52 +64,14 @@ cursor.execute('''
 ''')
 
 conn.commit()
-class OpenGLScreen(Screen):
-    def __init__(self, **kwargs):
-        super(OpenGLScreen, self).__init__(**kwargs)
-        self.opengl_widget = OpenGLWidget()
-        self.add_widget(self.opengl_widget)
 
-class OpenGLWidget(Widget):
-    def __init__(self, **kwargs):
-        super(OpenGLWidget, self).__init__(**kwargs)
-        self.vertices = []
-        self.indices = []
-        self.angle = 0
-        self.create_square()
-
-    def create_square(self):
-        # Define square vertices
-        self.vertices = [
-            -50, -50, 0, 1, 0, 0, 1,  # Vertex 1 (x, y, z, r, g, b, a)
-            50, -50, 0, 0, 1, 0, 1,   # Vertex 2
-            50, 50, 0, 0, 0, 1, 1,    # Vertex 3
-            -50, 50, 0, 1, 1, 0, 1    # Vertex 4
-        ]
-        # Define square indices
-        self.indices = [0, 1, 2, 2, 3, 0]
-
-    def on_size(self, instance, value):
-        self.create_square()
-    def on_touch_down(self, touch):
-        pass
-    def on_touch_move(self, touch):
-        pass
-    def on_touch_up(self, touch):
-        pass
-    def update(self, dt):
-        # Rotate the square
-        self.angle += 1
-        self.angle %= 360
-    def draw(self):
-        with self.canvas:
-            Color(1, 1, 1, 1)
-            Mesh(vertices=self.vertices, indices=self.indices, mode='triangles')
-
-class ProfileCard(MDFloatLayout, FakeRectangularElevationBehavior):
+class ProfileCard(MDFloatLayout, CommonElevationBehavior):
     pass
+
+
 class NavigationDrawerScreen(MDScreen):
     pass
+
 
 class LoginApp(MDApp):
 
@@ -122,38 +81,35 @@ class LoginApp(MDApp):
         self.check_internet_status_timer = Timer(interval=5000, repeating=True, enabled=True,
                                                  tick=self.check_internet_status)
         screen_manager = ScreenManager()
-        screen_manager.add_widget(Builder.load_file("main_sc.kv"))
-        screen_manager.add_widget(Login("login"))
-        screen_manager.add_widget(Signup("signup"))
-        screen_manager.add_widget(Forgot_password("forgot_password"))
-        screen_manager.add_widget(Client_services("client_services"))
-        screen_manager.add_widget(Location("client_services1"))
-        screen_manager.add_widget(Profile("menu_profile"))
-        screen_manager.add_widget(Notification("menu_notification"))
-        screen_manager.add_widget(Booking("menu_bookings"))
-        screen_manager.add_widget(Report("menu_reports"))
-        screen_manager.add_widget(Support_page("menu_support"))
-        screen_manager.add_widget(Builder.load_file("hospital_book.kv"))
-        screen_manager.add_widget(Slot_Booking(name="slot_booking"))
-        screen_manager.add_widget(Payment("payment_page.kv"))
-        screen_manager.add_widget(ServiceProviderMain(name="service_provider_main_page"))
-        screen_manager.add_widget(ServiceProfile(name="service_profile"))
-        screen_manager.add_widget(ServiceNotification(name="service_notification"))
-        screen_manager.add_widget(ServiceSlotAdding(name="service_slot_adding"))
-        screen_manager.add_widget(ServiceSupport(name="service_support"))
-        screen_manager.add_widget(Slot_Booking("slot_booking"))
-        screen_manager.add_widget(Payment("payment_page"))
-        # screen_manager.add_widget(ServiceProviderMain(name="service_provider_main_page"))
-        # screen_manager.add_widget(ServiceProfile(name="service_profile"))
-        # screen_manager.add_widget(ServiceNotification(name="service_notification"))
-        # screen_manager.add_widget(ServiceSlotAdding(name="service_slot_adding"))
-        # screen_manager.add_widget(ServiceSupport(name="service_support"))
-        screen_manager.add_widget(ServiceRegisterForm())
-        # Create the OpenGL screen and add it to the ScreenManager
-        opengl_screen = OpenGLScreen(name="opengl_screen")
-        screen_manager.add_widget(opengl_screen)
+        screen_widgets = [
+            Builder.load_file("main_sc.kv"),
+            Login("login"),
+            Signup("signup"),
+            Forgot_password("forgot_password"),
+            Client_services("client_services"),
+            Location("client_services1"),
+            Profile("menu_profile"),
+            Notification("menu_notification"),
+            Booking("menu_bookings"),
+            Report("menu_reports"),
+            Support_page("menu_support"),
+            Builder.load_file("hospital_book.kv"),
+            Slot_Booking(name="slot_booking"),
+            Payment("payment_page.kv"),
+            ServiceProviderMain(name="service_provider_main_page"),
+            ServiceProfile(name="service_profile"),
+            ServiceNotification(name="service_notification"),
+            ServiceSlotAdding(name="service_slot_adding"),
+            ServiceSupport(name="service_support"),
+            Slot_Booking("slot_booking"),
+            Payment("payment_page"),
+            ServiceRegisterForm(),
+        ]
+        for widget in screen_widgets:
+            screen_manager.add_widget(widget)
 
         return screen_manager
+
     def check_internet_status(self, **event_args):
         try:
             anvil.server.call('check_internet_status')
@@ -185,7 +141,6 @@ class LoginApp(MDApp):
         screen = self.root.current_screen
         username = screen.ids.name.text
         print(username)
-
 
     # hospital_Book page logic
     def back_button_hospital_book(self):

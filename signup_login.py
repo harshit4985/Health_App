@@ -278,7 +278,7 @@ class Login(MDScreen, Connection):
 
 # Your Twilio credentials
 account_sid = "AC64ab0fed3c9135f8011fb5e50f969cbe"
-auth_token = "6749dd3de2d4165a71ee9fec341ae503"
+auth_token = "325fe8524e6663d549c6bf49454809cd"
 verify_sid = "VA8937ab1f8c09c4e3842e4b32f72c8dc7"
 verified_number = "+919108340960"
 
@@ -362,7 +362,8 @@ class Forgot_password(MDScreen):
         self.ids.verify_otp.disabled = False
 
     def handle_otp_sending_error(self, e):
-        self.show_validation_dialog("No internet connection")
+        self.show_validation_dialog(f"No internet connection")
+        print(e)
 
     def verify_otp(self):
         phone_number = f"+91{self.ids.phone.text}"
@@ -391,5 +392,6 @@ class Forgot_password(MDScreen):
 
     def handle_otp_verification_error(self, e):
         self.show_validation_dialog("Error Occurred")
+        print(e)
 
 

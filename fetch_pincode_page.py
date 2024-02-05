@@ -7,11 +7,14 @@ import json
 from urllib.request import urlopen
 
 Builder.load_file("client_services1.kv")
+
+
 class Location(MDScreen):
     def client_services(self):
         app = MDApp.get_running_app()
         app.root.transition.direction = "right"
         app.root.current = "client_services"
+
     def fetch_pincode(self):
         pincode = self.ids.pincode.text
         if not pincode or len(pincode) != 6:
@@ -24,15 +27,23 @@ class Location(MDScreen):
             app = MDApp.get_running_app()
             app.root.transition.direction = "right"
             app.root.current = "client_services"
+
     def get_location(self):
         try:
-            url = 'http://ipinfo.io/json'
-            response = urlopen(url)
-            data = json.load(response)
-            pincode = data["postal"]
-            self.ids.pincode.text = pincode
+            import requests
+            r = requests.get('https://get.geojs.io/')
+            ip_request = requests.get('https://get.geojs.io/v1/ip.json')
+            ipAdd = ip_request.json()['ip']
+            print(ipAdd)
+            url = 'https://get.geojs.io/v1/ip/geo/' + ipAdd + '.json'
+            geo_request = requests.get(url)
+            geo_data = geo_request.json()
+            print(geo_data)
+            # pincode = data["postal"]
+            # self.ids.pincode.text = pincode
         except Exception:
             self.show_validation_dialog("No Internet Connection")
+
     def show_validation_dialog(self, message):
         # Create the dialog asynchronously
         Clock.schedule_once(lambda dt: self._create_dialog(message), 0)
