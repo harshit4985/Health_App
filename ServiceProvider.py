@@ -5,6 +5,7 @@ import sqlite3
 from anvil import BlobMedia
 from anvil.tables import app_tables
 from kivy.clock import Clock
+from kivy.core.window import Window
 from kivy.lang import Builder
 from kivy.metrics import dp
 from kivy.uix.boxlayout import BoxLayout
@@ -331,6 +332,14 @@ class ServiceRegisterForm(MDScreen):
         )
 
         self.dialog.open()
+        self.update_width()
+    def update_width(self, *args):
+        if self.dialog:
+            # Get the window width
+            window_width = Window.width
+
+            # Set the width of the dialog (you can adjust the multiplier as needed)
+            self.dialog.width = window_width * 0.8
 
     def cancel_dialog(self, instance):
         print("CANCEL button clicked")
@@ -468,7 +477,8 @@ class HospitalList(MDScrollView):
         super(HospitalList, self).__init__(**kwargs)
         self.orientation = "vertical"
         self.size_hint_y = None
-        self.height = "400dp"
+        self.height = "300dp"
+       
         # self.size_hint_x=None
         # self.width="280dp"
         initial_data = self.fetch_initial_data()
@@ -476,6 +486,7 @@ class HospitalList(MDScrollView):
             pos_hint={"center_y": 0.6, "center_x": 0.5},
             size_hint=(1, 0.7),
             use_pagination=True,
+            pagination_menu_pos="center",
             elevation=0,
             padding='0dp',
             check=True,
@@ -485,6 +496,7 @@ class HospitalList(MDScrollView):
 
             ],
             row_data=initial_data,
+
         )
 
         # Creating control buttons.
@@ -501,7 +513,7 @@ class HospitalList(MDScrollView):
             )
         )
 
-        layout = MDFloatLayout(size_hint=(1, 1))  # root layout
+        layout = MDFloatLayout()  # root layout
         layout.add_widget(self.data_tables)
         layout.add_widget(button_box)
         self.add_widget(layout)
