@@ -44,6 +44,12 @@ class Slot_Booking(MDScreen):
                 self.ids[slot].md_bg_color = (1, 1, 1, 1)
             else:
                 self.ids[slot].md_bg_color = (1, 0, 0, 1)
+    def slot_date_picker(self):
+        current_date = datetime.now().date()
+        date_dialog = MDDatePicker(year=current_date.year, month=current_date.month, day=current_date.day,
+                                   size_hint=(None, None), size=(150, 150))
+        date_dialog.bind(on_save=self.slot_save, on_cancel=self.slot_cancel)
+        date_dialog.open()
 
     def slot_save(self, instance, value, date_range):
         # the date string in "year-month-day" format
@@ -75,6 +81,7 @@ class Slot_Booking(MDScreen):
                                    size_hint=(None, None), size=(150, 150))
         date_dialog.bind(on_save=self.slot_save, on_cancel=self.slot_cancel)
         date_dialog.open()
+
 
 
     def pay_now(self, instance, *args):
