@@ -11,7 +11,7 @@ from kivymd.app import MDApp
 from kivymd.uix.button import MDFlatButton
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.screen import MDScreen
-# from twilio.rest import Client
+from twilio.rest import Client
 
 Builder.load_file("signup.kv")
 # Builder.load_file("login.kv")
@@ -284,10 +284,10 @@ verify_sid = "VA8937ab1f8c09c4e3842e4b32f72c8dc7"
 verified_number = "+919108340960"
 
 # Initialize Twilio client
-# try:
-#     client = Client(account_sid, auth_token)
-# except Exception as e:
-#     print(f"Error: {e}")
+try:
+    client = Client(account_sid, auth_token)
+except Exception as e:
+    print(f"Error: {e}")
 
 class Forgot_password(MDScreen):
 
@@ -340,21 +340,21 @@ class Forgot_password(MDScreen):
                 record.update(password=new_password)
                 print("changed")
     #
-    # def sent_otp(self):
-    #     phone = self.ids.phone.text
-    #
-    #     if not (phone and len(phone) == 10):
-    #         self.handle_invalid_phone()
-    #     else:
-    #         phone_number = f"+91{phone}"
-    #         try:
-    #             # Send OTP via Twilio
-    #             verification = client.verify.v2.services(verify_sid).verifications.create(
-    #                 to=phone_number, channel="sms"
-    #             )
-    #             self.update_ui_on_otp_sent(phone_number)
-    #         except Exception as e:
-    #             self.handle_otp_sending_error(e)
+    def sent_otp(self):
+        phone = self.ids.phone.text
+
+        if not (phone and len(phone) == 10):
+            self.handle_invalid_phone()
+        else:
+            phone_number = f"+91{phone}"
+            try:
+                # Send OTP via Twilio
+                verification = client.verify.v2.services(verify_sid).verifications.create(
+                    to=phone_number, channel="sms"
+                )
+                self.update_ui_on_otp_sent(phone_number)
+            except Exception as e:
+                self.handle_otp_sending_error(e)
 
     def handle_invalid_phone(self):
         self.ids.phone.error = True
@@ -370,20 +370,20 @@ class Forgot_password(MDScreen):
     def handle_otp_sending_error(self, e):
         self.show_validation_dialog(f"{e}")
     #
-    # def verify_otp(self):
-    #     phone_number = f"+91{self.ids.phone.text}"
-    #     user_entered_otp = self.ids.otp.text
-    #     try:
-    #         # Verify OTP via Twilio
-    #         verification_check = client.verify.v2.services(verify_sid) \
-    #             .verification_checks \
-    #             .create(to=phone_number, code=user_entered_otp)
-    #         if verification_check.status == 'approved':
-    #             self.update_ui_on_otp_verified()
-    #         else:
-    #             self.handle_invalid_otp()
-    #     except Exception as e:
-    #         self.handle_otp_verification_error(e)
+    def verify_otp(self):
+        phone_number = f"+91{self.ids.phone.text}"
+        user_entered_otp = self.ids.otp.text
+        try:
+            # Verify OTP via Twilio
+            verification_check = client.verify.v2.services(verify_sid) \
+                .verification_checks \
+                .create(to=phone_number, code=user_entered_otp)
+            if verification_check.status == 'approved':
+                self.update_ui_on_otp_verified()
+            else:
+                self.handle_invalid_otp()
+        except Exception as e:
+            self.handle_otp_verification_error(e)
 
     def update_ui_on_otp_verified(self):
         print("OTP verified")
