@@ -5,8 +5,7 @@ from anvil import Timer
 from kivy.clock import Clock
 from kivymd.uix.dialog import MDDialog
 
-from ServiceProviderMainPage import ServiceProviderMain, ServiceProfile, ServiceNotification, ServiceSlotAdding, \
-    ServiceSupport
+from ServiceProviderMainPage import ServiceProviderMain, ServiceProfile, ServiceNotification, ServiceSlotAdding, ServiceSupport
 from kivymd.uix.screen import MDScreen
 
 from signup_login import Signup, Login, Forgot_password
@@ -110,8 +109,6 @@ class LoginApp(MDApp):
             ServiceNotification(name="service_notification"),
             ServiceSlotAdding(name="service_slot_adding"),
             ServiceSupport(name="service_support"),
-            Slot_Booking("slot_booking"),
-            Payment("payment_page"),
             ServiceRegisterForm(),
             HospitalContent(),
             MobileCareContent(),
