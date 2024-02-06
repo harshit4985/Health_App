@@ -8,8 +8,8 @@ from ServiceProviderMainPage import ServiceProviderMain, ServiceProfile, Service
 from kivymd.uix.screen import MDScreen
 
 from signup_login import Signup, Login, Forgot_password
-from ServiceRegister import ServiceRegisterForm, HospitalContent, HospitalList, MobileCareContent, GymContent, \
-     RegisterPage2
+from ServiceRegister import ServiceRegisterForm, HospitalContent, MobileCareContent, GymContent, \
+    RegisterPage2, HospitalListTable
 from slot_booking import Slot_Booking
 from support_page import Support_page
 from fetch_pincode_page import Location
@@ -109,6 +109,7 @@ class LoginApp(MDApp):
             MobileCareContent(),
             GymContent(),
             RegisterPage2(),
+            HospitalListTable()
         ]
         for widget in screen_widgets:
             screen_manager.add_widget(widget)

@@ -15,6 +15,7 @@ from kivymd.uix.button import MDFlatButton, MDRaisedButton
 from kivymd.uix.datatables import MDDataTable
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.floatlayout import MDFloatLayout
+from kivymd.uix.label import MDLabel
 from kivymd.uix.screen import MDScreen
 from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.pickers import MDDatePicker
@@ -28,7 +29,7 @@ import requests
 from kivymd.uix.scrollview import MDScrollView
 
 Builder.load_file('service_register.kv')
-kv=Builder.load_file('content_class.kv')
+kv = Builder.load_file('content_class.kv')
 conn = sqlite3.connect("user.db")
 cursor = conn.cursor()
 
@@ -237,6 +238,9 @@ class BaseRegistrationScreen(MDScreen):
 
                 conn.commit()
                 conn.close()
+                app = MDApp.get_running_app()
+                app.root.transition.direction = "down"
+                app.root.current = "register_page2"
                 return True
             elif tablename == 'mobile_hospital':
                 print('MobileCareContent')
@@ -251,6 +255,9 @@ class BaseRegistrationScreen(MDScreen):
 
                 conn.commit()
                 conn.close()
+                app = MDApp.get_running_app()
+                app.root.transition.direction = "down"
+                app.root.current = "register_page2"
                 return True
 
             elif tablename == 'oxi_gym':
@@ -266,6 +273,9 @@ class BaseRegistrationScreen(MDScreen):
 
                 conn.commit()
                 conn.close()
+                app = MDApp.get_running_app()
+                app.root.transition.direction = "down"
+                app.root.current = "register_page2"
                 return True
 
 
@@ -273,15 +283,14 @@ class BaseRegistrationScreen(MDScreen):
 class ServiceRegisterForm(MDScreen):
     def __init__(self, **kwargs):
         super(ServiceRegisterForm, self).__init__(**kwargs)
-class RegisterPage2 (MDScreen):
+
+
+class RegisterPage2(MDScreen):
     dialog = None
     checkbox = None
 
-
-
     def __init__(self, **kwargs):
         super(RegisterPage2, self).__init__(**kwargs)
-
 
     def on_checkbox_active(self, checkbox, checkbox_value, add_branch_button):
         self.checkbox = checkbox
@@ -479,20 +488,16 @@ class GymContent(BaseRegistrationScreen):
         return super().validate_content(tablename='oxi_gym')
 
 
-
-
-class HospitalList(MDScreen):
-    pass
-
-class HospitalListTable(MDScrollView):
+class HospitalListTable(MDScreen):
     def __init__(self, **kwargs):
-        super(HospitalList, self).__init__(**kwargs)
-        self.orientation = "vertical"
-        self.size_hint_y = None
-        self.height = "300dp"
+        super(HospitalListTable, self).__init__(**kwargs)
+        self.name = 'list_content'
+        # self.orientation = "vertical"
+        # self.size_hint_y = None
+        # self.height = "300dp"
         initial_data = self.fetch_initial_data()
         self.data_tables = MDDataTable(
-            pos_hint={"center_y": 0.4, "center_x": 0.5},
+            pos_hint={"center_y": 0.7, "center_x": 0.5},
             size_hint=(.9, None),
             use_pagination=True,
             pagination_menu_pos="center",
@@ -510,18 +515,19 @@ class HospitalListTable(MDScrollView):
         self.update_table_height()
         # Creating control buttons.
         button_box = MDBoxLayout(
-            pos_hint={"center_x": .5},
+            pos_hint={"center_x": 0.5, "center_y": .5},
             adaptive_size=True,
-
+            padding="24dp",
+            spacing="24dp",
         )
 
         button_box.add_widget(
-            MDFlatButton(
+            MDRaisedButton(
                 text='Delete', on_release=self.on_button_press
             )
         )
 
-        layout = MDFloatLayout()  # root layout
+        layout = MDFloatLayout()
         layout.add_widget(self.data_tables)
         layout.add_widget(button_box)
         self.add_widget(layout)
@@ -583,5 +589,6 @@ class HospitalListTable(MDScrollView):
 
         table_height = num_rows * row_height + header_height + footer_height + padding * 2
         self.data_tables.height = table_height
+
     def validate_content(self):
         return True
