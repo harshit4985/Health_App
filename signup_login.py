@@ -1,3 +1,4 @@
+import os
 import sqlite3
 import re
 import anvil
@@ -20,7 +21,7 @@ class Connection:
     def is_connected(self):
         try:
             # Attempt to make a simple HTTP request to check connectivity
-            response = requests.get('https://www.google.com', timeout=5)
+            response = requests.get('https://www.google.com', timeout=1)
             response.raise_for_status()  # Raise an exception for HTTP errors
             return True
         except requests.RequestException:
@@ -278,13 +279,15 @@ class Login(MDScreen, Connection):
 
 # Your Twilio credentials
 account_sid = "AC64ab0fed3c9135f8011fb5e50f969cbe"
-auth_token = "325fe8524e6663d549c6bf49454809cd"
+auth_token = "3a50206a976a26f6f9c7befcf5359fe5"
 verify_sid = "VA8937ab1f8c09c4e3842e4b32f72c8dc7"
 verified_number = "+919108340960"
 
 # Initialize Twilio client
-client = Client(account_sid, auth_token)
-
+try:
+    client = Client(account_sid, auth_token)
+except Exception as e:
+    print(f"Error: {e}")
 
 class Forgot_password(MDScreen):
 
@@ -331,6 +334,9 @@ class Forgot_password(MDScreen):
 
         else:
             if record:
+                app = MDApp.get_running_app()
+                app.root.transition.direction = "left"
+                app.root.current = "login"
                 record.update(password=new_password)
                 print("changed")
 
@@ -362,8 +368,7 @@ class Forgot_password(MDScreen):
         self.ids.verify_otp.disabled = False
 
     def handle_otp_sending_error(self, e):
-        self.show_validation_dialog(f"No internet connection")
-        print(e)
+        self.show_validation_dialog(f"{e}")
 
     def verify_otp(self):
         phone_number = f"+91{self.ids.phone.text}"

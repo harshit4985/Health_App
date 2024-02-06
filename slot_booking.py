@@ -3,15 +3,22 @@ from datetime import datetime
 from anvil.tables import app_tables
 from kivy.clock import Clock
 from kivy.lang import Builder
+from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.screenmanager import SlideTransition
 from kivymd.app import MDApp
-from kivymd.uix.button import MDFlatButton
+from kivymd.uix.button import MDFlatButton, MDRaisedButton
 from kivymd.uix.dialog import MDDialog
+from kivymd.uix.label import MDLabel
 from kivymd.uix.pickers import MDDatePicker
 from kivymd.uix.screen import MDScreen
 
 Builder.load_file("slot_booking.kv")
-
+class S_button(MDRaisedButton):
+    pass
+class S_layout(BoxLayout):
+    pass
+class S_label(MDLabel):
+    pass
 
 class Slot_Booking(MDScreen):
     time_slots = ['9am - 11am', '11am - 1pm', '1pm - 3pm', '3pm - 5pm', '5pm - 7pm', '7pm - 9pm']
@@ -68,6 +75,12 @@ class Slot_Booking(MDScreen):
     def slot_cancel(self, instance, value):
         print("cancel")
 
+    def slot_date_picker(self):
+        current_date = datetime.now().date()
+        date_dialog = MDDatePicker(year=current_date.year, month=current_date.month, day=current_date.day,
+                                   size_hint=(None, None), size=(150, 150))
+        date_dialog.bind(on_save=self.slot_save, on_cancel=self.slot_cancel)
+        date_dialog.open()
 
 
 

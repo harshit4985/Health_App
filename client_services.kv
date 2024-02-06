@@ -89,13 +89,15 @@
                                                 font_size: '18sp'
                                                 pos_hint: {'center_x': 0.5,'center_y': 0.8}
 
-                                        Button:
+                                        MDRaisedButton:
                                             text: "Book Now"
-                                            font_name: "Roboto"
+                                            font_name: "Roboto-bold"
                                             size_hint: None, None
                                             size: "100dp", "30dp"
                                             pos_hint: {'right': 0.95, 'y': 0}
-                                            background_color: 0, 0, 0, 0
+                                            md_bg_color: 1, 0, 0, 1
+                                            elevation: 3
+#                                            background_color: 0, 0, 0, 0
                                             theme_text_color: "Custom"
                                             text_color: 1, 1, 1, 1
                                             font_style: "Button"
