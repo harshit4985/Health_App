@@ -1,10 +1,11 @@
+from kivy import platform
+
 import anvil
 from anvil import Timer
 from kivy.clock import Clock
 from kivymd.uix.dialog import MDDialog
 
-from ServiceProviderMainPage import ServiceProviderMain, ServiceProfile, ServiceNotification, ServiceSlotAdding, \
-    ServiceSupport
+from ServiceProviderMainPage import ServiceProviderMain, ServiceProfile, ServiceNotification, ServiceSlotAdding, ServiceSupport
 from kivymd.uix.screen import MDScreen
 
 from signup_login import Signup, Login, Forgot_password
@@ -66,6 +67,12 @@ cursor.execute('''
 
 conn.commit()
 
+# if platform == "android":
+#     from android.permissions import Permission, request_permissions
+#
+#     request_permissions([Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE, SEND_SMS])
+
+
 class ProfileCard(MDFloatLayout, CommonElevationBehavior):
     pass
 
@@ -77,33 +84,31 @@ class NavigationDrawerScreen(MDScreen):
 class LoginApp(MDApp):
 
     def build(self):
-        self.icon = "images/shot.png"
-        self.theme_cls.theme_style = "Light"
         self.check_internet_status_timer = Timer(interval=5000, repeating=True, enabled=True,
                                                  tick=self.check_internet_status)
+        print(platform)
         screen_manager = ScreenManager()
         screen_widgets = [
-            # Builder.load_file("main_sc.kv"),
-            # Login("login"),
-            # Signup("signup"),
-            # Forgot_password("forgot_password"),
-            # Client_services("client_services"),
-            # Location("client_services1"),
-            # Profile("menu_profile"),
-            # Notification("menu_notification"),
-            # Booking("menu_bookings"),
-            # Report("menu_reports"),
-            # Support_page("menu_support"),
-            # Builder.load_file("hospital_book.kv"),
-            # Slot_Booking(name="slot_booking"),
-            # Payment("payment_page.kv"),
-            # ServiceProviderMain(name="service_provider_main_page"),
-            # ServiceProfile(name="service_profile"),
-            # ServiceNotification(name="service_notification"),
-            # ServiceSlotAdding(name="service_slot_adding"),
-            # ServiceSupport(name="service_support"),
-            # Slot_Booking("slot_booking"),
-            # Payment("payment_page"),
+
+            Builder.load_file("main_sc.kv"),
+            Login("login"),
+            Signup("signup"),
+            Forgot_password("forgot_password"),
+            Client_services("client_services"),
+            Location("client_services1"),
+            Profile("menu_profile"),
+            Notification("menu_notification"),
+            Booking("menu_bookings"),
+            Report("menu_reports"),
+            Support_page("menu_support"),
+            Builder.load_file("hospital_book.kv"),
+            Slot_Booking(name="slot_booking"),
+            Payment("payment_page.kv"),
+            ServiceProviderMain(name="service_provider_main_page"),
+            ServiceProfile(name="service_profile"),
+            ServiceNotification(name="service_notification"),
+            ServiceSlotAdding(name="service_slot_adding"),
+            ServiceSupport(name="service_support"),
             ServiceRegisterForm(),
             HospitalContent(),
             MobileCareContent(),
