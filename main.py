@@ -101,8 +101,8 @@ class LoginApp(MDApp):
             ServiceNotification(name="service_notification"),
             ServiceSlotAdding(name="service_slot_adding"),
             ServiceSupport(name="service_support"),
-            Slot_Booking("slot_booking"),
-            Payment("payment_page"),
+            # Slot_Booking("slot_booking"),
+            # Payment("payment_page"),
             ServiceRegisterForm(),
         ]
         for widget in screen_widgets:
