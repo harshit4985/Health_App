@@ -1,3 +1,5 @@
+from kivy import platform
+
 import anvil
 from anvil import Timer
 from kivy.clock import Clock
@@ -65,6 +67,12 @@ cursor.execute('''
 
 conn.commit()
 
+# if platform == "android":
+#     from android.permissions import Permission, request_permissions
+#
+#     request_permissions([Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE, SEND_SMS])
+
+
 class ProfileCard(MDFloatLayout, CommonElevationBehavior):
     pass
 
@@ -76,10 +84,9 @@ class NavigationDrawerScreen(MDScreen):
 class LoginApp(MDApp):
 
     def build(self):
-        self.icon = "images/shot.png"
-        self.theme_cls.theme_style = "Light"
         self.check_internet_status_timer = Timer(interval=5000, repeating=True, enabled=True,
                                                  tick=self.check_internet_status)
+        print(platform)
         screen_manager = ScreenManager()
         screen_widgets = [
             Builder.load_file("main_sc.kv"),
