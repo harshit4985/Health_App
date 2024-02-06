@@ -14,7 +14,7 @@ from kivymd.uix.screen import MDScreen
 from twilio.rest import Client
 
 Builder.load_file("signup.kv")
-Builder.load_file("login.kv")
+# Builder.load_file("login.kv")
 Builder.load_file("forgot_password.kv")
 
 class Connection:
@@ -339,7 +339,7 @@ class Forgot_password(MDScreen):
                 app.root.current = "login"
                 record.update(password=new_password)
                 print("changed")
-
+    #
     def sent_otp(self):
         phone = self.ids.phone.text
 
@@ -369,7 +369,7 @@ class Forgot_password(MDScreen):
 
     def handle_otp_sending_error(self, e):
         self.show_validation_dialog(f"{e}")
-
+    #
     def verify_otp(self):
         phone_number = f"+91{self.ids.phone.text}"
         user_entered_otp = self.ids.otp.text
