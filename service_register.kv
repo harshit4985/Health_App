@@ -40,10 +40,10 @@
                     MDTextField:
                         id: service_provider_name
 #                        required: True
-                        hint_text: 'Name'
+                        hint_text: 'Full Name'
                         font_name: "Roboto"
                         pos_hint:{'center_x':.5}
-                        size_hint:.9,None
+                        size_hint:.7,None
                         height: "25dp"
                         multiline: False
                         write_tab: False
@@ -60,7 +60,7 @@
 #                        required: True
                         font_name: "Roboto"
                         pos_hint:{'center_x':.5}
-                        size_hint:.9,None
+                        size_hint:.7,None
                         multiline: False
                         write_tab: False
                         color_mode: 'custom'
@@ -70,7 +70,7 @@
                         hint_text_color_focus:0,0,0,.5
 
                     MDFloatLayout:
-                        size_hint:.9,None
+                        size_hint:.7,None
                         height: "60dp"
                         pos_hint: {"center_x": .5, "center_y": .5}
                         MDTextField:
@@ -112,7 +112,7 @@
 #                       required: True
                         font_name: "Roboto"
                         pos_hint:{'center_x':.5}
-                        size_hint:.9,None
+                        size_hint:.7,None
                         height: "30dp"
                         multiline: False
                         write_tab: False
@@ -128,7 +128,7 @@
 #                        required: True
                         font_name: "Roboto"
                         pos_hint:{'center_x':.5}
-                        size_hint:.9,None
+                        size_hint:.7,None
                         height: "30dp"
                         multiline: False
                         write_tab: False
@@ -137,177 +137,47 @@
                         text_color_focus:0,0,0,1
                         hint_text_color:0,0,0,1
                         hint_text_color_focus:0,0,0,.5
-                    BoxLayout:
-                        orientation: 'horizontal'
-                        font_name: "Roboto"
-                        pos_hint:{'center_x':.5}
-                        size_hint:.9,None
-                        height: "30dp"
-                        MDLabel:
-                            pos_hint:{'center_x':.5}
-                            text: 'Select service provider types.'
-                            font_size:'18sp'
-                            font_name: "Roboto"
-                    BoxLayout:
-                        orientation: 'horizontal'
-                        font_name: "Roboto"
-                        pos_hint:{'center_x':.5}
-                        spacing:dp(10)
-                        size_hint:.9,None
-                        height: "60dp"
-                        MDCheckbox:
-                            id:hospital_manager
-                            size_hint: None, None
-                            size: dp(48), dp(48)
-                            color_active: "red"
-                            pos_hint: { 'center_y': .5}
-                            on_active: root.on_checkbox_active(hospital_manager,'Hospital',add_hospital_button)
-
-                        MDLabel:
-                            text: 'Hospital'
-                            font_size:'16sp'
-                            font_name: "Roboto"
-                        MDTextButton:
-                            id:hospital_list_button
-                            text:'View'
-                            font_size:'14sp'
-                            font_name: "Roboto"
-                            pos_hint: { 'center_y': .5}
-                            color:1, 0, 0, 1
-                            disabled: True
-                            on_release:root.show_branch_dialog('Hospital List',add_hospital_button)
-
-
-                        MDTextButton:
-                            id: add_hospital_button
-                            text:'Add'
-                            font_size:'14sp'
-                            font_name: "Roboto"
-                            pos_hint: { 'center_y': .5}
-                            color:1, 0, 0, 1
-                            disabled: True  # Initially disabled
-                            on_release:root.show_branch_dialog('Hospital',hospital_list_button)
-
-                    BoxLayout:
-                        orientation: 'horizontal'
-                        font_name: "Roboto"
-                        pos_hint:{'center_x':.5}
-                        size_hint:.9,None
-                        height: "60dp"
-                        spacing:dp(10)
-                        MDCheckbox:
-                            id:mobile_hospital_manager
-                            size_hint: None, None
-                            size: dp(48), dp(48)
-                            color_active: "red"
-                            pos_hint: { 'center_y': .5}
-                            on_active: root.on_checkbox_active(mobile_hospital_manager,'Mobile-Hospital',add_mobile_hospital_button)
-                        MDLabel:
-                            text: 'Mobile-Hospital'
-                            font_size:'16sp'
-                            font_name: "Roboto"
-
-                        MDTextButton:
-                            id:mobile_hospital_list_button
-                            text:'View'
-                            font_size:'14sp'
-                            font_name: "Roboto"
-                            pos_hint: { 'center_y': .5}
-                            color:1, 0, 0, 1
-                            #disabled: True
-                            on_release:root.show_branch_dialog('Mobile-Hospital List',add_mobile_hospital_button)
-
-                        MDTextButton:
-                            id: add_mobile_hospital_button
-                            text:'Add'
-                            font_size:'14sp'
-                            font_name: "Roboto"
-                            pos_hint: { 'center_y': .5}
-                            color:1, 0, 0, 1
-                            disabled: True
-#                            icon: "plus"
-#                            type:'small'
-#                            md_bg_color: 1, 0, 0, 1
-#                            pos_hint: { 'center_y': .5}
-#                            disabled: True  # Initially disabled
-#                            size_hint: None, None
-#                            size: dp(48), dp(48)
-#                            icon_size:'16sp'
-                            on_release:root.show_branch_dialog('Mobile-Hospital',mobile_hospital_list_button)
-                    BoxLayout:
-                        orientation: 'horizontal'
-                        font_name: "Roboto"
-                        pos_hint:{'center_x':.5}
-                        size_hint:.9,None
-                        height: "60dp"
-                        spacing:dp(10)
-                        MDCheckbox:
-                            id:oxigym_manager
-                            size_hint: None, None
-                            size: dp(48), dp(48)
-                            color_active: "red"
-                            pos_hint: { 'center_y': .5}
-                            on_active: root.on_checkbox_active(oxigym_manager,'Oxi-Gym',add_oxigym_button)
-                        MDLabel:
-                            text: 'Oxi-Gym'
-                            font_size:'16sp'
-                            font_name: "Roboto"
-                        MDTextButton:
-                            id:oxigym_list_button
-                            text:'View'
-                            font_size:'14sp'
-                            font_name: "Roboto"
-                            pos_hint: { 'center_y': .5}
-                            color:1, 0, 0, 1
-                            disabled: True
-                            on_release:root.show_branch_dialog('Oxi-Gym List',add_oxigym_button)
-                        MDTextButton:
-                            id: add_oxigym_button
-                            text:'Add'
-                            font_size:'14sp'
-                            font_name: "Roboto"
-                            pos_hint: { 'center_y': .5}
-                            color:1, 0, 0, 1
-                            disabled: True
-                            on_release:root.show_branch_dialog('Oxi-Gym',oxigym_list_button)
-                    MDLabel:
-                        id:hint_label
-                        text: ''
-                        font_size:'14sp'
-                        font_name: "Roboto"
-                        halign:'center'
-                        color:1, 0, 0, 1
-                    BoxLayout:
-                        orientation: 'horizontal'
-                        font_name: "Roboto"
-                        pos_hint:{'center_x':.5}
-                        size_hint:.9,None
-                        height: "20dp"
-
-                        HorizontalLineWidget:
-                            size_hint:.9,None
-                            pos_hint:{'center_y':.5}
 #
-                    BoxLayout:
-                        orientation: 'vertical'
-                        size_hint_y: None
-                        height: self.minimum_height
-                        padding: dp(20)
-                        spacing: dp(10)
-                        # signup button
-                    Button:
-                        id: service_register
-                        text: "REGISTER"
-                        size_hint: .7,None
-                        height:dp(40)
-                        pos_hint: {"center_x": .5, "center_y": .34}
-                        background_color: 0, 0, 0, 0
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_y: None
+            height: self.minimum_height
+            padding: dp(20)
+            spacing: dp(10)
+                # signup button
+            MDFlatButton:
+                disabled: False
+                size_hint: None, None
+                size: dp(100), dp(30) # Adjusted size
+                halign: "left"
+                md_bg_color: 0, 0, 0, 0
+                pos_hint: {"center_x": 0.8, "center_y":1}
+                elevation: 10
+                on_release:
+                    root.manager.transition.direction = "left"
+                    root.manager.current = "register_page2"
+                canvas.before:
+                    Color:
+                        rgba: 1, 0, 0, 1  # Red color for the border
+                    Line:
+                        width: 1.2  # Adjust the border width as needed
+                        rounded_rectangle: (self.x, self.y, self.width, self.height, dp(5))
+                BoxLayout:
+                    orientation: 'horizontal'
+                    spacing: 0
+
+                    MDLabel:
+                        text: "Next"
                         font_name: "Roboto"
-                        on_release:root.register_validation()
-                        canvas.before:
-                            Color:
-                                rgb: rgba(255, 0, 0, 255)
-                            RoundedRectangle:
-                                size: self.size
-                                pos: self.pos
-                                radius: [5]
+                        halign: "center"
+                        text_color: 1, 0, 0, 1
+                        theme_text_color: "Custom"
+                    MDIcon:
+                        icon: "arrow-right"
+                        halign: "center"
+                        theme_text_color: "Custom"
+                        text_color: 1, 0, 0, 1
+                        size_hint_x: None
+                        width: dp(24)
+                        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+

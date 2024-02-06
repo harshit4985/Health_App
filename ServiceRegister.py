@@ -9,11 +9,13 @@ from kivy.core.window import Window
 from kivy.lang import Builder
 from kivy.metrics import dp
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.screenmanager import ScreenManager, Screen
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.button import MDFlatButton, MDRaisedButton
 from kivymd.uix.datatables import MDDataTable
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.floatlayout import MDFloatLayout
+from kivymd.uix.label import MDLabel
 from kivymd.uix.screen import MDScreen
 from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.pickers import MDDatePicker
@@ -27,7 +29,7 @@ import requests
 from kivymd.uix.scrollview import MDScrollView
 
 Builder.load_file('service_register.kv')
-Builder.load_file('content_class.kv')
+kv = Builder.load_file('content_class.kv')
 conn = sqlite3.connect("user.db")
 cursor = conn.cursor()
 
@@ -80,7 +82,7 @@ conn.commit()
 conn.close()
 
 
-class BaseRegistrationScreen(MDScrollView):
+class BaseRegistrationScreen(MDScreen):
     def request_permissions(self):
         request_permissions([Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE])
 
@@ -236,6 +238,9 @@ class BaseRegistrationScreen(MDScrollView):
 
                 conn.commit()
                 conn.close()
+                app = MDApp.get_running_app()
+                app.root.transition.direction = "down"
+                app.root.current = "register_page2"
                 return True
             elif tablename == 'mobile_hospital':
                 print('MobileCareContent')
@@ -250,6 +255,9 @@ class BaseRegistrationScreen(MDScrollView):
 
                 conn.commit()
                 conn.close()
+                app = MDApp.get_running_app()
+                app.root.transition.direction = "down"
+                app.root.current = "register_page2"
                 return True
 
             elif tablename == 'oxi_gym':
@@ -265,16 +273,24 @@ class BaseRegistrationScreen(MDScrollView):
 
                 conn.commit()
                 conn.close()
+                app = MDApp.get_running_app()
+                app.root.transition.direction = "down"
+                app.root.current = "register_page2"
                 return True
 
 
 # -----------------service-register-form----------------------
 class ServiceRegisterForm(MDScreen):
+    def __init__(self, **kwargs):
+        super(ServiceRegisterForm, self).__init__(**kwargs)
+
+
+class RegisterPage2(MDScreen):
     dialog = None
     checkbox = None
 
     def __init__(self, **kwargs):
-        super(ServiceRegisterForm, self).__init__(**kwargs)
+        super(RegisterPage2, self).__init__(**kwargs)
 
     def on_checkbox_active(self, checkbox, checkbox_value, add_branch_button):
         self.checkbox = checkbox
@@ -290,49 +306,49 @@ class ServiceRegisterForm(MDScreen):
         else:
             print(f"Selected service provider type: {checkbox_value}")
 
-    def show_branch_dialog(self, content_type, list_button):
-
-        global content_cls, title
-        if content_type == 'Hospital':
-            content_cls = HospitalContent()
-            title = f'Add {content_type}'
-        elif content_type == 'Mobile-Hospital':
-            content_cls = MobileCareContent()
-            title = f'Add {content_type}'
-        elif content_type == 'Oxi-Gym':
-            content_cls = GymContent()
-            title = f'Add {content_type}'
-        elif content_type == 'Hospital List':
-            content_cls = HospitalList()
-            title = content_type
-        elif content_type == 'Mobile-Hospital List':
-            content_cls = HospitalList()
-            title = content_type
-        elif content_type == 'Oxi-Gym List':
-            content_cls = HospitalList()
-            title = content_type
-        self.dialog = MDDialog(
-            title=title,
-            type="custom",
-            content_cls=content_cls,
-            padding='0dp',
-            buttons=[
-                MDFlatButton(
-                    text="CANCEL",
-                    theme_text_color="Custom",
-                    on_release=self.cancel_dialog,
-                ),
-                MDFlatButton(
-                    text="OK",
-                    theme_text_color="Custom",
-                    on_release=lambda x: self.ok_dialog(content_cls, list_button),
-                ),
-            ],
-            auto_dismiss=False,
-        )
-
-        self.dialog.open()
-        self.update_width()
+    # def show_branch_dialog(self, content_type, list_button):
+    #
+    #     global content_cls, title
+    #     if content_type == 'Hospital':
+    #         content_cls = HospitalContent()
+    #         title = f'Add {content_type}'
+    #     elif content_type == 'Mobile-Hospital':
+    #         content_cls = MobileCareContent()
+    #         title = f'Add {content_type}'
+    #     elif content_type == 'Oxi-Gym':
+    #         content_cls = GymContent()
+    #         title = f'Add {content_type}'
+    #     elif content_type == 'Hospital List':
+    #         content_cls = HospitalList()
+    #         title = content_type
+    #     elif content_type == 'Mobile-Hospital List':
+    #         content_cls = HospitalList()
+    #         title = content_type
+    #     elif content_type == 'Oxi-Gym List':
+    #         content_cls = HospitalList()
+    #         title = content_type
+    #     self.dialog = MDDialog(
+    #         title=title,
+    #         type="custom",
+    #         content_cls=content_cls,
+    #         padding='0dp',
+    #         buttons=[
+    #             MDFlatButton(
+    #                 text="CANCEL",
+    #                 theme_text_color="Custom",
+    #                 on_release=self.cancel_dialog,
+    #             ),
+    #             MDFlatButton(
+    #                 text="OK",
+    #                 theme_text_color="Custom",
+    #                 on_release=lambda x: self.ok_dialog(content_cls, list_button),
+    #             ),
+    #         ],
+    #         auto_dismiss=False,
+    #     )
+    #
+    #     self.dialog.open()
+    #     self.update_width()
     def update_width(self, *args):
         if self.dialog:
             # Get the window width
@@ -442,9 +458,9 @@ class HorizontalLineWidget(BoxLayout):
 class HospitalContent(BaseRegistrationScreen):
     def __init__(self, **kwargs):
         super(HospitalContent, self).__init__(**kwargs)
-        self.orientation = "vertical"
-        self.size_hint_y = None
-        self.height = "300dp"
+        # self.orientation = "vertical"
+        # self.size_hint_y = None
+        # self.height = "300dp"
 
     def validate_content(self):
         return super().validate_content(tablename='hospital')
@@ -453,9 +469,9 @@ class HospitalContent(BaseRegistrationScreen):
 class MobileCareContent(BaseRegistrationScreen):
     def __init__(self, **kwargs):
         super(MobileCareContent, self).__init__(**kwargs)
-        self.orientation = "vertical"
-        self.size_hint_y = None
-        self.height = "300dp"
+        # self.orientation = "vertical"
+        # self.size_hint_y = None
+        # self.height = "300dp"
 
     def validate_content(self):
         return super().validate_content(tablename='mobile_hospital')
@@ -464,27 +480,25 @@ class MobileCareContent(BaseRegistrationScreen):
 class GymContent(BaseRegistrationScreen):
     def __init__(self, **kwargs):
         super(GymContent, self).__init__(**kwargs)
-        self.orientation = "vertical"
-        self.size_hint_y = None
-        self.height = "300dp"
+        # self.orientation = "vertical"
+        # self.size_hint_y = None
+        # self.height = "300dp"
 
     def validate_content(self):
         return super().validate_content(tablename='oxi_gym')
 
 
-class HospitalList(MDScrollView):
+class HospitalListTable(MDScreen):
     def __init__(self, **kwargs):
-        super(HospitalList, self).__init__(**kwargs)
-        self.orientation = "vertical"
-        self.size_hint_y = None
-        self.height = "300dp"
-       
-        # self.size_hint_x=None
-        # self.width="280dp"
+        super(HospitalListTable, self).__init__(**kwargs)
+        self.name = 'list_content'
+        # self.orientation = "vertical"
+        # self.size_hint_y = None
+        # self.height = "300dp"
         initial_data = self.fetch_initial_data()
         self.data_tables = MDDataTable(
-            pos_hint={"center_y": 0.6, "center_x": 0.5},
-            size_hint=(1, 0.7),
+            pos_hint={"center_y": 0.7, "center_x": 0.5},
+            size_hint=(.9, None),
             use_pagination=True,
             pagination_menu_pos="center",
             elevation=0,
@@ -498,22 +512,22 @@ class HospitalList(MDScrollView):
             row_data=initial_data,
 
         )
-
+        self.update_table_height()
         # Creating control buttons.
         button_box = MDBoxLayout(
-            pos_hint={"center_x": .1},
+            pos_hint={"center_x": 0.5, "center_y": .5},
             adaptive_size=True,
-            # padding="24dp",
-            # spacing="24dp",
+            padding="24dp",
+            spacing="24dp",
         )
 
         button_box.add_widget(
-            MDFlatButton(
+            MDRaisedButton(
                 text='Delete', on_release=self.on_button_press
             )
         )
 
-        layout = MDFloatLayout()  # root layout
+        layout = MDFloatLayout()
         layout.add_widget(self.data_tables)
         layout.add_widget(button_box)
         self.add_widget(layout)
@@ -563,6 +577,18 @@ class HospitalList(MDScrollView):
                 self.data_tables.row_data.remove(checked_row)
 
         Clock.schedule_once(deselect_rows)
+        self.update_table_height()
+
+    def update_table_height(self):
+        # Calculate the height of the table based on the number of rows and other parameters
+        num_rows = len(self.data_tables.row_data)
+        row_height = 40  # Adjust this value based on your row height
+        header_height = 60  # Height of the header
+        footer_height = 50  # Height of the footer if any
+        padding = 10  # Adjust this value based on your padding
+
+        table_height = num_rows * row_height + header_height + footer_height + padding * 2
+        self.data_tables.height = table_height
 
     def validate_content(self):
         return True
