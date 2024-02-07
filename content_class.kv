@@ -174,7 +174,8 @@
                         MDFlatButton:
                             text: "Select File"
                             size_hint:.4,.5
-                            on_release: root.file_manager_open('file_path')
+#                            on_release: root.file_manager_open('file_path')
+                            on_release: root.new_file_chooser()
                             pos_hint: {"center_x":.3,'center_y':.5}
                             background_color: 0, 0, 0, 0
                             font_name: "Roboto"

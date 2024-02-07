@@ -9,6 +9,9 @@ from kivy.core.window import Window
 from kivy.lang import Builder
 from kivy.metrics import dp
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.button import Button
+from kivy.uix.filechooser import FileChooserListView
+from kivy.uix.popup import Popup
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.button import MDFlatButton, MDRaisedButton
@@ -158,6 +161,40 @@ class BaseRegistrationScreen(MDScreen):
 
     def exit_manager(self, *args):
         self.file_manager.close()
+
+    def new_file_chooser(self):
+        self.file_chooser = FileChooserListView()
+        upload_button = Button(text="Upload",
+                               size_hint=(None, None),
+                               size=(100, 30),
+                               pos_hint={'right': 0.7, 'bottom': 1},
+                               on_press=lambda btn: self.new_upload_file(self.file_chooser.selection[0],popup))
+
+        popup_layout = BoxLayout(orientation="vertical")
+        popup_layout.add_widget(self.file_chooser)
+        popup_layout.add_widget(upload_button)
+
+        popup = Popup(title="Choose a file", content=popup_layout, size_hint=(0.9, 0.9), background_color=(0,0,0,1))
+        popup.open()
+
+    def new_upload_file(self,selected_file, popup):
+        if selected_file:
+            # selected_file = self.file_chooser.selection[0]  # Assuming only one file is selected
+            with open(selected_file, "rb") as file:
+                file_data = file.read()
+                # Now you have the file data, you can upload it to your database
+                conn = sqlite3.connect('docs.db')
+                cursor = conn.cursor()
+                # Create table if it doesn't exist
+                cursor.execute('''CREATE TABLE IF NOT EXISTS files
+                                  (id INTEGER PRIMARY KEY, data BLOB)''')
+                # Insert file data into the table
+                cursor.execute("INSERT INTO files (data) VALUES (?)", (sqlite3.Binary(file_data),))
+                conn.commit()
+                conn.close()
+                print("File uploaded successfully.")
+                popup.dismiss()
+
 
     # ----------------------------------registration validation-------------
     #
