@@ -8,12 +8,22 @@
     name:'hospital_content'
     BoxLayout:
         orientation: 'vertical'
+        MDIconButton:
+            icon: "arrow-left"
+            pos_hint: {"center_y": .95}
+            user_font_size: "30sp"
+            theme_text_color: "Custom"
+            text_color: rgba(26, 24, 58, 255)
+            on_release:
+                root.manager.transition.direction = "right"
+                root.manager.current = "register_page2"
         MDLabel:
             text: "Hospital "
             font_name: "Broboto"
-            pos_hint: {"center_x":.6,"center_y": .95}
+            pos_hint: {"center_y": .95}
             size_hint_y:.1
             font_size: "18sp"
+            halign:'center'
         ScrollView:
             GridLayout:
                 id: grid
@@ -258,23 +268,25 @@
                                     width: 1.2
                                     rounded_rectangle: self.x, self.y, self.width, self.height, 5, 5, 5, 5, 100
 
-                    Button:
-                        id: register_submit
-                        text: "CONFIRM"
-                        size_hint: .4,None
-                        height:dp(30)
-                        pos_hint: {"center_x": .5, "center_y": 1}
-                        background_color: 0, 0, 0, 0
-                        font_name: "Roboto"
-                        on_release:root.validate_content()
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_y: None
+            height: dp(60)
+            padding: dp(10)
+            spacing: dp(10)
+            MDFlatButton:
+                disabled: False
+                size_hint: .4, None
+                height:dp(40) # Adjusted size
+                pos_hint:{'center_x':.5,'center_y':.5}
+                md_bg_color: 1, 0, 0, 1
+                elevation: 10
+                text: "CONFIRM"
+                font_name: "Roboto-bold"
+                halign: "center"
+                text_color: 1, 1, 1, 1
+                theme_text_color: "Custom"
 
-                        canvas.before:
-                            Color:
-                                rgb: rgba(255, 0, 0, 255)
-                            RoundedRectangle:
-                                size: self.size
-                                pos: self.pos
-                                radius: [5]
 
 
 
@@ -283,12 +295,22 @@
     name:'mobile_hospital_content'
     BoxLayout:
         orientation: 'vertical'
+        MDIconButton:
+            icon: "arrow-left"
+            pos_hint: {"center_y": .95}
+            user_font_size: "30sp"
+            theme_text_color: "Custom"
+            text_color: rgba(26, 24, 58, 255)
+            on_release:
+                root.manager.transition.direction = "right"
+                root.manager.current = "register_page2"
         MDLabel:
             text: "Mobile-Hospital "
             font_name: "Broboto"
-            pos_hint: {"center_x":.6,"center_y": .95}
+            pos_hint: {"center_y": .95}
             size_hint_y:.1
             font_size: "18sp"
+            halign:'center'
         ScrollView:
             GridLayout:
                 id: grid
@@ -532,23 +554,24 @@
                                     width: 1.2
                                     rounded_rectangle: self.x, self.y, self.width, self.height, 5, 5, 5, 5, 100
 
-                    Button:
-                        id: register_submit
-                        text: "CONFIRM"
-                        size_hint: .4,None
-                        height:dp(30)
-                        pos_hint: {"center_x": .5, "center_y": 1}
-                        background_color: 0, 0, 0, 0
-                        font_name: "Roboto"
-                        on_release:root.validate_content()
-
-                        canvas.before:
-                            Color:
-                                rgb: rgba(255, 0, 0, 255)
-                            RoundedRectangle:
-                                size: self.size
-                                pos: self.pos
-                                radius: [5]
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_y: None
+            height: dp(60)
+            padding: dp(10)
+            spacing: dp(10)
+            MDFlatButton:
+                disabled: False
+                size_hint: .4, None
+                height:dp(40) # Adjusted size
+                pos_hint:{'center_x':.5,'center_y':.5}
+                md_bg_color: 1, 0, 0, 1
+                elevation: 10
+                text: "CONFIRM"
+                font_name: "Roboto-bold"
+                halign: "center"
+                text_color: 1, 1, 1, 1
+                theme_text_color: "Custom"
 
 
 
@@ -558,12 +581,22 @@
     name:'oxigym_content'
     BoxLayout:
         orientation: 'vertical'
+        MDIconButton:
+            icon: "arrow-left"
+            pos_hint: {"center_y": .95}
+            user_font_size: "30sp"
+            theme_text_color: "Custom"
+            text_color: rgba(26, 24, 58, 255)
+            on_release:
+                root.manager.transition.direction = "right"
+                root.manager.current = "register_page2"
         MDLabel:
             text: "Oxi-Gym "
             font_name: "Broboto"
-            pos_hint: {"center_x":.6,"center_y": .95}
+            pos_hint: {"center_y": .95}
             size_hint_y:.1
             font_size: "18sp"
+            halign:'center'
         ScrollView:
             GridLayout:
                 id: grid
@@ -807,23 +840,24 @@
                                     width: 1.2
                                     rounded_rectangle: self.x, self.y, self.width, self.height, 5, 5, 5, 5, 100
 
-
-                    Button:
-                        id: register_confirm
-                        text: "CONFIRM"
-                        size_hint: .4,None
-                        height:dp(30)
-                        pos_hint: {"center_x": .5, "center_y": 1}
-                        background_color: 0, 0, 0, 0
-                        font_name: "Roboto"
-                        on_release:root.validate_content()
-                        canvas.before:
-                            Color:
-                                rgb: rgba(255, 0, 0, 255)
-                            RoundedRectangle:
-                                size: self.size
-                                pos: self.pos
-                                radius: [5]
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_y: None
+            height: dp(60)
+            padding: dp(10)
+            spacing: dp(10)
+            MDFlatButton:
+                disabled: False
+                size_hint: .4, None
+                height:dp(40) # Adjusted size
+                pos_hint:{'center_x':.5,'center_y':.5}
+                md_bg_color: 1, 0, 0, 1
+                elevation: 10
+                text: "CONFIRM"
+                font_name: "Roboto-bold"
+                halign: "center"
+                text_color: 1, 1, 1, 1
+                theme_text_color: "Custom"
 
 
 <RegisterPage2>
@@ -1009,59 +1043,54 @@
                         pos_hint:{'center_x':.5}
                         size_hint:.7,None
                         height: "20dp"
+                        height: "10dp"
                         HorizontalLineWidget:
                             size_hint:.9,None
                             pos_hint:{'center_y':.5}
                     BoxLayout:
                         orientation: 'horizontal'
+                        pos_hint:{'center_x':.5}
+                        size_hint:.7,None
+                        height: "30dp"
+                        MDLabel:
+                            text: "You added"
+                            font_size:'16sp'
+                            font_name: "Broboto"
+                            halign:'center'
+                    BoxLayout:
+                        orientation: 'horizontal'
                         font_name: "Roboto"
                         pos_hint:{'center_x':.5}
                         spacing:dp(10)
                         size_hint:.7,None
                         height: "60dp"
                         MDLabel:
-                            text: "No of 'Hospitals'"
+                            text: '0  Hospitals'
                             font_size:'16sp'
                             font_name: "Roboto"
                             size_hint:.7,None
-
-                        MDLabel:
-                            text: '0'
-                            font_size:'16sp'
-                            font_name: "Roboto"
-                            size_hint:.2,None
-                            halign:'center'
-
 
                     BoxLayout:
                         orientation: 'horizontal'
                         font_name: "Roboto"
                         pos_hint:{'center_x':.5}
                         size_hint:.7,None
-                        height: "60dp"
+                        height: "30dp"
                         spacing:dp(10)
                         MDLabel:
-                            text: "No of 'Mobile-Hospitals'"
+                            text: "0  Mobile-Hospitals"
                             font_size:'16sp'
                             font_name: "Roboto"
                             size_hint:.7,None
-
-                        MDLabel:
-                            text: '0'
-                            font_size:'16sp'
-                            font_name: "Roboto"
-                            size_hint:.2,None
-                            halign:'center'
-
                     BoxLayout:
                         orientation: 'horizontal'
                         font_name: "Roboto"
                         pos_hint:{'center_x':.5}
                         size_hint:.7,None
-                        height: "60dp"
+                        height: "30dp"
                         spacing:dp(10)
                         MDLabel:
-                            text: "No of 'Oxi-Gyms'"
+                            text: "0  Oxi-Gyms"
                             font_size:'16sp'
                             font_name: "Roboto"
                             size_hint:.7,None
@@ -1072,6 +1101,16 @@
                             font_name: "Roboto"
                             size_hint:.2,None
                             halign:'center'
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        font_name: "Roboto"
+                        pos_hint:{'center_x':.5}
+                        size_hint:.7,None
+                        height: "20dp"
+
+                        HorizontalLineWidget:
+                            size_hint:.9,None
+                            pos_hint:{'center_y':.5}
         BoxLayout:
             orientation: 'horizontal'
             size_hint_y: None
@@ -1151,27 +1190,40 @@
 
 <HospitalListTable>
     name:'list_content'
+    MDIconButton:
+        icon: "arrow-left"
+        pos_hint: {"center_y": .95}
+        user_font_size: "30sp"
+        theme_text_color: "Custom"
+        text_color: rgba(26, 24, 58, 255)
+        on_release:
+            root.manager.transition.direction = "right"
+            root.manager.current = "register_page2"
     MDLabel:
         text: "Organization List "
         font_name: "Broboto"
-        pos_hint: {"center_x":.6,"center_y": .95}
+        pos_hint: {"center_y": .95}
         size_hint_y:.1
         font_size: "18sp"
-    Button:
-        id: preview_confirm
-        text: "CONFIRM"
-        size_hint: .4,None
-        height:dp(30)
-        pos_hint: {"center_x": .5, "center_y":.4}
-        background_color: 0, 0, 0, 0
-        font_name: "Roboto"
-        on_release:
-            root.manager.transition.direction = "down"
-            root.manager.current = "register_page2"
-        canvas.before:
-            Color:
-                rgb: rgba(255, 0, 0, 255)
-            RoundedRectangle:
-                size: self.size
-                pos: self.pos
-                radius: [5]
+        halign:'center'
+    BoxLayout:
+        orientation: 'vertical'
+        size_hint_y: None
+        height: dp(60)
+        padding: dp(10)
+        spacing: dp(10)
+        MDFlatButton:
+            disabled: False
+            size_hint: .4, None
+            height:dp(40) # Adjusted size
+            pos_hint:{'center_x':.5,'center_y':.5}
+            md_bg_color: 1, 0, 0, 1
+            elevation: 10
+            text: "CONFIRM"
+            font_name: "Roboto-bold"
+            halign: "center"
+            text_color: 1, 1, 1, 1
+            theme_text_color: "Custom"
+            on_release:
+                root.manager.transition.direction = "down"
+                root.manager.current = "register_page2"
