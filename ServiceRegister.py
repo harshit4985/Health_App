@@ -297,12 +297,21 @@ class RegisterPage2(MDScreen):
         if checkbox_value == 'Hospital':
             print(f"Selected service provider type: {checkbox_value}")
             add_branch_button.disabled = not checkbox.active
+            if checkbox.active:
+                self.ids.plus_icon_h.text_color = (1, 0, 0, 1)
+                self.ids.add_text_h.text_color = (1, 0, 0, 1)
         elif checkbox_value == 'Mobile-Hospital':
             print(f"Selected service provider type: {checkbox_value}")
             add_branch_button.disabled = not checkbox.active
+            if checkbox.active:
+                self.ids.plus_icon_m_h.text_color = (1, 0, 0, 1)
+                self.ids.add_text_m_h.text_color = (1, 0, 0, 1)
         elif checkbox_value == 'Oxi-Gym':
             print(f"Selected service provider type: {checkbox_value}")
             add_branch_button.disabled = not checkbox.active
+            if checkbox.active:
+                self.ids.plus_icon_o_g.text_color = (1, 0, 0, 1)
+                self.ids.add_text_o_g.text_color = (1, 0, 0, 1)
         else:
             print(f"Selected service provider type: {checkbox_value}")
 
