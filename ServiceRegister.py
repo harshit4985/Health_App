@@ -163,18 +163,18 @@ class BaseRegistrationScreen(MDScreen):
         self.file_manager.close()
 
     def new_file_chooser(self):
-        self.file_chooser = FileChooserListView(filters=["*.pdf", "*.doc", "*.docx", "*.png", "*.jpg"])
+        self.file_chooser = FileChooserListView()
         upload_button = Button(text="Upload",
                                size_hint=(None, None),
-                               size=(100, 50),
-                               pos_hint={'right': 1, 'bottom': 1},
+                               size=(100, 30),
+                               pos_hint={'right': 0.7, 'bottom': 1},
                                on_press=lambda btn: self.new_upload_file(self.file_chooser.selection[0],popup))
 
         popup_layout = BoxLayout(orientation="vertical")
         popup_layout.add_widget(self.file_chooser)
         popup_layout.add_widget(upload_button)
 
-        popup = Popup(title="Choose a file", content=popup_layout, size_hint=(0.9, 0.9), background_color=(1,1,1,1))
+        popup = Popup(title="Choose a file", content=popup_layout, size_hint=(0.9, 0.9), background_color=(0,0,0,1))
         popup.open()
 
     def new_upload_file(self,selected_file, popup):
