@@ -488,6 +488,10 @@ class GymContent(BaseRegistrationScreen):
         return super().validate_content(tablename='oxi_gym')
 
 
+class Documents(MDScreen):
+    pass
+
+
 class HospitalListTable(MDScreen):
     def __init__(self, **kwargs):
         super(HospitalListTable, self).__init__(**kwargs)
@@ -497,8 +501,8 @@ class HospitalListTable(MDScreen):
         # self.height = "300dp"
         initial_data = self.fetch_initial_data()
         self.data_tables = MDDataTable(
-            pos_hint={"center_y": 0.7, "center_x": 0.5},
-            size_hint=(.9, None),
+            pos_hint={"center_y": 0.5, "center_x": 0.5},
+            size_hint=(.9, .6),
             use_pagination=True,
             pagination_menu_pos="center",
             elevation=0,
@@ -512,10 +516,9 @@ class HospitalListTable(MDScreen):
             row_data=initial_data,
 
         )
-        self.update_table_height()
         # Creating control buttons.
         button_box = MDBoxLayout(
-            pos_hint={"center_x": 0.5, "center_y": .5},
+            pos_hint={"center_x": .5},
             adaptive_size=True,
             padding="24dp",
             spacing="24dp",
@@ -523,7 +526,7 @@ class HospitalListTable(MDScreen):
 
         button_box.add_widget(
             MDRaisedButton(
-                text='Delete', on_release=self.on_button_press
+                text='Delete', on_release=self.on_button_press, pos_hint={"center_x": .5},
             )
         )
 
@@ -577,7 +580,6 @@ class HospitalListTable(MDScreen):
                 self.data_tables.row_data.remove(checked_row)
 
         Clock.schedule_once(deselect_rows)
-        self.update_table_height()
 
     def update_table_height(self):
         # Calculate the height of the table based on the number of rows and other parameters
