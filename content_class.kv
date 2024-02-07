@@ -830,12 +830,6 @@
     name:'register_page2'
     BoxLayout:
         orientation: 'vertical'
-        MDLabel:
-            text: " "
-            font_name: "Broboto"
-            pos_hint: {"center_x":.6,"center_y": .95}
-            size_hint_y:.1
-            font_size: "18sp"
         ScrollView:
             GridLayout:
                 id: grid
@@ -844,21 +838,38 @@
                 spacing: dp(20)
                 size_hint_y: None
                 height: self.minimum_height
+                MDLabel:
+                    text: "Select Service Provider Types"
+                    font_name: "Roboto"
+                    theme_text_color: "Custom"
+                    text_color: 0, 0, 0, 1
+                    font_style: "H6"
+                    font_size: "22sp"
+                    halign: "center"
+                    valign: "middle"
+                    size_hint_y: None
+                    height: dp(40)
+
+                    canvas.before:
+                        Color:
+                            rgba: 1, 0, 0, 1
+                        Line:
+                            points: self.x, self.y, self.x + self.width, self.y
+                            width: 2
+                MDBoxLayout:
+                    orientation: 'horizontal'
+                    size_hint_y: None
+                    height: dp(40)
+                    canvas.before:
+                        Color:
+                            rgba: 0, 0, 0, 1  # Red color
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
                 MDBoxLayout:
                     orientation: 'vertical'
                     size_hint_y: None
                     height: self.minimum_height
-                    BoxLayout:
-                        orientation: 'horizontal'
-                        font_name: "Roboto"
-                        pos_hint:{'center_x':.5}
-                        size_hint:.7,None
-                        height: "30dp"
-                        MDLabel:
-                            pos_hint:{'center_x':.5}
-                            text: 'Select service provider types.'
-                            font_size:'18sp'
-                            font_name: "Roboto"
                     BoxLayout:
                         orientation: 'horizontal'
                         font_name: "Roboto"
@@ -1028,27 +1039,6 @@
                             font_name: "Roboto"
                             size_hint:.2,None
                             halign:'center'
-
-
-                    Button:
-                        id: list_preview
-                        text: "Preview"
-                        size_hint: .4,None
-                        height:dp(30)
-                        pos_hint: {"center_x": .5, "center_y": 1}
-                        background_color: 0, 0, 0, 0
-                        font_name: "Roboto"
-                        color: rgba(255, 0, 0, 255)
-
-                        on_release:
-                            root.manager.transition.direction = "up"
-                            root.manager.current = "list_content"
-                        canvas.before:
-                            Color:
-                                rgb: rgba(255, 0, 0, 255)
-                            Line:
-                                width: 1.2
-                                rounded_rectangle: self.x, self.y, self.width, self.height, 5, 5, 5, 5, 100
                     BoxLayout:
                         orientation: 'horizontal'
                         font_name: "Roboto"
@@ -1059,29 +1049,82 @@
                         HorizontalLineWidget:
                             size_hint:.9,None
                             pos_hint:{'center_y':.5}
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: self.minimum_height
+            padding: dp(20)
+            spacing: dp(10)
+             # next button
+            BoxLayout:
+                orientation: 'horizontal'
+                spacing: 0
+                MDFlatButton:
+                    disabled: False
+                    size_hint: None, None
+                    size: dp(120), dp(40) # Adjusted size
+                    halign: "left"
+                    pos_hint: {'x': 0, 'y': 0}
+                    md_bg_color: 0, 0, 0, 0
+                    on_release:
+                        root.manager.transition.direction = "right"
+                        root.manager.current = "service_register"
+                    canvas.before:
+                        Color:
+                            rgba: 1, 0, 0, 1
+                        Line:
+                            width: 2
+                            rounded_rectangle: (self.x, self.y, self.width, self.height, dp(30))
                     BoxLayout:
-                        orientation: 'vertical'
-                        size_hint_y: None
-                        height: self.minimum_height
-                        padding: dp(20)
-                        spacing: dp(10)
-                        # signup button
-                    Button:
-                        id: register_submit
-                        text: "REGISTER"
-                        size_hint: .6,None
-                        height:dp(30)
-                        pos_hint: {"center_x": .5, "center_y": 1}
-                        background_color: 0, 0, 0, 0
-                        font_name: "Roboto"
-                        on_release:root.register_validation()
-                        canvas.before:
-                            Color:
-                                rgb: rgba(255, 0, 0, 255)
-                            RoundedRectangle:
-                                size: self.size
-                                pos: self.pos
-                                radius: [5]
+                        orientation: 'horizontal'
+                        spacing: 10
+                        MDIcon:
+                            icon: "arrow-left-bold"
+                            halign: "center"
+                            theme_text_color: "Custom"
+                            text_color: 1, 0, 0, 1
+                            size_hint_x: None
+                            width: dp(24)
+                        MDLabel:
+                            text: "GO Back"
+                            font_name: "Roboto-bold"
+                            halign: "center"
+                            text_color: 1, 0, 0, 1
+                            theme_text_color: "Custom"
+
+            MDFlatButton:
+                disabled: False
+                size_hint: None, None
+                size: dp(120), dp(40) # Adjusted size
+                halign: "left"
+                pos_hint: {'right': 1, 'y': 0}
+                md_bg_color: 0, 0, 0, 0
+                on_release:
+                    root.manager.transition.direction = "left"
+                    root.manager.current = "list_content"
+                canvas.before:
+                    Color:
+                        rgba: 1, 0, 0, 1
+                    Line:
+                        width: 2
+                        rounded_rectangle: (self.x, self.y, self.width, self.height, dp(30))
+                BoxLayout:
+                    orientation: 'horizontal'
+                    spacing: 0
+                    MDLabel:
+                        text: "Preview"
+                        font_name: "Roboto-bold"
+                        halign: "center"
+                        text_color: 1, 0, 0, 1
+                        theme_text_color: "Custom"
+                    MDIcon:
+                        icon: "arrow-right-bold"
+                        halign: "center"
+                        theme_text_color: "Custom"
+                        text_color: 1, 0, 0, 1
+                        size_hint_x: None
+                        width: dp(24)
+
 
 <HospitalListTable>
     name:'list_content'
