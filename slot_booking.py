@@ -1,4 +1,5 @@
 import cProfile
+import sqlite3
 from datetime import datetime
 from anvil.tables import app_tables
 from kivy.clock import Clock
@@ -12,13 +13,36 @@ from kivymd.uix.label import MDLabel
 from kivymd.uix.pickers import MDDatePicker
 from kivymd.uix.screen import MDScreen
 
-Builder.load_file("slot_booking.kv")
+# Create the BookSlot table if it doesn't exist
+
+conn = sqlite3.connect("users.db")
+cursor = conn.cursor()
+cursor.execute('''
+    CREATE TABLE IF NOT EXISTS BookSlot (
+        slot_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER NOT NULL,
+        username TEXT NOT NULL,
+        book_date TEXT NOT NULL,
+        book_time TEXT NOT NULL,
+        FOREIGN KEY (user_id) REFERENCES users (id)
+    )
+''')
+conn.commit()
+
+# Builder.load_file("slot_booking.kv")
+
+
 class S_button(MDRaisedButton):
     pass
+
+
 class S_layout(BoxLayout):
     pass
+
+
 class S_label(MDLabel):
     pass
+
 
 class Slot_Booking(MDScreen):
     time_slots = ['9am - 11am', '11am - 1pm', '1pm - 3pm', '3pm - 5pm', '5pm - 7pm', '7pm - 9pm']
@@ -44,6 +68,7 @@ class Slot_Booking(MDScreen):
                 self.ids[slot].md_bg_color = (1, 1, 1, 1)
             else:
                 self.ids[slot].md_bg_color = (1, 0, 0, 1)
+
     def slot_date_picker(self):
         current_date = datetime.now().date()
         date_dialog = MDDatePicker(year=current_date.year, month=current_date.month, day=current_date.day,
@@ -81,8 +106,6 @@ class Slot_Booking(MDScreen):
                                    size_hint=(None, None), size=(150, 150))
         date_dialog.bind(on_save=self.slot_save, on_cancel=self.slot_cancel)
         date_dialog.open()
-
-
 
     def pay_now(self, instance, *args):
         session_date = self.ids.date_choosed.text

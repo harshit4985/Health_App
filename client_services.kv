@@ -1,5 +1,4 @@
 <Client_services>:
-    name: "client_services"
     ScreenManager:
         id: screen_manager
         NavigationDrawerScreen:
@@ -13,7 +12,7 @@
                         font_name: "Roboto"
                         md_bg_color: 1, 0, 0, 1
                         left_action_items: [["menu", lambda x: nav_drawer.set_state()]]
-                        right_action_items: [["map-marker", lambda x: app.client_services1()]]
+                        right_action_items: [["map-marker", lambda x: root.location_screen()]]
                     ScrollView:
                         GridLayout:
                             id: card_grid

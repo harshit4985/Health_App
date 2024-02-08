@@ -1,0 +1,324 @@
+<HorizontalLineWidget>:
+    canvas:
+        Color:
+            rgba: 0.5, 0.5, 0.5, 1  # Set the color of the line (Blue in this example)
+        Line:
+            points: self.x, self.center_y, self.right, self.center_y  # Define the coordinates of the line
+
+<ServiceRegisterForm1>:
+    BoxLayout:
+        orientation: 'vertical'
+        ScrollView:
+            GridLayout:
+                id: grid
+                cols: 1
+                padding: dp(10)
+                spacing: dp(20)
+                size_hint_y: None
+                height: self.minimum_height
+                MDLabel:
+                    text: "Select Service Provider Types"
+                    font_name: "Roboto"
+                    theme_text_color: "Custom"
+                    text_color: 0, 0, 0, 1
+                    font_style: "H6"
+                    font_size: "22sp"
+                    halign: "center"
+                    valign: "middle"
+                    size_hint_y: None
+                    height: dp(30)
+                    canvas.before:
+                        Color:
+                            rgba: 1, 0, 0, 1
+                        Line:
+                            points: self.x, self.y, self.x + self.width, self.y
+                            width: 2
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    size_hint_y: None
+                    height: self.minimum_height
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        font_name: "Roboto"
+                        pos_hint:{'center_x':.5}
+                        spacing:dp(10)
+                        size_hint:.7,None
+                        height: "30dp"
+                        MDCheckbox:
+                            id:hospital_manager
+                            size_hint: None, None
+                            size: dp(48), dp(48)
+                            color_active: "red"
+                            pos_hint: { 'center_y': .5}
+                            on_active: root.on_checkbox_active(hospital_manager,'Hospital',add_hospital_button)
+                        MDLabel:
+                            text: 'Hospital'
+                            font_size:'16sp'
+                            font_name: "Roboto"
+                        MDFlatButton:
+                            id: add_hospital_button
+                            size_hint: None, None
+                            pos_hint: { 'center_y': .5}
+                            spacing:0
+                            padding:0
+                            disabled: True
+                            on_release:
+                                root.manager.transition.direction = "left"
+                                root.manager.current = "hospital_content"
+                            BoxLayout:
+                                orientation: 'horizontal'
+                                spacing:0
+                                padding:0
+                                MDIcon:
+                                    id: plus_icon_h
+                                    icon: "plus"
+                                    theme_text_color: "Custom"
+                                    text_color: 0, 0, 0, .5
+                                    size_hint_x: None
+                                    width: dp(24)
+                                MDLabel:
+                                    id: add_text_h
+                                    text: "Add"
+                                    font_name: "Roboto"
+                                    font_size:'16sp'
+                                    text_color: 0, 0, 0, .5
+                                    theme_text_color: "Custom"
+                    Widget:  # Spacer widget for gap
+                        size_hint_y: None
+                        height: dp(20)
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        font_name: "Roboto"
+                        pos_hint:{'center_x':.5}
+                        size_hint:.7,None
+                        height: "30dp"
+                        spacing:dp(5)
+                        MDCheckbox:
+                            id:mobile_hospital_manager
+                            size_hint: None, None
+                            size: dp(48), dp(48)
+                            color_active: "red"
+                            pos_hint: { 'center_y': .5}
+                            on_active: root.on_checkbox_active(mobile_hospital_manager,'Mobile-Hospital',add_mobile_hospital_button)
+                        MDLabel:
+                            text: 'Mobile-Hospital'
+                            font_size:'16sp'
+                            font_name: "Roboto"
+                        MDFlatButton:
+                            id: add_mobile_hospital_button
+                            size_hint: None, None
+                            pos_hint: { 'center_y': .5}
+                            disabled: True
+                            spacing:0
+                            padding:0
+                            on_release:
+                                root.manager.transition.direction = "left"
+                                root.manager.current = "mobile_hospital_content"
+                            BoxLayout:
+                                orientation: 'horizontal'
+                                spacing:0
+                                padding:0
+                                MDIcon:
+                                    id: plus_icon_m_h
+                                    icon: "plus"
+                                    theme_text_color: "Custom"
+                                    text_color: 0, 0, 0, .5
+                                    size_hint_x: None
+                                    width: dp(24)
+                                MDLabel:
+                                    id: add_text_m_h
+                                    text: "Add"
+                                    font_name: "Roboto"
+                                    font_size:'16sp'
+                                    text_color: 0, 0, 0, .5
+                                    theme_text_color: "Custom"
+                    Widget:  # Spacer widget for gap
+                        size_hint_y: None
+                        height: dp(20)
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        font_name: "Roboto"
+                        pos_hint:{'center_x':.5}
+                        size_hint:.7,None
+                        height: "30dp"
+                        spacing:dp(10)
+                        MDCheckbox:
+                            id:oxigym_manager
+                            size_hint: None, None
+                            size: dp(48), dp(48)
+                            pos_hint: { 'center_y': .5}
+                            color_active: "red"
+                            on_active: root.on_checkbox_active(oxigym_manager,'Oxi-Gym',add_oxigym_button)
+                        MDLabel:
+                            text: 'Oxi-Gym'
+                            font_size:'16sp'
+                            font_name: "Roboto"
+                        MDFlatButton:
+                            id: add_oxigym_button
+                            size_hint: None, None
+                            pos_hint: { 'center_y': .5}
+                            disabled: True
+                            spacing:0
+                            padding:0
+                            on_release:
+                                root.manager.transition.direction = "left"
+                                root.manager.current = "oxigym_content"
+                            BoxLayout:
+                                orientation: 'horizontal'
+                                spacing:0
+                                padding:0
+                                MDIcon:
+                                    id: plus_icon_o_g
+                                    icon:"plus"
+                                    theme_text_color: "Custom"
+                                    text_color: 0, 0, 0, .5
+                                    size_hint_x: None
+                                    width: dp(24)
+                                MDLabel:
+                                    id: add_text_o_g
+                                    text: "Add"
+                                    font_name: "Roboto"
+                                    font_size:'16sp'
+                                    text_color: 0, 0, 0, .5
+                                    theme_text_color: "Custom"
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        font_name: "Roboto"
+                        pos_hint:{'center_x':.5}
+                        size_hint:.7,None
+                        height: "20dp"
+                        height: "10dp"
+                        HorizontalLineWidget:
+                            size_hint:.9,None
+                            pos_hint:{'center_y':.5}
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        pos_hint:{'center_x':.5}
+                        size_hint:.7,None
+                        height: "30dp"
+                        MDLabel:
+                            text: "You added"
+                            font_size:'16sp'
+                            font_name: "Broboto"
+                            halign:'center'
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        font_name: "Roboto"
+                        pos_hint:{'center_x':.5}
+                        spacing:dp(10)
+                        size_hint:.7,None
+                        height: "60dp"
+                        MDLabel:
+                            text: '0  Hospitals'
+                            font_size:'16sp'
+                            font_name: "Roboto"
+                            size_hint:.7,None
+
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        font_name: "Roboto"
+                        pos_hint:{'center_x':.5}
+                        size_hint:.7,None
+                        height: "30dp"
+                        spacing:dp(10)
+                        MDLabel:
+                            text: "0  Mobile-Hospitals"
+                            font_size:'16sp'
+                            font_name: "Roboto"
+                            size_hint:.7,None
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        font_name: "Roboto"
+                        pos_hint:{'center_x':.5}
+                        size_hint:.7,None
+                        height: "30dp"
+                        spacing:dp(10)
+                        MDLabel:
+                            text: "0  Oxi-Gyms"
+                            font_size:'16sp'
+                            font_name: "Roboto"
+                            size_hint:.7,None
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        font_name: "Roboto"
+                        pos_hint:{'center_x':.5}
+                        size_hint:.7,None
+                        height: "5dp"
+                        HorizontalLineWidget:
+                            size_hint:.9,None
+                            pos_hint:{'center_y':.5}
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: self.minimum_height
+            padding: dp(20)
+            spacing: dp(10)
+             # next button
+            BoxLayout:
+                orientation: 'horizontal'
+                spacing: 0
+                MDFlatButton:
+                    disabled: False
+                    size_hint: None, None
+                    size: dp(120), dp(40) # Adjusted size
+                    halign: "left"
+                    pos_hint: {'x': 0, 'y': 0}
+                    md_bg_color: 0, 0, 0, 0
+                    on_release:
+                        root.manager.transition.direction = "right"
+                        root.manager.current = "service_register"
+                    canvas.before:
+                        Color:
+                            rgba: 1, 0, 0, 1
+                        Line:
+                            width: 2
+                            rounded_rectangle: (self.x, self.y, self.width, self.height, dp(30))
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        spacing: 10
+                        MDIcon:
+                            icon: "arrow-left-bold"
+                            halign: "center"
+                            theme_text_color: "Custom"
+                            text_color: 1, 0, 0, 1
+                            size_hint_x: None
+                            width: dp(24)
+                        MDLabel:
+                            text: "GO Back"
+                            font_name: "Broboto"
+                            halign: "center"
+                            text_color: 1, 0, 0, 1
+                            theme_text_color: "Custom"
+
+            MDFlatButton:
+                disabled: False
+                size_hint: None, None
+                size: dp(120), dp(40) # Adjusted size
+                halign: "left"
+                pos_hint: {'right': 1, 'y': 0}
+                md_bg_color: 0, 0, 0, 0
+                on_release:
+                    root.manager.transition.direction = "left"
+                    root.manager.current = "list_content"
+                canvas.before:
+                    Color:
+                        rgba: 1, 0, 0, 1
+                    Line:
+                        width: 2
+                        rounded_rectangle: (self.x, self.y, self.width, self.height, dp(30))
+                BoxLayout:
+                    orientation: 'horizontal'
+                    spacing: 0
+                    MDLabel:
+                        text: "Preview"
+                        font_name: "Broboto"
+                        halign: "center"
+                        text_color: 1, 0, 0, 1
+                        theme_text_color: "Custom"
+                    MDIcon:
+                        icon: "arrow-right-bold"
+                        halign: "center"
+                        theme_text_color: "Custom"
+                        text_color: 1, 0, 0, 1
+                        size_hint_x: None
+                        width: dp(24)

@@ -1,5 +1,4 @@
-MDScreen:
-    name: "main_screen"
+<MainScreen>:
     MDFloatLayout:
         md_bg_color: 1,1,1,1
         Image:
@@ -32,9 +31,7 @@ MDScreen:
             pos_hint: {"center_x": .5, "center_y": .18}
             background_color: 0, 0, 0, 0
             font_name: "Roboto"
-            on_release:
-                root.manager.transition.direction = "left"
-                root.manager.current = "login"
+            on_release: root.manager.push("login")
             canvas.before:
                 Color:
                     rgb: rgba(255, 0, 0, 255)
@@ -49,9 +46,7 @@ MDScreen:
             background_color: 0, 0, 0, 0
             font_name: "Roboto"
             color: rgba(255, 0, 0, 255)
-            on_release:
-                root.manager.transition.direction = "left"
-                root.manager.current = "signup"
+            on_release: root.manager.push("signup")
             canvas.before:
                 Color:
                     rgb: rgba(255, 0, 0, 255)

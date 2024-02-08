@@ -6,7 +6,6 @@ from kivymd.uix.screen import MDScreen
 import json
 from urllib.request import urlopen
 
-Builder.load_file("client_services1.kv")
 
 
 class Location(MDScreen):

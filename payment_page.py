@@ -1,3 +1,4 @@
+import sqlite3
 import webbrowser
 
 import razorpay
@@ -11,9 +12,21 @@ from kivymd.app import MDApp
 import anvil
 
 
-Builder.load_file("payment_page.kv")
-
 class Payment(MDScreen):
+    # def payment_page_backButton(self):
+    #     # Extract the username from menu_profile
+    #     self.screen = Builder.load_file("menu_profile.kv")
+    #     screen = self.root.get_screen('menu_profile')
+    #     username = screen.ids.username.text
+    #     print(username)
+    #     conn = sqlite3.connect("users.db")
+    #     cursor = conn.cursor()
+    #     # Execute the SQL DELETE statement
+    #     cursor.execute("DELETE FROM BookSlot WHERE username = ?", (username,))
+    #     # Commit the changes and close the connection
+    #     conn.commit()
+    #     self.root.transition.direction='right'
+    #     self.root.current = 'slot_booking'
     def razor_pay(self, instance):
         client = razorpay.Client(auth=('rzp_test_kOpS7Ythlfb1Ho', 'OzPZyPbsOV0AlADilk4wkgv9'))
 

@@ -1,6 +1,4 @@
-#hospital_book.kv
-MDScreen:
-    name:'hospital_book'
+<BookingInfo>:
     MDNavigationLayout:
         ScreenManager:
             Screen:
@@ -9,7 +7,7 @@ MDScreen:
 
                     MDTopAppBar:
                         md_bg_color: 1, 0, 0, 1
-                        left_action_items: [["arrow-left", lambda x: app.back_button_hospital_book()]]
+                        left_action_items: [["arrow-left", lambda x: root.back_button_hospital_book()]]
                     ScrollView:
                         GridLayout:
                             cols: 1

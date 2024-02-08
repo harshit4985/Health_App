@@ -1,0 +1,27 @@
+{
+    "main_sc": {
+        "import": "from main_sc import MainScreen",
+        "object": "MainScreen()",
+        "kv": "main_sc.kv"
+    },
+    "login": {
+        "import": "from login import Login",
+        "object": "Login()",
+        "kv": "login.kv"
+    },
+    "signup": {
+        "import": "from signup import Signup",
+        "object": "Signup()",
+        "kv": "signup.kv"
+    },
+    "client_services": {
+        "import": "from client_services import Client_services",
+        "object": "Client_services()",
+        "kv": "client_services.kv"
+    },
+    "hospital_booking": {
+        "import": "from hospital_booking import BookingInfo",
+        "object": "BookingInfo()",
+        "kv": "hospital_booking.kv"
+    }
+}
