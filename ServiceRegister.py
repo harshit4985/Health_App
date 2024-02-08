@@ -1,9 +1,5 @@
 import re
 import sqlite3
-
-# from android.permissions import request_permissions, Permission
-from anvil import BlobMedia
-from anvil.tables import app_tables
 from kivy.clock import Clock
 from kivy.core.window import Window
 from kivy.lang import Builder
@@ -12,28 +8,19 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.filechooser import FileChooserListView
 from kivy.uix.popup import Popup
-from kivy.uix.screenmanager import ScreenManager, Screen
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.button import MDFlatButton, MDRaisedButton
 from kivymd.uix.datatables import MDDataTable
-from kivymd.uix.dialog import MDDialog
 from kivymd.uix.floatlayout import MDFloatLayout
-from kivymd.uix.label import MDLabel
 from kivymd.uix.screen import MDScreen
-from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.pickers import MDDatePicker
-from kivy.properties import ObjectProperty
 from kivymd.uix.filemanager import MDFileManager
 from kivymd.app import MDApp
-import anvil.server
-import anvil.media
 import os
-import requests
-from kivymd.uix.scrollview import MDScrollView
 
 Builder.load_file('service_register.kv')
 kv = Builder.load_file('content_class.kv')
-conn = sqlite3.connect("user.db")
+conn = sqlite3.connect("users.db")
 cursor = conn.cursor()
 
 # Creating the hospital_table
@@ -86,9 +73,6 @@ conn.close()
 
 
 class BaseRegistrationScreen(MDScreen):
-    def request_permissions(self):
-        request_permissions([Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE])
-
     def show_date_picker(self, arg):
         date_dialog = MDDatePicker(size_hint=(None, None), size=(150, 150))
         date_dialog.bind(on_save=self.on_save, on_cancel=self.on_cancel)
@@ -183,7 +167,7 @@ class BaseRegistrationScreen(MDScreen):
             with open(selected_file, "rb") as file:
                 file_data = file.read()
                 # Now you have the file data, you can upload it to your database
-                conn = sqlite3.connect('docs.db')
+                conn = sqlite3.connect('users.db')
                 cursor = conn.cursor()
                 # Create table if it doesn't exist
                 cursor.execute('''CREATE TABLE IF NOT EXISTS files
@@ -264,7 +248,7 @@ class BaseRegistrationScreen(MDScreen):
             print(self.file_data2)
             if tablename == 'hospital':
                 print('HospitalContent')
-                conn = sqlite3.connect("user.db")
+                conn = sqlite3.connect("users.db")
                 cursor = conn.cursor()
                 # Inserting data into the specified table
                 cursor.execute(f''' INSERT INTO hospital_table (hospital_name ,established_year , District, State, 
@@ -281,7 +265,7 @@ class BaseRegistrationScreen(MDScreen):
                 return True
             elif tablename == 'mobile_hospital':
                 print('MobileCareContent')
-                conn = sqlite3.connect("user.db")
+                conn = sqlite3.connect("users.db")
                 cursor = conn.cursor()
                 # Inserting data into the specified table
                 cursor.execute(f'''
@@ -299,7 +283,7 @@ class BaseRegistrationScreen(MDScreen):
 
             elif tablename == 'oxi_gym':
                 print('GymContent')
-                conn = sqlite3.connect("user.db")
+                conn = sqlite3.connect("users.db")
                 cursor = conn.cursor()
                 # Inserting data into the specified table
                 cursor.execute(f'''
@@ -583,7 +567,7 @@ class HospitalListTable(MDScreen):
     def fetch_initial_data(self):
         # Connect to your database and fetch data
         # Replace this with your actual database connection and query logic
-        connection = sqlite3.connect('user.db')
+        connection = sqlite3.connect('users.db')
         cursor = connection.cursor()
 
         # Example query: Fetch all rows from the database
@@ -601,7 +585,7 @@ class HospitalListTable(MDScreen):
         checked_rows = self.data_tables.get_row_checks()
 
         # Connect to the database and delete selected rows
-        connection = sqlite3.connect('user.db')
+        connection = sqlite3.connect('users.db')
         cursor = connection.cursor()
 
         for checked_row in checked_rows:

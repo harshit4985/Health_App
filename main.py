@@ -18,8 +18,6 @@ from payment_page import Payment
 from client_services import Client_services, Profile, Booking, Notification, Report
 
 # from kivyauth.google_auth import initialize_google,login_google,logout_google
-from kivy.graphics import Mesh, Color
-from kivy.uix.widget import Widget
 from kivy.lang import Builder
 from kivymd.app import MDApp
 from kivy.core.window import Window
@@ -37,7 +35,7 @@ import razorpay
 import sqlite3
 from kivymd.uix.floatlayout import MDFloatLayout
 
-Window.size = (320, 580)
+Window.size = (380, 720)
 
 # SQLite database setup
 conn = sqlite3.connect("users.db")
@@ -66,12 +64,6 @@ cursor.execute('''
 ''')
 
 conn.commit()
-
-# if platform == "android":
-#     from android.permissions import Permission, request_permissions
-#
-#     request_permissions([Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE, SEND_SMS])
-
 
 class ProfileCard(MDFloatLayout, CommonElevationBehavior):
     pass
