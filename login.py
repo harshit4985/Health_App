@@ -3,14 +3,25 @@ import sqlite3
 import anvil
 import requests
 from anvil.tables import app_tables
-from kivy.lang import Builder
-from kivymd.app import MDApp
+from kivy.core.window import Window
 from kivymd.uix.screen import MDScreen
 
 from server import Server
 
 
 class Login(MDScreen):
+    def __init__(self, **kwargs):
+        super(Login, self).__init__(**kwargs)
+        Window.bind(on_keyboard=self.on_keyboard)
+
+    def on_keyboard(self, instance, key, scancode, codepoint, modifier):
+        if key == 27:  # Keycode for the back button on Android
+            self.on_back_button()
+            return True
+        return False
+
+    def on_back_button(self):
+        self.manager.pop()
 
     # def google_sign_in(self):
     #     # Set up the OAuth 2.0 client ID and client secret obtained from the Google Cloud Console
@@ -141,58 +152,4 @@ class Login(MDScreen):
                 self.ids.login_email.error = True
                 self.ids.login_email.helper_text = "Invalid email or password"
                 self.ids.login_password.error = True
-
-        # self.ids.login_spinner.active = True
-        # server = Server()
-        # connection = server.get_database_connection()
-        # user_anvil = None
-        # user_sqlite = None
-        # try:
-        #
-        #     if server.is_connected():
-        #         # Fetch user from Anvil's database
-        #         user_anvil = app_tables.users.get(
-        #             email=email,
-        #             password=password,
-        #         )
-        #     else:
-        #         # Fetch user from SQLite database
-        #         cursor = connection.cursor()
-        #         cursor.execute('''
-        #                     SELECT * FROM users
-        #                     WHERE email = ? AND password = ?
-        #                 ''', (email, password))
-        #         user_sqlite = cursor.fetchone()
-        # finally:
-        #     # Close the connection
-        #     if connection and server.is_connected():
-        #         connection.close()
-        # if user_anvil or user_sqlite:
-        #     print("Login successful.")
-        #     self.manager.load_screen("menu_profile")
-        #     self.manager.push_replacement("client_services")
-        #     if user_anvil:
-        #         username = str(user_anvil["username"])
-        #         email = str(user_anvil["email"])
-        #         phone = str(user_anvil["phone"])
-        #         pincode = str(user_anvil["pincode"])
-        #     elif user_sqlite:
-        #         username = str(user_sqlite[1])
-        #         email = str(user_sqlite[2])
-        #         phone = str(user_sqlite[4])
-        #         pincode = str(user_sqlite[5])
-        #     screen = self.manager.get_screen('menu_profile')
-        #     screen.ids.username.text = f"Username : {username}"
-        #     screen.ids.email.text = f"Email : {email}"
-        #     screen.ids.phone.text = f"Phone no : {phone}"
-        #     screen.ids.pincode.text = f"Pincode : {pincode}"
-        #     screen1 = self.manager.get_screen('client_services')
-        #     screen1.ids.username.text = username
-        #     screen1.ids.email.text = email
-        #
-        # else:
-        #     # Login failed
-        #     self.ids.login_email.error = True
-        #     self.ids.login_email.helper_text = "Invalid email or password"
-        #     self.ids.login_password.error = True
 

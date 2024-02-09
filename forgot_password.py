@@ -3,7 +3,7 @@ import re
 import anvil
 from anvil.tables import app_tables
 from kivy.clock import Clock
-from kivy.lang import Builder
+from kivy.core.window import Window
 from kivymd.app import MDApp
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.screen import MDScreen
@@ -24,6 +24,18 @@ except Exception as e:
 
 
 class ForgotPassword(MDScreen):
+    def __init__(self, **kwargs):
+        super(ForgotPassword, self).__init__(**kwargs)
+        Window.bind(on_keyboard=self.on_keyboard)
+
+    def on_keyboard(self, instance, key, scancode, codepoint, modifier):
+        if key == 27:  # Keycode for the back button on Android
+            self.on_back_button()
+            return True
+        return False
+
+    def on_back_button(self):
+        self.manager.pop()
 
     def show_validation_dialog(self, message):
         # Create the dialog asynchronously

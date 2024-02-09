@@ -1,7 +1,5 @@
 import os
 import sqlite3
-
-from kivymd.tools.hotreload.app import MDApp
 from kivymd.uix.filemanager import MDFileManager
 from kivymd.uix.pickers import MDDatePicker
 from kivymd.uix.screen import MDScreen

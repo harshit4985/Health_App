@@ -37,7 +37,7 @@
     "menu_bookings": {
         "import": "from menu_bookings import Booking",
         "object": "Booking()",
-        "kv": "menu_bookings.py"
+        "kv": "menu_bookings.kv"
     },
     "menu_reports": {
         "import": "from menu_reports import Report",

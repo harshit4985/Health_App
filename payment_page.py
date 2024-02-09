@@ -1,18 +1,29 @@
-import sqlite3
 import webbrowser
 
 import razorpay
 from anvil.tables import app_tables
-from kivy.lang import Builder
+from kivy.core.window import Window
 from kivymd.uix.screen import MDScreen
 from kivymd.uix.button import MDFlatButton
 from kivymd.uix.dialog import MDDialog
 from kivy.clock import Clock
-from kivymd.app import MDApp
 import anvil
 
 
 class Payment(MDScreen):
+    def __init__(self, **kwargs):
+        super(Payment, self).__init__(**kwargs)
+        Window.bind(on_keyboard=self.on_keyboard)
+
+    def on_keyboard(self, instance, key, scancode, codepoint, modifier):
+        if key == 27:  # Keycode for the back button on Android
+            self.on_back_button()
+            return True
+        return False
+
+    def on_back_button(self):
+        self.manager.pop()
+
     # def payment_page_backButton(self):
     #     # Extract the username from menu_profile
     #     self.screen = Builder.load_file("menu_profile.kv")
