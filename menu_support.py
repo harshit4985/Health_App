@@ -1,11 +1,23 @@
-from kivy.lang import Builder
-from kivymd.app import MDApp
+from kivy.core.window import Window
 from kivymd.uix.button import MDFlatButton
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.screen import MDScreen
 
 
 class SupportPage(MDScreen):
+    def __init__(self, **kwargs):
+        super(SupportPage, self).__init__(**kwargs)
+        Window.bind(on_keyboard=self.on_keyboard)
+
+    def on_keyboard(self, instance, key, scancode, codepoint, modifier):
+        if key == 27:  # Keycode for the back button on Android
+            self.on_back_button()
+            return True
+        return False
+
+    def on_back_button(self):
+        self.manager.pop()
+
     def support_back(self):
         self.manager.pop()
         screen = self.manager.get_screen('client_services')

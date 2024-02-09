@@ -55,9 +55,7 @@
                             spacing:0
                             padding:0
                             disabled: True
-                            on_release:
-                                root.manager.transition.direction = "left"
-                                root.manager.current = "hospital_content"
+                            on_release: root.manager.push("service_hospital")
                             BoxLayout:
                                 orientation: 'horizontal'
                                 spacing:0
@@ -104,9 +102,7 @@
                             disabled: True
                             spacing:0
                             padding:0
-                            on_release:
-                                root.manager.transition.direction = "left"
-                                root.manager.current = "mobile_hospital_content"
+                            on_release: root.manager.push("service_mobile_hospital")
                             BoxLayout:
                                 orientation: 'horizontal'
                                 spacing:0
@@ -153,9 +149,7 @@
                             disabled: True
                             spacing:0
                             padding:0
-                            on_release:
-                                root.manager.transition.direction = "left"
-                                root.manager.current = "oxigym_content"
+                            on_release: root.manager.push("service_oxygym")
                             BoxLayout:
                                 orientation: 'horizontal'
                                 spacing:0
