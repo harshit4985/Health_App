@@ -8,9 +8,7 @@
             user_font_size: "30sp"
             theme_text_color: "Custom"
             text_color: rgba(26, 24, 58, 255)
-            on_release:
-                root.manager.transition.direction = "right"
-                root.manager.current = "register_page2"
+            on_release: root.manager.pop()
         MDLabel:
             text: "Oxi-Gym "
             font_name: "Broboto"

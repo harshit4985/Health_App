@@ -14,14 +14,94 @@
         "object": "Signup()",
         "kv": "signup.kv"
     },
+    "forgot_password": {
+        "import": "from forgot_password import ForgotPassword",
+        "object": "ForgotPassword()",
+        "kv": "forgot_password.kv"
+    },
+    "location": {
+        "import": "from location import Location",
+        "object": "Location()",
+        "kv": "location.kv"
+    },
     "client_services": {
         "import": "from client_services import Client_services",
         "object": "Client_services()",
         "kv": "client_services.kv"
     },
+    "menu_profile": {
+        "import": "from menu_profile import Profile",
+        "object": "Profile()",
+        "kv": "menu_profile.kv"
+    },
+    "menu_bookings": {
+        "import": "from menu_bookings import Booking",
+        "object": "Booking()",
+        "kv": "menu_bookings.py"
+    },
+    "menu_reports": {
+        "import": "from menu_reports import Report",
+        "object": "Report()",
+        "kv": "menu_reports.kv"
+    },
+    "menu_notification": {
+        "import": "from menu_notification import Notification",
+        "object": "Notification()",
+        "kv": "menu_notification.kv"
+    },
+    "menu_support": {
+        "import": "from menu_support import SupportPage",
+        "object": "SupportPage()",
+        "kv": "menu_support.kv"
+    },
     "hospital_booking": {
         "import": "from hospital_booking import BookingInfo",
         "object": "BookingInfo()",
         "kv": "hospital_booking.kv"
+    },
+    "slot_booking": {
+        "import": "from slot_booking import Slot_Booking",
+        "object": "Slot_Booking()",
+        "kv": "slot_booking.kv"
+    },
+    "payment_page": {
+        "import": "from payment_page import Payment",
+        "object": "Payment()",
+        "kv": "payment_page.kv"
+    },
+    "service_register_form1": {
+        "import": "from service_register_form1 import ServiceRegisterForm1",
+        "object": "ServiceRegisterForm1()",
+        "kv": "service_register_form1.kv"
+    },
+    "service_register_form2": {
+        "import": "from service_register_form2 import ServiceRegisterForm2",
+        "object": "ServiceRegisterForm2()",
+        "kv": "service_register_form2.kv"
+    },
+    "service_hospital": {
+        "import": "from service_hospital import HospitalService",
+        "object": "HospitalService()",
+        "kv": "service_hospital.kv"
+    },
+    "service_mobile_hospital": {
+        "import": "from service_mobile_hospital import MobileCareService",
+        "object": "MobileCareService()",
+        "kv": "service_mobile_hospital.kv"
+    },
+    "service_oxygym": {
+        "import": "from service_oxygym import OxyGymService",
+        "object": "OxyGymService()",
+        "kv": "service_oxygym.kv"
+    },
+    "services_list": {
+        "import": "from services_list import ServicesList",
+        "object": "ServicesList()",
+        "kv": "services_list.kv"
+    },
+    "Screen_name": {
+        "import": "",
+        "object": "()",
+        "kv": ""
     }
 }

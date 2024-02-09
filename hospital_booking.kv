@@ -115,9 +115,7 @@
                         background_color: 0, 0, 0, 0
                         font_name: "Roboto"
                         bold: True
-                        on_release:
-                            root.manager.transition.direction = "left"
-                            root.manager.current = "slot_booking"
+                        on_release: root.manager.push("slot_booking")
                         canvas.before:
                             Color:
                                 rgb: rgba(255, 0, 0, 255)

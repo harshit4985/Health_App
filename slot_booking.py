@@ -110,17 +110,15 @@ class Slot_Booking(MDScreen):
     def pay_now(self, instance, *args):
         session_date = self.ids.date_choosed.text
         # Extract the username from menu_profile
-        app = MDApp.get_running_app()
-        screen = app.root.get_screen('client_services')
+        screen = self.manager.get_screen('client_services')
         username = screen.ids.username.text
         if len(session_date) == 10 and hasattr(self, 'session_time') and self.session_time:
             print(username, session_date, self.session_time)
-            current_screen = app.root.get_screen('payment_page')
+            current_screen = self.manager.get_screen('payment_page')
             current_screen.ids.user_name.text = username
             current_screen.ids.session_date.text = session_date
             current_screen.ids.session_time.text = self.session_time
-            app.root.transition.direction = 'left'
-            app.root.current = 'payment_page'
+            self.manager.push("payment_page")
         elif len(session_date) == 13 and hasattr(self, 'session_time') and self.session_time:
             self.show_validation_dialog("Select Date")
         elif hasattr(self, 'session_time') == False and len(session_date) == 10:

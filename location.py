@@ -10,9 +10,7 @@ from urllib.request import urlopen
 
 class Location(MDScreen):
     def client_services(self):
-        app = MDApp.get_running_app()
-        app.root.transition.direction = "right"
-        app.root.current = "client_services"
+        self.manager.push("client_services")
 
     def fetch_pincode(self):
         pincode = self.ids.pincode.text

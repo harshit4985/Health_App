@@ -1,11 +1,4 @@
-<HorizontalLineWidget>:
-    canvas:
-        Color:
-            rgba: 0.5, 0.5, 0.5, 1  # Set the color of the line (Blue in this example)
-        Line:
-            points: self.x, self.center_y, self.right, self.center_y  # Define the coordinates of the line
-
-<Service_register_form1>
+<ServiceRegisterForm1>
     BoxLayout:
         orientation: 'vertical'
 
@@ -15,9 +8,7 @@
             user_font_size: "30sp"
             theme_text_color: "Custom"
             text_color: rgba(26, 24, 58, 255)
-            on_release:
-                root.manager.transition.direction = "right"
-                root.manager.current = "signup"
+            on_release: root.manager.pop()
         MDLabel:
             text: "Create new account"
             font_name: "Broboto"
@@ -152,9 +143,7 @@
                 halign: "left"
                 pos_hint: {'right': 1, 'y': 0}
                 md_bg_color: 0, 0, 0, 0
-                on_release:
-                    root.manager.transition.direction = "left"
-                    root.manager.current = "register_page2"
+                on_release: root.manager.push("service_register_form2")
                 canvas.before:
                     Color:
                         rgba: 1, 0, 0, 1

@@ -7,9 +7,7 @@
             user_font_size: "30sp"
             theme_text_color: "Custom"
             text_color: rgba(26, 24, 58, 255)
-            on_release:
-                root.manager.transition.direction = "right"
-                root.manager.current = "register_page2"
+            on_release: root.manager.pop()
         MDLabel:
             text: "Hospital "
             font_name: "Broboto"
@@ -29,13 +27,9 @@
                     orientation: 'vertical'
                     size_hint_y: None
                     height: self.minimum_height
-
-
-
                     MDTextField:
                         id:extra_info
                         hint_text: "Hospital Name"
-            #                        required: True
                         font_name: "Roboto"
                         font_size: "14sp"
                         pos_hint:{'center_x':.5}
@@ -51,7 +45,6 @@
                     MDTextField:
                         id:extra_info2
                         hint_text: "Established Year"
-            #                        required: True
                         font_name: "Roboto"
                         font_size: "14sp"
                         pos_hint:{'center_x':.5}
@@ -96,7 +89,6 @@
                     MDTextField:
                         id:pincode
                         hint_text: "PIN Code"
-            #                        required: True
                         font_name: "Roboto"
                         font_size: "14sp"
                         pos_hint:{'center_x':.5}
@@ -112,7 +104,6 @@
                     MDTextField:
                         id:address
                         hint_text: "Address"
-            #                        required: True
                         font_name: "Roboto"
                         font_size: "14sp"
                         pos_hint:{'center_x':.5}

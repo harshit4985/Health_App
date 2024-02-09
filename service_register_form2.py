@@ -101,9 +101,7 @@ class ServiceRegisterForm2(MDScreen):
         elif not (hospital_manager.disabled or mobile_hospital_manager.disabled or oxigym_manager.disabled):
             self.ids.hint_label.text = "Please add values"
         else:
-            app = MDApp.get_running_app()
-            app.root.transition.direction = "left"
-            app.root.current = "login"
+            self.manager.push("login")
             self.ids.service_provider_name.text = ""
             self.ids.service_provider_email.text = ""
             self.ids.service_provider_password.text = ""

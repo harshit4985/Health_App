@@ -103,7 +103,8 @@ class Login(MDScreen):
                 connection.close()
         if user_anvil or user_sqlite:
             print("Login successful.")
-            self.manager.push("client_services")
+            self.manager.load_screen("menu_profile")
+            self.manager.push_replacement("client_services")
             if user_anvil:
                 username = str(user_anvil["username"])
                 email = str(user_anvil["email"])
@@ -114,14 +115,14 @@ class Login(MDScreen):
                 email = str(user_sqlite[2])
                 phone = str(user_sqlite[4])
                 pincode = str(user_sqlite[5])
-            # screen = self.manager.get_screen('menu_profile')
-            # screen.ids.username.text = f"Username : {username}"
-            # screen.ids.email.text = f"Email : {email}"
-            # screen.ids.phone.text = f"Phone no : {phone}"
-            # screen.ids.pincode.text = f"Pincode : {pincode}"
+            screen = self.manager.get_screen('menu_profile')
+            screen.ids.username.text = f"Username : {username}"
+            screen.ids.email.text = f"Email : {email}"
+            screen.ids.phone.text = f"Phone no : {phone}"
+            screen.ids.pincode.text = f"Pincode : {pincode}"
             screen1 = self.manager.get_screen('client_services')
             screen1.ids.username.text = username
-            screen1.root.email.text = email
+            screen1.ids.email.text = email
 
         else:
             # Login failed

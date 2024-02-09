@@ -26,6 +26,8 @@ cursor.execute('''
 
 
 class BaseRegistrationScreen(MDScreen):
+    conn = sqlite3.connect("users.db")
+    cursor = conn.cursor()
 
     def show_date_picker(self, arg):
         date_dialog = MDDatePicker(size_hint=(None, None), size=(150, 150))
@@ -145,7 +147,7 @@ class BaseRegistrationScreen(MDScreen):
             print(self.file_data1)
             print(self.file_data2)
             if tablename == 'hospital':
-                print('HospitalContent')
+                print('HospitalService')
                 conn = sqlite3.connect("user.db")
                 cursor = conn.cursor()
                 # Inserting data into the specified table
@@ -157,12 +159,10 @@ class BaseRegistrationScreen(MDScreen):
 
                 conn.commit()
                 conn.close()
-                app = MDApp.get_running_app()
-                app.root.transition.direction = "down"
-                app.root.current = "register_page2"
+                self.manager.push("service_hospital", "down")
                 return True
             elif tablename == 'mobile_hospital':
-                print('MobileCareContent')
+                print('MobileCareServices')
                 conn = sqlite3.connect("user.db")
                 cursor = conn.cursor()
                 # Inserting data into the specified table
@@ -174,13 +174,11 @@ class BaseRegistrationScreen(MDScreen):
 
                 conn.commit()
                 conn.close()
-                app = MDApp.get_running_app()
-                app.root.transition.direction = "down"
-                app.root.current = "register_page2"
+                self.manager.push("service_mobile_hospital", "down")
                 return True
 
             elif tablename == 'oxi_gym':
-                print('GymContent')
+                print('OxyGymServices')
                 conn = sqlite3.connect("user.db")
                 cursor = conn.cursor()
                 # Inserting data into the specified table
@@ -192,7 +190,5 @@ class BaseRegistrationScreen(MDScreen):
 
                 conn.commit()
                 conn.close()
-                app = MDApp.get_running_app()
-                app.root.transition.direction = "down"
-                app.root.current = "register_page2"
+                self.manager.push("service_oxygym  ", "down")
                 return True

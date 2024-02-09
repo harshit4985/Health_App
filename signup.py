@@ -193,9 +193,7 @@ class Signup(MDScreen):
                 print(e)
                 self.show_validation_dialog("No internet connection")
             # Navigate to the success screen
-            app = MDApp.get_running_app()
-            app.root.transition.direction = "left"
-            app.root.current = "login"
+            self.manager.push("login")
 
     # password validation
     def validate_password(self, password):

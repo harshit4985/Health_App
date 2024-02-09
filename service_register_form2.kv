@@ -1,11 +1,4 @@
-<HorizontalLineWidget>:
-    canvas:
-        Color:
-            rgba: 0.5, 0.5, 0.5, 1  # Set the color of the line (Blue in this example)
-        Line:
-            points: self.x, self.center_y, self.right, self.center_y  # Define the coordinates of the line
-
-<ServiceRegisterForm1>:
+<ServiceRegisterForm2>:
     BoxLayout:
         orientation: 'vertical'
         ScrollView:
@@ -264,9 +257,7 @@
                     halign: "left"
                     pos_hint: {'x': 0, 'y': 0}
                     md_bg_color: 0, 0, 0, 0
-                    on_release:
-                        root.manager.transition.direction = "right"
-                        root.manager.current = "service_register"
+                    on_release: root.manager.pop()
                     canvas.before:
                         Color:
                             rgba: 1, 0, 0, 1
@@ -297,9 +288,7 @@
                 halign: "left"
                 pos_hint: {'right': 1, 'y': 0}
                 md_bg_color: 0, 0, 0, 0
-                on_release:
-                    root.manager.transition.direction = "left"
-                    root.manager.current = "list_content"
+                on_release: root.manager.push("services_list")
                 canvas.before:
                     Color:
                         rgba: 1, 0, 0, 1
@@ -322,3 +311,9 @@
                         text_color: 1, 0, 0, 1
                         size_hint_x: None
                         width: dp(24)
+<HorizontalLineWidget>:
+    canvas:
+        Color:
+            rgba: 0.5, 0.5, 0.5, 1  # Set the color of the line (Blue in this example)
+        Line:
+            points: self.x, self.center_y, self.right, self.center_y  # Define the coordinates of the line

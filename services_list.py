@@ -8,16 +8,11 @@ from kivymd.uix.datatables import MDDataTable
 from kivymd.uix.floatlayout import MDFloatLayout
 from kivymd.uix.screen import MDScreen
 
-from ServiceRegister import HospitalListTable
-
 
 class ServicesList(MDScreen):
     def __init__(self, **kwargs):
-        super(HospitalListTable, self).__init__(**kwargs)
+        super(ServicesList, self).__init__(**kwargs)
         self.name = 'list_content'
-        # self.orientation = "vertical"
-        # self.size_hint_y = None
-        # self.height = "300dp"
         initial_data = self.fetch_initial_data()
         self.data_tables = MDDataTable(
             pos_hint={"center_y": 0.5, "center_x": 0.5},

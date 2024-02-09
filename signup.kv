@@ -210,6 +210,4 @@
             font_size: "11sp"
             pos_hint: {"center_x": .5, "center_y": .98}
             color: rgba(225, 0, 0, 255)
-            on_release:
-                root.manager.transition.direction = "left"
-                root.manager.current = "service_register"
+            on_release: root.manager.push("service_register_form1")

@@ -52,8 +52,7 @@ class Payment(MDScreen):
             self.open_payment_gateway(payment_url)
             self.show_validation_dialog("Payment Successful")
             anvil.server.connect("server_UY47LMUKBDUJMU4EA3RKLXCC-LP5NLIEYMCLMZ4NU")
-            app = MDApp.get_running_app()
-            screen = app.root.get_screen('client_services')
+            screen = self.manager.get_screen('client_services')
             email = screen.ids.email.text
             user_name = self.ids.user_name.text
             book_date = self.ids.session_date.text
