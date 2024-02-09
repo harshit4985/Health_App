@@ -1,5 +1,4 @@
 <Login>:
-    name: "login"
     MDFloatLayout:
         id:main
         md_bg_color: 1, 1, 1, 1
@@ -9,9 +8,7 @@
             user_font_size: "30sp"
             theme_text_color: "Custom"
             text_color: rgba(26, 24, 58, 255)
-            on_release:
-                root.manager.transition.direction = "right"
-                root.manager.current = "main_screen"
+            on_release: root.manager.pop()
         MDLabel:
             text: "W e l c o m e!"
             font_name: "Roboto"
@@ -105,9 +102,7 @@
             color: rgba(250, 87, 87, 255)
             font_size: "12sp"
             font_name:"Roboto"
-            on_release:
-                root.manager.transition.direction = "left"
-                root.manager.current = "forgot_password"
+            on_release: root.manager.push("forgot_password")
         MDLabel:
             text: "or"
             color: rgba(74, 73, 73, 255)
@@ -155,9 +150,7 @@
             font_size: "11sp"
             pos_hint: {"center_x": .5, "center_y": .05}
             color: rgba(225, 0, 0, 255)
-            on_release:
-                root.manager.transition.direction = "left"
-                root.manager.current = "signup"
+            on_release: root.manager.push("signup")
         ProgressBar:
             id: progress_bar
             max: 100

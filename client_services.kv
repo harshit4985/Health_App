@@ -1,5 +1,4 @@
 <Client_services>:
-    name: "client_services"
     ScreenManager:
         id: screen_manager
         NavigationDrawerScreen:
@@ -7,13 +6,12 @@
             MDScreen:
                 BoxLayout:
                     orientation: 'vertical'
-
                     MDTopAppBar:
                         title: "Available Services"
                         font_name: "Roboto"
                         md_bg_color: 1, 0, 0, 1
                         left_action_items: [["menu", lambda x: nav_drawer.set_state()]]
-                        right_action_items: [["map-marker", lambda x: app.client_services1()]]
+                        right_action_items: [["map-marker", lambda x: root.location_screen()]]
                     ScrollView:
                         GridLayout:
                             id: card_grid
@@ -61,7 +59,7 @@
                                             MDLabel:
                                                 id: organization_name
                                                 text: "Hospital"
-                                                font_name: "Roboto-Bold"
+                                                font_name: "Broboto"
                                                 theme_text_color: "Primary"
                                                 font_size: '25sp'
                                                 halign: 'center'
@@ -91,7 +89,7 @@
 
                                         MDRaisedButton:
                                             text: "Book Now"
-                                            font_name: "Roboto-bold"
+                                            font_name: "Broboto"
                                             size_hint: None, None
                                             size: "100dp", "30dp"
                                             pos_hint: {'right': 0.95, 'y': 0}
@@ -101,9 +99,7 @@
                                             theme_text_color: "Custom"
                                             text_color: 1, 1, 1, 1
                                             font_style: "Button"
-                                            on_release:
-                                                root.manager.transition.direction = "left"
-                                                root.manager.current = "hospital_book"
+                                            on_release: root.manager.push("hospital_book")
                                             canvas.before:
                                                 Color:
                                                     rgb: rgba(255, 0, 0, 255)
@@ -120,19 +116,16 @@
                     size_hint_max_x: "270dp"
                     padding: "0dp"
                     spacing: "5dp"
-
                     MDCard:
                         orientation: 'vertical'
                         size_hint: None, None
                         size: "268dp", "100dp"
                         elevation: 2
                         md_bg_color: 1, 1, 1, 1
-
                         BoxLayout:
                             size_hint_y: None
                             height: dp(90)
                             padding: "15dp"
-
                             BoxLayout:
                                 size_hint: None, None
                                 size: dp(60), dp(60)
@@ -149,14 +142,12 @@
                                 orientation: 'vertical'
                                 padding: "5dp"
                                 spacing: "5dp"
-
                                 MDLabel:
                                     id: username
                                     text: "username"
                                     font_name: "Roboto"
                                     theme_text_color: "Secondary"
                                     pos_hint: {'center_x': 0.5,'center_y': 0.2}
-
                                 MDLabel:
                                     id: email
                                     text: "clientemail@gmail.com"
@@ -179,58 +170,37 @@
                                             on_release: root.home()
                                     OneLineIconListItem:
                                         text: "Profile"
-                                        on_release:
-                                            root.manager.transition.direction = "left"
-                                            root.manager.current = "menu_profile"
+                                        on_release: root.manager.push("menu_profile")
                                         IconLeftWidget:
                                             icon: "account-circle"
-                                            on_release:
-                                                root.manager.transition.direction = "left"
-                                                root.manager.current = "menu_profile"
+                                            on_release: root.manager.push("menu_profile")
                                     OneLineIconListItem:
                                         text: "Notification"
-                                        on_release:
-                                            root.manager.transition.direction = "left"
-                                            root.manager.current = "menu_notification"
+                                        on_release: root.manager.push("menu_notification")
                                         IconLeftWidget:
                                             icon: "bell-outline"
-                                            on_release:
-                                                root.manager.transition.direction = "left"
-                                                root.manager.current = "menu_notification"
+                                            on_release: root.manager.push("menu_notification")
 
                                     OneLineIconListItem:
                                         text: "Bookings"
-                                        on_release:
-                                            root.manager.transition.direction = "left"
-                                            root.manager.current = "menu_bookings"
+                                        on_release: root.manager.push("menu_bookings")
                                         IconLeftWidget:
                                             icon: "book-account-outline"
-                                            on_release:
-                                                root.manager.transition.direction = "left"
-                                                root.manager.current = "menu_bookings"
+                                            on_release: root.manager.push("menu_bookings")
 
                                     OneLineIconListItem:
                                         text: "Reports"
-                                        on_release:
-                                            root.manager.transition.direction = "left"
-                                            root.manager.current = "menu_reports"
-
+                                        on_release: root.manager.push("menu_reports")
                                         IconLeftWidget:
                                             icon: "file-multiple"
-                                            on_release:
-                                                root.manager.transition.direction = "left"
-                                                root.manager.current = "menu_reports"
+                                            on_release: root.manager.push("menu_reports")
 
                                     OneLineIconListItem:
                                         text: "Support"
-                                        on_release:
-                                            root.manager.transition.direction = "left"
-                                            root.manager.current = "menu_support"
+                                        on_release: root.manager.push("menu_support")
                                         IconLeftWidget:
                                             icon: "book-information-variant"
-                                            on_release:
-                                                root.manager.transition.direction = "left"
-                                                root.manager.current = "menu_support"
+                                            on_release: root.manager.push("menu_support")
 
                                     OneLineIconListItem:
                                         text: "Logout"

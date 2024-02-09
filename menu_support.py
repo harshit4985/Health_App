@@ -4,19 +4,18 @@ from kivymd.uix.button import MDFlatButton
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.screen import MDScreen
 
-Builder.load_file("menu_support.kv")
-class Support_page(MDScreen):
+
+class SupportPage(MDScreen):
     def support_back(self):
-        app = MDApp.get_running_app()
-        app.root.transition.direction = 'right'
-        app.root.current = 'client_services'
-        screen = app.root.get_screen('client_services')
+        self.manager.pop()
+        screen = self.manager.get_screen('client_services')
         screen.ids.nav_drawer.set_state("close")
+
     def show_customer_support_dialog(self):
         dialog = MDDialog(
             title="Contact Customer Support",
             text="Call Customer Support at: +1-800-123-4567",
-            elevation = 0
+            elevation=0
         )
         dialog.open()
 
@@ -43,7 +42,6 @@ class Support_page(MDScreen):
         self.ids.issue_title.text = ''
         self.ids.issue_description.text = ''
 
-
     def show_ticket_popup(self):
         submitted_text = self.ids.issue_title.text
         # Create and show the popup
@@ -65,7 +63,8 @@ class Support_page(MDScreen):
         ticket_popup.open()
         self.ids.issue_title.text = ''
         self.ids.issue_description.text = ''
-    #dialog box
+
+    # dialog box
     def show_validation_dialog(self, message):
         # Display a dialog for invalid login or sign up
         dialog = MDDialog(

@@ -1,4 +1,5 @@
 import cProfile
+import sqlite3
 from datetime import datetime
 from anvil.tables import app_tables
 from kivy.clock import Clock
@@ -12,13 +13,36 @@ from kivymd.uix.label import MDLabel
 from kivymd.uix.pickers import MDDatePicker
 from kivymd.uix.screen import MDScreen
 
-Builder.load_file("slot_booking.kv")
+# Create the BookSlot table if it doesn't exist
+
+conn = sqlite3.connect("users.db")
+cursor = conn.cursor()
+cursor.execute('''
+    CREATE TABLE IF NOT EXISTS BookSlot (
+        slot_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER NOT NULL,
+        username TEXT NOT NULL,
+        book_date TEXT NOT NULL,
+        book_time TEXT NOT NULL,
+        FOREIGN KEY (user_id) REFERENCES users (id)
+    )
+''')
+conn.commit()
+
+# Builder.load_file("slot_booking.kv")
+
+
 class S_button(MDRaisedButton):
     pass
+
+
 class S_layout(BoxLayout):
     pass
+
+
 class S_label(MDLabel):
     pass
+
 
 class Slot_Booking(MDScreen):
     time_slots = ['9am - 11am', '11am - 1pm', '1pm - 3pm', '3pm - 5pm', '5pm - 7pm', '7pm - 9pm']
@@ -44,6 +68,7 @@ class Slot_Booking(MDScreen):
                 self.ids[slot].md_bg_color = (1, 1, 1, 1)
             else:
                 self.ids[slot].md_bg_color = (1, 0, 0, 1)
+
     def slot_date_picker(self):
         current_date = datetime.now().date()
         date_dialog = MDDatePicker(year=current_date.year, month=current_date.month, day=current_date.day,
@@ -82,22 +107,18 @@ class Slot_Booking(MDScreen):
         date_dialog.bind(on_save=self.slot_save, on_cancel=self.slot_cancel)
         date_dialog.open()
 
-
-
     def pay_now(self, instance, *args):
         session_date = self.ids.date_choosed.text
         # Extract the username from menu_profile
-        app = MDApp.get_running_app()
-        screen = app.root.get_screen('client_services')
+        screen = self.manager.get_screen('client_services')
         username = screen.ids.username.text
         if len(session_date) == 10 and hasattr(self, 'session_time') and self.session_time:
             print(username, session_date, self.session_time)
-            current_screen = app.root.get_screen('payment_page')
+            current_screen = self.manager.get_screen('payment_page')
             current_screen.ids.user_name.text = username
             current_screen.ids.session_date.text = session_date
             current_screen.ids.session_time.text = self.session_time
-            app.root.transition.direction = 'left'
-            app.root.current = 'payment_page'
+            self.manager.push("payment_page")
         elif len(session_date) == 13 and hasattr(self, 'session_time') and self.session_time:
             self.show_validation_dialog("Select Date")
         elif hasattr(self, 'session_time') == False and len(session_date) == 10:

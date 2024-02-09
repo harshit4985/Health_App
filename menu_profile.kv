@@ -1,8 +1,7 @@
 <Profile>:
-    name: "menu_profile"
     MDFloatLayout:
         md_bg_color: rgba(246, 250, 255, 255)
-        ProfileCard:
+        ProfileCard
             size_hint_y: .65
             pos_hint: {"center_y": .7}
             elevation: 3
@@ -29,16 +28,7 @@
                 color: rgba(34, 34, 34, 255)
             MDFloatLayout:
                 orientation:'vertical'
-    #                pos_hint: {"center_x": .5, "center_y": .72}
-#                canvas:
-#                    Color:
-#                        rgb: 1, 1, 1
-#                    Ellipse:
-#                        pos: 140, 500
-#                        size: 110 , 110
-#                        source: 'images/hospital.png'
-#                        angle_start: 0
-#                        angle_end: 360
+
                 MDLabel:
                     id: username
                     text: "Username : username"
@@ -75,19 +65,3 @@
                 md_bg_color: rgba(178, 178, 178, 255)
                 size_hint: .62, .002
                 pos_hint: {"center_x": .47, "center_y": .208}
-#            ScrollView
-#                MDList:
-#                    OneLineIconListItem:
-#                        id: profile_name
-#                        text: "client Name"
-#                        pos_hint: {"center_x": .56, "center_y": .82}
-#                        font_name: "MPoppins"
-#                        IconLeftWidget:
-#                            icon: "account-circle"
-#
-#                    OneLineIconListItem:
-#                        id: profile_email
-#                        text: "clientemail@gmail.com"
-#                        IconLeftWidget:
-#                            icon: "email"
-

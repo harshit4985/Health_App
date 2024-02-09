@@ -1,5 +1,4 @@
 <signup>:
-    name: 'signup'
     MDFloatLayout:
         md_bg_color: 1, 1, 1, 1
         # back button
@@ -9,9 +8,7 @@
             user_font_size: "30sp"
             theme_text_color: "Custom"
             text_color: rgba(26, 24, 58, 255)
-            on_release:
-                root.manager.transition.direction = "right"
-                root.manager.current = "main_screen"
+            on_release: root.manager.pop()
         # Label
         MDLabel:
             text: "Create new account"
@@ -206,15 +203,11 @@
             font_size: "11sp"
             pos_hint: {"center_x": .5, "center_y": .05}
             color: rgba(225, 0, 0, 255)
-            on_release:
-                root.manager.transition.direction = "left"
-                root.manager.current = "login"
+            on_release: root.manager.push("login")
         MDTextButton:
             text: "Are you service provider? Sign in"
             font_name: "Roboto"
             font_size: "11sp"
             pos_hint: {"center_x": .5, "center_y": .98}
             color: rgba(225, 0, 0, 255)
-            on_release:
-                root.manager.transition.direction = "left"
-                root.manager.current = "service_register"
+            on_release: root.manager.push("service_register_form1")
