@@ -14,21 +14,7 @@ from kivymd.uix.dialog import MDDialog
 from kivymd.uix.screen import MDScreen
 from twilio.rest import Client
 
-# SQLite database setup
-conn = sqlite3.connect("users.db")
-cursor = conn.cursor()
-cursor.execute('''
-    CREATE TABLE IF NOT EXISTS users (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        username TEXT NOT NULL,
-        email TEXT NOT NULL,
-        password TEXT NOT NULL,
-        phone TEXT NOT NULL,
-        pincode TEXT NOT NULL
-    )
-''')
-conn.commit()
-
+from server import Server
 
 class Signup(MDScreen):
     def __init__(self, **kwargs):
@@ -94,22 +80,6 @@ class Signup(MDScreen):
     #     token_data = response.json()
     #
     #     return token_data
-    def is_connected(self):
-        try:
-            # Attempt to make a simple HTTP request to check connectivity
-            response = requests.get('https://www.google.com', timeout=1)
-            response.raise_for_status()  # Raise an exception for HTTP errors
-            return True
-        except requests.RequestException:
-            return False
-
-    def get_database_connection(self):
-        if self.is_connected():
-            # Use Anvil's database connection
-            return anvil.server.connect("server_UY47LMUKBDUJMU4EA3RKLXCC-LP5NLIEYMCLMZ4NU")
-        else:
-            # Use SQLite database connection
-            return sqlite3.connect('users.db')
 
     def show_validation_dialog(self, message):
         # Create the dialog asynchronously
@@ -176,11 +146,11 @@ class Signup(MDScreen):
             self.ids.signup_password.text = ""
             self.ids.signup_phone.text = ""
             self.ids.signup_pincode.text = ""
-
+            server = Server()
+            connection = server.get_database_connection()
             # If validation is successful, insert into the database
             try:
-                if self.is_connected():
-                    anvil.server.connect("server_UY47LMUKBDUJMU4EA3RKLXCC-LP5NLIEYMCLMZ4NU")
+                if server.is_connected():
                     rows = app_tables.users.search()
                     # Get the number of rows
                     id = len(rows) + 1
@@ -191,7 +161,7 @@ class Signup(MDScreen):
                         password=password,
                         phone=float(phone),
                         pincode=int(pincode))
-                    connection = sqlite3.connect('users.db')
+                    connection = server.sqlite3_users_db()
                     cursor = connection.cursor()
                     cursor.execute('''
                                     INSERT INTO users (username, email, password, phone, pincode)
