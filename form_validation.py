@@ -146,7 +146,7 @@ class BaseRegistrationScreen(MDScreen):
             print(self.file_data2)
             if tablename == 'hospital':
                 print('HospitalService')
-                conn = sqlite3.connect("user.db")
+                conn = sqlite3.connect("users.db")
                 cursor = conn.cursor()
                 # Inserting data into the specified table
                 cursor.execute(f''' INSERT INTO hospital_table (hospital_name ,established_year , District, State, 
@@ -161,7 +161,7 @@ class BaseRegistrationScreen(MDScreen):
                 return True
             elif tablename == 'mobile_hospital':
                 print('MobileCareServices')
-                conn = sqlite3.connect("user.db")
+                conn = sqlite3.connect("users.db")
                 cursor = conn.cursor()
                 # Inserting data into the specified table
                 cursor.execute(f'''
@@ -177,7 +177,7 @@ class BaseRegistrationScreen(MDScreen):
 
             elif tablename == 'oxi_gym':
                 print('OxyGymServices')
-                conn = sqlite3.connect("user.db")
+                conn = sqlite3.connect("users.db")
                 cursor = conn.cursor()
                 # Inserting data into the specified table
                 cursor.execute(f'''

@@ -6,18 +6,18 @@ from kivymd.uix.screen import MDScreen
 
 
 class Location(MDScreen):
-    def __init__(self, **kwargs):
-        super(Location, self).__init__(**kwargs)
-        Window.bind(on_keyboard=self.on_keyboard)
-
-    def on_keyboard(self, instance, key, scancode, codepoint, modifier):
-        if key == 27:  # Keycode for the back button on Android
-            self.on_back_button()
-            return True
-        return False
-
-    def on_back_button(self):
-        self.manager.pop()
+    # def __init__(self, **kwargs):
+    #     super(Location, self).__init__(**kwargs)
+    #     Window.bind(on_keyboard=self.on_keyboard)
+    #
+    # def on_keyboard(self, instance, key, scancode, codepoint, modifier):
+    #     if key == 27:  # Keycode for the back button on Android
+    #         self.on_back_button()
+    #         return True
+    #     return False
+    #
+    # def on_back_button(self):
+    #     self.manager.pop()
 
     def client_services(self):
         self.manager.pop()

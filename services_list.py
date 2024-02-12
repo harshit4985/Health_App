@@ -13,7 +13,7 @@ from kivymd.uix.screen import MDScreen
 class ServicesList(MDScreen):
     def __init__(self, **kwargs):
         super(ServicesList, self).__init__(**kwargs)
-        Window.bind(on_keyboard=self.on_keyboard)
+        # Window.bind(on_keyboard=self.on_keyboard)
         self.name = 'list_content'
         initial_data = self.fetch_initial_data()
         self.data_tables = MDDataTable(
@@ -54,14 +54,14 @@ class ServicesList(MDScreen):
         layout.add_widget(button_box)
         self.add_widget(layout)
 
-    def on_keyboard(self, instance, key, scancode, codepoint, modifier):
-        if key == 27:  # Keycode for the back button on Android
-            self.on_back_button()
-            return True
-        return False
-
-    def on_back_button(self):
-        self.manager.pop()
+    # def on_keyboard(self, instance, key, scancode, codepoint, modifier):
+    #     if key == 27:  # Keycode for the back button on Android
+    #         self.on_back_button()
+    #         return True
+    #     return False
+    #
+    # def on_back_button(self):
+    #     self.manager.pop()
 
     def on_button_press(self, instance_button):
         try:
@@ -74,7 +74,7 @@ class ServicesList(MDScreen):
     def fetch_initial_data(self):
         # Connect to your database and fetch data
         # Replace this with your actual database connection and query logic
-        connection = sqlite3.connect('user.db')
+        connection = sqlite3.connect('users.db')
         cursor = connection.cursor()
 
         # Example query: Fetch all rows from the database
@@ -92,7 +92,7 @@ class ServicesList(MDScreen):
         checked_rows = self.data_tables.get_row_checks()
 
         # Connect to the database and delete selected rows
-        connection = sqlite3.connect('user.db')
+        connection = sqlite3.connect('users.db')
         cursor = connection.cursor()
 
         for checked_row in checked_rows:
