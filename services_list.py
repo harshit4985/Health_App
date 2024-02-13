@@ -4,7 +4,7 @@ from kivy.clock import Clock
 from kivy.core.window import Window
 from kivy.metrics import dp
 from kivymd.uix.boxlayout import MDBoxLayout
-from kivymd.uix.button import MDRectangleFlatButton
+from kivymd.uix.button import MDRectangleFlatButton, MDIconButton
 from kivymd.uix.datatables import MDDataTable
 from kivymd.uix.floatlayout import MDFloatLayout
 from kivymd.uix.screen import MDScreen
@@ -18,7 +18,7 @@ class ServicesList(MDScreen):
         initial_data = self.fetch_initial_data()
         self.data_tables = MDDataTable(
             pos_hint={"center_y": 0.5, "center_x": 0.5},
-            size_hint=(.9, .6),
+            size_hint=(.9, .7),
             use_pagination=True,
             pagination_menu_pos="center",
             elevation=0,
@@ -34,17 +34,17 @@ class ServicesList(MDScreen):
         )
         # Creating control buttons.
         button_box = MDBoxLayout(
-            pos_hint={"center_x": 1, 'center_y': .2},
+            pos_hint={"center_x": 1.2, 'center_y': .15},
             size_hint=(.9, .2),
             padding="14dp",
             spacing="14dp",
         )
 
         button_box.add_widget(
-            MDRectangleFlatButton(
-                text='Delete',
+            MDIconButton(
+                icon='trash-can-outline',
                 on_release=self.on_button_press,
-                pos_hint={"center_y": .5},
+                # pos_hint={"center_y": .5},
 
             )
         )

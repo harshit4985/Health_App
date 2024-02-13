@@ -9,23 +9,37 @@
                 spacing: dp(20)
                 size_hint_y: None
                 height: self.minimum_height
-                MDLabel:
-                    text: "Select Service Provider Types"
-                    font_name: "Roboto"
-                    theme_text_color: "Custom"
-                    text_color: 0, 0, 0, 1
-                    font_style: "H6"
-                    font_size: "22sp"
-                    halign: "center"
-                    valign: "middle"
+
+                MDBoxLayout:
+                    orientation: 'vertical'
                     size_hint_y: None
-                    height: dp(30)
-                    canvas.before:
-                        Color:
-                            rgba: 1, 0, 0, 1
-                        Line:
-                            points: self.x, self.y, self.x + self.width, self.y
-                            width: 2
+                    height: self.minimum_height
+
+                    MDIconButton:
+                        icon: "arrow-left"
+                        pos_hint: {"center_y": .95}
+                        user_font_size: "30sp"
+                        theme_text_color: "Custom"
+                        text_color: rgba(26, 24, 58, 255)
+                        on_release: root.manager.pop()
+                    MDLabel:
+                        text: "Select Service Provider Types"
+                        font_name: "Roboto"
+                        theme_text_color: "Custom"
+                        text_color: 0, 0, 0, 1
+                        pos_hint: {"center_y": .95}
+                        font_style: "H6"
+                        font_size: "18sp"
+                        halign: "center"
+                        valign: "middle"
+                        size_hint_y: None
+                        height: dp(30)
+                        canvas.before:
+                            Color:
+                                rgba: 1, 0, 0, 1
+                            Line:
+                                points: self.x, self.y, self.x + self.width, self.y
+                                width: 2
                 MDBoxLayout:
                     orientation: 'vertical'
                     size_hint_y: None
@@ -234,47 +248,51 @@
                         HorizontalLineWidget:
                             size_hint:.9,None
                             pos_hint:{'center_y':.5}
+#        BoxLayout:
+#            orientation: 'horizontal'
+#            size_hint_y: None
+#            height: self.minimum_height
+#            padding: dp(20)
+#            spacing: dp(10)
+#             # next button
+#            MDFlatButton:
+#                disabled: False
+#                size_hint: None, None
+#                size: dp(120), dp(40) # Adjusted size
+#                halign: "right"
+#                pos_hint: {'right': 1, 'bottom': 1}
+#                md_bg_color: 0, 0, 0, 0
+#                on_release: root.manager.push("services_list")
+#                canvas.before:
+#                    Color:
+#                        rgba: 1, 0, 0, 1
+#                    Line:
+#                        width: 2
+#                        rounded_rectangle: (self.x, self.y, self.width, self.height, dp(30))
+#                BoxLayout:
+#                    orientation: 'horizontal'
+#                    spacing: 0
+#                    MDLabel:
+#                        text: "Preview"
+#                        font_name: "Broboto"
+#                        halign: "center"
+#                        text_color: 1, 0, 0, 1
+#                        theme_text_color: "Custom"
+#                    MDIcon:
+#                        icon: "arrow-right-bold"
+#                        halign: "center"
+#                        theme_text_color: "Custom"
+#                        text_color: 1, 0, 0, 1
+#                        size_hint_x: None
+#                        width: dp(24)
+
         BoxLayout:
-            orientation: 'horizontal'
+            orientation: 'vertical'
             size_hint_y: None
             height: self.minimum_height
             padding: dp(20)
             spacing: dp(10)
              # next button
-            BoxLayout:
-                orientation: 'horizontal'
-                spacing: 0
-                MDFlatButton:
-                    disabled: False
-                    size_hint: None, None
-                    size: dp(120), dp(40) # Adjusted size
-                    halign: "left"
-                    pos_hint: {'x': 0, 'y': 0}
-                    md_bg_color: 0, 0, 0, 0
-                    on_release: root.manager.pop()
-                    canvas.before:
-                        Color:
-                            rgba: 1, 0, 0, 1
-                        Line:
-                            width: 2
-                            rounded_rectangle: (self.x, self.y, self.width, self.height, dp(30))
-                    BoxLayout:
-                        orientation: 'horizontal'
-                        spacing: 10
-                        MDIcon:
-                            icon: "arrow-left-bold"
-                            halign: "center"
-                            theme_text_color: "Custom"
-                            text_color: 1, 0, 0, 1
-                            size_hint_x: None
-                            width: dp(24)
-                        MDLabel:
-                            text: "GO Back"
-                            font_name: "Broboto"
-                            halign: "center"
-                            text_color: 1, 0, 0, 1
-                            theme_text_color: "Custom"
-
             MDFlatButton:
                 disabled: False
                 size_hint: None, None
@@ -305,6 +323,7 @@
                         text_color: 1, 0, 0, 1
                         size_hint_x: None
                         width: dp(24)
+
 <HorizontalLineWidget>:
     canvas:
         Color:
