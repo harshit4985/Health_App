@@ -2,6 +2,7 @@ import re
 
 import anvil
 from anvil.tables import app_tables
+from kivy import platform
 from kivy.clock import Clock
 from kivy.core.window import Window
 from kivymd.app import MDApp
@@ -89,6 +90,10 @@ class ForgotPassword(MDScreen):
 
     #
     def sent_otp(self):
+        if platform == 'android':
+            from android.permissions import request_permissions, Permission
+            request_permissions([Permission.SEND_SMS, Permission.RECEIVE_SMS])
+
         phone = self.ids.phone.text
 
         if not (phone and len(phone) == 10):
