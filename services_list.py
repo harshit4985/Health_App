@@ -78,7 +78,7 @@ class ServicesList(MDScreen):
         cursor = connection.cursor()
 
         # Example query: Fetch all rows from the database
-        cursor.execute("SELECT hospital_name, District FROM hospital_table")
+        cursor.execute("SELECT hospital_name, District FROM service_table")
         db_row_data = cursor.fetchall()
 
         connection.close()
@@ -97,7 +97,7 @@ class ServicesList(MDScreen):
 
         for checked_row in checked_rows:
             hospital_name = checked_row[0]  # Assuming hospital_name is the first column
-            cursor.execute("DELETE FROM hospital_table WHERE hospital_name=?", (hospital_name,))
+            cursor.execute("DELETE FROM service_table WHERE hospital_name=?", (hospital_name,))
 
         connection.commit()
         connection.close()
