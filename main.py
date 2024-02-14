@@ -1,16 +1,12 @@
-from kivy import platform
+import json
 
-import anvil
-from anvil import Timer
-from kivy.clock import Clock
-from kivymd.uix.dialog import MDDialog
+from kivy import platform
 from kivymd.app import MDApp
 from kivy.core.window import Window
 from libs.uix.root import Root
 from kivy.core.text import LabelBase
 
 
-# Window.size = (380, 720)
 Window.size = (320, 580)
 
 
@@ -24,33 +20,19 @@ class ShotApp(MDApp):
         Window.softinput_mode = "below_target"
 
     def build(self):
-        # self.check_internet_status_timer = Timer(interval=5000, repeating=True, enabled=True,
-        #                                          tick=self.check_internet_status)
         print(platform)
         self.root = Root()
         self.root.push_replacement("main_sc")
 
-    # def check_internet_status(self, **event_args):
-    #     try:
-    #         anvil.server.call('check_internet_status')
-    #         # If the check is successful, update UI or enable features as needed
-    #     except anvil.server.AnvilWrappedError as e:
-    #         self.handle_network_error(e)
-    #
-    # def handle_network_error(self, e):
-    #     # Handle specific errors and display appropriate messages to the user
-    #     self.show_validation_dialog("Network Error: Please check your internet connection.")
-    #
-    # def show_validation_dialog(self, message):
-    #     # Create the dialog asynchronously
-    #     Clock.schedule_once(lambda dt: self._create_dialog(message), 0)
-    #
-    # def _create_dialog(self, message):
-    #     dialog = MDDialog(
-    #         text=f"{message}",
-    #         elevation=0,
-    #     )
-    #     dialog.open()
+    def on_start(self):
+        with open("logged_in_data.json", "r") as json_file:
+            logged_in_data = json.load(json_file)
+        if logged_in_data["logged_in"] == True:
+            self.root.load_screen("client_services")
+            self.root.current = "client_services"
+        else:
+            self.root.load_screen("main_sc")
+            self.root.current = "main_sc"
 
 
 # Run the app

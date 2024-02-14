@@ -1,3 +1,5 @@
+import json
+
 from kivy.core.window import Window
 from kivymd.app import MDApp
 from kivymd.uix.screen import MDScreen
@@ -20,11 +22,14 @@ class Client_services(MDScreen):
     #     return False
     #
     # def on_back_button(self):
-    #     pass
-        # self.manager.push_replacement("","right")
+    #     self.manager.push_replacement()
 
     def logout(self):
-        self.manager.pop()
+        logged_in_data = {'logged_in': False}
+        with open("logged_in_data.json", "w") as json_file:
+            json.dump(logged_in_data, json_file)
+
+        self.manager.push_replacement("login")
         self.ids.nav_drawer.set_state("close")
 
     def home(self):

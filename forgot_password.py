@@ -13,7 +13,7 @@ from twilio.rest import Client
 
 # Your Twilio credentials
 account_sid = "AC64ab0fed3c9135f8011fb5e50f969cbe"
-auth_token = "3a50206a976a26f6f9c7befcf5359fe5"
+auth_token = "2c450c5297067c3a88b338397d95beaf"
 verify_sid = "VA8937ab1f8c09c4e3842e4b32f72c8dc7"
 verified_number = "+919108340960"
 
@@ -25,18 +25,18 @@ except Exception as e:
 
 
 class ForgotPassword(MDScreen):
-    # def __init__(self, **kwargs):
-    #     super(ForgotPassword, self).__init__(**kwargs)
-    #     Window.bind(on_keyboard=self.on_keyboard)
-    #
-    # def on_keyboard(self, instance, key, scancode, codepoint, modifier):
-    #     if key == 27:  # Keycode for the back button on Android
-    #         self.on_back_button()
-    #         return True
-    #     return False
-    #
-    # def on_back_button(self):
-    #     self.manager.pop()
+    def __init__(self, **kwargs):
+        super(ForgotPassword, self).__init__(**kwargs)
+        Window.bind(on_keyboard=self.on_keyboard)
+
+    def on_keyboard(self, instance, key, scancode, codepoint, modifier):
+        if key == 27:  # Keycode for the back button on Android
+            self.on_back_button()
+            return True
+        return False
+
+    def on_back_button(self):
+        self.manager.push_replacement("login","right")
 
     def show_validation_dialog(self, message):
         # Create the dialog asynchronously
@@ -82,9 +82,7 @@ class ForgotPassword(MDScreen):
 
         else:
             if record:
-                app = MDApp.get_running_app()
-                app.root.transition.direction = "left"
-                app.root.current = "login"
+                self.manager.push_replacement("login")
                 record.update(password=new_password)
                 print("changed")
 

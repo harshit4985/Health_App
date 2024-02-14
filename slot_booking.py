@@ -47,21 +47,21 @@ class S_label(MDLabel):
 class Slot_Booking(MDScreen):
     time_slots = ['9am - 11am', '11am - 1pm', '1pm - 3pm', '3pm - 5pm', '5pm - 7pm', '7pm - 9pm']
 
-    # def __init__(self, **kwargs):
-    #     super(Slot_Booking, self).__init__(**kwargs)
-    #     Window.bind(on_keyboard=self.on_keyboard)
-    #
-    # def on_keyboard(self, instance, key, scancode, codepoint, modifier):
-    #     if key == 27:  # Keycode for the back button on Android
-    #         self.on_back_button()
-    #         return True
-    #     return False
-    #
-    # def on_back_button(self):
-    #     self.manager.pop()
+    def __init__(self, **kwargs):
+        super(Slot_Booking, self).__init__(**kwargs)
+        Window.bind(on_keyboard=self.on_keyboard)
+
+    def on_keyboard(self, instance, key, scancode, codepoint, modifier):
+        if key == 27:  # Keycode for the back button on Android
+            self.on_back_button()
+            return True
+        return False
+
+    def on_back_button(self):
+        self.manager.push_replacement("hospital_booking","right")
 
     def slot_booking_back_button(self, instance):
-        self.manager.pop()
+        self.manager.push_replacement("hospital_booking","right")
         self.ids.date_choosed.text = "Choose a date"
         for slots in Slot_Booking.time_slots:
             self.ids[slots].disabled = False
