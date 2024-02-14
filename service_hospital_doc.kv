@@ -1,0 +1,131 @@
+<HospitalServiceDoc>:
+    BoxLayout:
+        orientation: 'vertical'
+        MDIconButton:
+            icon: "arrow-left"
+            pos_hint: {"center_y": .95}
+            user_font_size: "30sp"
+            theme_text_color: "Custom"
+            text_color: rgba(26, 24, 58, 255)
+            on_release: root.manager.pop()
+        ScrollView:
+            GridLayout:
+                id: grid
+                cols: 1
+                padding: dp(10)
+                spacing: dp(20)
+                size_hint_y: None
+                height: self.minimum_height
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    size_hint_y: None
+                    spacing: dp(10)
+                    height: self.minimum_height
+                    MDLabel:
+                        text:'Upload Required Documents'
+                        pos_hint: {"center_x": .5}
+                        halign:'center'
+                        font_size: "16sp"
+                        font_name: "Broboto"
+                        size_hint:.7,None
+                        height: "30dp"
+                    MDLabel:
+                        text:"Documents should be in PDF format and should be less than 2MB in size."
+                        pos_hint: {"center_x": .5}
+                        halign:'center'
+                        font_size: "10sp"
+                        font_name: "Roboto"
+                        size_hint:.7,None
+                        color:1, 0, 0, 1
+                        height: "20dp"
+                    MDLabel:
+                        id: Doc_1
+                        text: "1.Medical Practitioner License"
+                        font_name: "Roboto"
+                        font_size: "16sp"
+                        pos_hint: {"center_x": .5}
+                        size_hint:.7,None
+                        height: "20dp"
+                    GridLayout:
+                        id: grid
+                        cols: 2
+                        spacing: dp(20)
+                        pos_hint:{'center_x':.5}
+                        size_hint:.7,None
+                        height: "20dp"
+                        MDLabel:
+                            id: file_path
+                            text: "None selected "  # Initial text when no file is selected
+                            italic: True
+                            color: 0.5, 0.5, 0.5, 1
+                            pos_hint: {"center_x": .5,'center_y':.5}
+                        MDRectangleFlatButton:
+                            id:upload1
+                            text:'Upload'
+                            font_name: "Roboto"
+                            font_size: "14sp"
+                            pos_hint:{'center_x':.5}
+                            size_hint:None,None
+                            width:dp(100)
+                            color_mode: 'custom'
+                            text_color:1, 0, 0, 1
+                            line_color:1,0,0,1
+                            on_release: root.file_manager_open('file_path')
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        font_name: "Roboto"
+                        pos_hint:{'center_x':.5}
+                        size_hint:.7,None
+                        height: "20dp"
+                        height: "10dp"
+                    MDLabel:
+                        id: Doc_2
+                        text: "2.Building Permit and Licenses"
+                        font_name: "Roboto"
+                        font_size: "16sp"
+                        size_hint:.7,None
+                        height: "30dp"
+                        pos_hint: {"center_x": .5,'center_y':.5}
+                    GridLayout:
+                        id: grid
+                        cols: 2
+                        spacing: dp(20)
+                        pos_hint: {"center_x": .5}
+                        size_hint:.7,None
+                        height: "20dp"
+                        MDLabel:
+                            id: file_path2
+                            text: "None selected"  # Initial text when no file is selected
+                            italic: True
+                            color: 0.5, 0.5, 0.5, 1
+                            pos_hint: {"center_x": .5,'center_y':.5}
+                        MDRectangleFlatButton:
+                            id:upload2
+                            text:'Upload'
+                            font_name: "Roboto"
+                            font_size: "14sp"
+                            pos_hint:{'center_x':.5}
+                            size_hint:None,None
+                            width:dp(100)
+                            color_mode: 'custom'
+                            text_color:1, 0, 0, 1
+                            line_color:1,0,0,1
+                            on_release: root.file_manager_open('file_path2')
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_y: None
+            height: dp(60)
+            padding: dp(10)
+            spacing: dp(10)
+            MDFlatButton:
+                disabled: False
+                size_hint: .4, None
+                height:dp(40) # Adjusted size
+                pos_hint:{'center_x':.5,'center_y':.5}
+                md_bg_color: 1, 0, 0, 1
+                elevation: 10
+                text: "SUBMIT"
+                font_name: "Broboto"
+                halign: "center"
+                text_color: 1, 1, 1, 1
+                theme_text_color: "Custom"

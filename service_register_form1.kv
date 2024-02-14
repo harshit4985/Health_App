@@ -144,12 +144,10 @@
                 pos_hint: {'right': 1, 'y': 0}
                 md_bg_color: 0, 0, 0, 0
                 on_release: root.manager.push("service_register_form2")
-#                canvas.before:
-#                    Color:
-#                        rgba: 1, 0, 0, 1
-#                    Line:
-#                        width: 1.5
-#                        rounded_rectangle: (self.x, self.y, self.width, self.height, dp(30))
+                canvas.before:
+                    Color:
+                        rgba: 1, 0, 0, 1
+
                 BoxLayout:
                     orientation: 'horizontal'
                     spacing: 0
