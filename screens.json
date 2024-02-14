@@ -84,15 +84,30 @@
         "object": "HospitalService()",
         "kv": "service_hospital.kv"
     },
+    "service_hospital_doc": {
+        "import": "from service_hospital_doc import HospitalServiceDoc",
+        "object": "HospitalServiceDoc()",
+        "kv": "service_hospital_doc.kv"
+    },
     "service_mobile_hospital": {
         "import": "from service_mobile_hospital import MobileCareService",
         "object": "MobileCareService()",
         "kv": "service_mobile_hospital.kv"
     },
+    "service_mobile_hospital_doc": {
+        "import": "from service_mobile_hospital_doc import MobileCareServiceDoc",
+        "object": "MobileCareServiceDoc()",
+        "kv": "service_mobile_hospital_doc.kv"
+    },
     "service_oxygym": {
         "import": "from service_oxygym import OxyGymService",
         "object": "OxyGymService()",
         "kv": "service_oxygym.kv"
+    },
+    "service_oxygym_doc": {
+        "import": "from service_oxygym_doc import OxyGymServiceDoc",
+        "object": "OxyGymServiceDoc()",
+        "kv": "service_oxygym_doc.kv"
     },
     "services_list": {
         "import": "from services_list import ServicesList",

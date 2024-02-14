@@ -10,11 +10,11 @@
             text_color: rgba(26, 24, 58, 255)
             on_release: root.manager.pop()
         MDLabel:
-            text: "Mobile-Hospital "
+            text: "OxiTaxi"
             font_name: "Broboto"
             pos_hint: {"center_y": .95}
-            size_hint_y:.01
-            font_size: "20sp"
+            size_hint_y:.1
+            font_size: "18sp"
             halign:'center'
         ScrollView:
             do_scroll_y:False
@@ -124,92 +124,41 @@
                         text_color_focus:0,0,0,1
                         hint_text_color:0,0,0,1
                         hint_text_color_focus:0,0,0,.5
-                    MDBoxLayout:
-                        pos_hint:{'center_x':.5}
-                        size_hint:.7,None
-                        height: "30dp"
-                        orientation: 'vertical'
-                        MDLabel:
-                            text:'Upload Required Documents'
-                            size_hint_y:.1
-                            halign:'center'
-                            font_size: "16sp"
-                            font_name: "Broboto"
-                    MDLabel:
-                        id: Doc_1
-                        text: "1.Vehicle RC"
-                        font_name: "Roboto"
-                        font_size: "16sp"
-                        pos_hint: {"center_x": .5}
-                        size_hint:.7,None
-                        height: "20dp"
-                    GridLayout:
-                        id: grid
-                        cols: 2
-                        padding: dp(10)
-                        spacing: dp(20)
-                        pos_hint:{'center_x':.5}
-                        size_hint:.7,None
-                        height: "20dp"
-                        MDLabel:
-                            id: file_path
-                            text: "None selected "  # Initial text when no file is selected
-                            italic: True
-                            color: 0.5, 0.5, 0.5, 1
-                            pos_hint: {"center_x": .5,'center_y':.5}
-                        MDTextButton:
-                            id:upload1
-                            text:'Upload'
-                            font_name: "Roboto"
-                            font_size: "16sp"
-                            color:1, 0, 0, 1
-                            pos_hint: {"center_x": .5,'center_y':.5}
-                            on_release: root.file_manager_open('file_path')
-                    MDLabel:
-                        id: Doc_2
-                        text: "2.Driving License"
-                        font_name: "Roboto"
-                        font_size: "16sp"
-                        size_hint:.7,None
-                        height: "40dp"
-                        pos_hint: {"center_x": .5,'center_y':.5}
-                    GridLayout:
-                        id: grid
-                        cols: 2
-                        padding: dp(10)
-                        spacing: dp(20)
-                        pos_hint: {"center_x": .5}
-                        size_hint:.7,None
-                        height: "20dp"
-                        MDLabel:
-                            id: file_path2
-                            text: "None selected 2"  # Initial text when no file is selected
-                            italic: True
-                            color: 0.5, 0.5, 0.5, 1
-                            pos_hint: {"center_x": .5,'center_y':.5}
-                        MDTextButton:
-                            id:upload1
-                            text:'Upload'
-                            font_name: "Roboto"
-                            font_size: "16sp"
-                            color:1, 0, 0, 1
-                            pos_hint: {"center_x": .5,'center_y':.5}
-                            on_release: root.file_manager_open('file_path')
+
         BoxLayout:
             orientation: 'vertical'
             size_hint_y: None
-            height: dp(60)
-            padding: dp(10)
+            height: self.minimum_height
+            padding: dp(20)
             spacing: dp(10)
+             # next button
             MDFlatButton:
                 disabled: False
-                size_hint: .4, None
-                height:dp(40) # Adjusted size
-                pos_hint:{'center_x':.5,'center_y':.5}
-                md_bg_color: 1, 0, 0, 1
-                elevation: 10
-                text: "CONFIRM"
-                font_name: "Broboto"
-                halign: "center"
-                text_color: 1, 1, 1, 1
-                theme_text_color: "Custom"
+                size_hint: None, None
+                size: dp(90), dp(35) # Adjusted size
+                halign: "left"
+                pos_hint: {'right': 1, 'y': 0}
+                md_bg_color: 0, 0, 0, 0
+                on_release: root.manager.push("service_mobile_hospital_doc")
+                canvas.before:
+                    Color:
+                        rgba: 1, 0, 0, 1
+#                    Line:
+#                        width: 1.5
+#                        rounded_rectangle: (self.x, self.y, self.width, self.height, dp(30))
+                BoxLayout:
+                    orientation: 'horizontal'
+                    spacing: 0
+                    MDLabel:
+                        text: "Next"
+                        font_name: "Broboto"
+                        halign: "center"
+                        text_color: 1, 0, 0, 1
+                        theme_text_color: "Custom"
+                    MDIcon:
+                        icon: "arrow-right-bold"
+                        halign: "center"
+                        theme_text_color: "Custom"
+                        text_color: 1, 0, 0, 1
+                        size_hint_x: None
+                        width: dp(24)
