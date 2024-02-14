@@ -1,28 +1,38 @@
+import threading
 import socket
 import sqlite3
-import anvil
-import requests
-
+import anvil.server
 
 class Server:
+    def __init__(self):
+        self.anvil_connected = False
+        self.anvil_connection_lock = threading.Lock()
 
-    def is_connected(self):
+        # Connect to Anvil in a separate thread
+        threading.Thread(target=self.connect_to_anvil, daemon=True).start()
+
+    def connect_to_anvil(self):
         try:
             # Attempt to create a socket connection to google.com
-            print("Internet is connected")
             socket.create_connection(("www.google.com", 80))
-            return True
+
+            # Connect to Anvil
+            with self.anvil_connection_lock:
+                anvil.server.connect("server_UY47LMUKBDUJMU4EA3RKLXCC-LP5NLIEYMCLMZ4NU")
+                self.anvil_connected = True
+                print("Connected to anvil.server")
         except OSError:
-            return False
+            print("Internet is not connected or Anvil connection failed")
+
+    def is_connected(self):
+        return self.anvil_connected
 
     def get_database_connection(self):
-        if self.is_connected():  # Use the stored connection status
+        if self.is_connected():
             # Use Anvil's database connection
-            print("Connected to anvil.server")
             return anvil.server.connect("server_UY47LMUKBDUJMU4EA3RKLXCC-LP5NLIEYMCLMZ4NU")
         else:
             # Use SQLite database connection
-            print("Connected to sqlite3")
             return sqlite3.connect('users.db')
 
     def sqlite3_users_db(self):
@@ -40,4 +50,4 @@ class Server:
         ''')
         conn.commit()
         print("Connected to sqlite3")
-        return sqlite3.connect('users.db')
+        return conn

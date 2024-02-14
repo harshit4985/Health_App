@@ -1,18 +1,10 @@
-import os
-import sqlite3
 import re
-import anvil
-import requests
-from anvil import Timer
 from anvil.tables import app_tables
 from kivy.clock import Clock
 from kivy.core.window import Window
-from kivy.lang import Builder
-from kivymd.app import MDApp
 from kivymd.uix.button import MDFlatButton
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.screen import MDScreen
-from twilio.rest import Client
 
 from server import Server
 
@@ -20,6 +12,7 @@ class Signup(MDScreen):
     def __init__(self, **kwargs):
         super(Signup, self).__init__(**kwargs)
         Window.bind(on_keyboard=self.on_keyboard)
+        self.server = Server()
 
     def on_keyboard(self, instance, key, scancode, codepoint, modifier):
         if key == 27:  # Keycode for the back button on Android
@@ -146,11 +139,9 @@ class Signup(MDScreen):
             self.ids.signup_password.text = ""
             self.ids.signup_phone.text = ""
             self.ids.signup_pincode.text = ""
-            server = Server()
-            connection = server.get_database_connection()
 
             try:
-                if server.is_connected():
+                if self.server.is_connected():
                     # Check if email and phone already exist in the database
                     existing_email = app_tables.users.get(email=email)
                     existing_phone = app_tables.users.get(phone=float(phone))
@@ -173,7 +164,7 @@ class Signup(MDScreen):
                             pincode=int(pincode))
 
                         # Additional SQLite insert (if needed)
-                        with server.sqlite3_users_db() as connection:
+                        with self.server.sqlite3_users_db() as connection:
                             cursor = connection.cursor()
                             cursor.execute('''
                                             INSERT INTO users (username, email, password, phone, pincode)
