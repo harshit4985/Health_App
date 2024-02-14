@@ -1,34 +1,3 @@
-<S_button>:
-    disabled: False
-    size_hint: None, None
-    size: dp(120), dp(58) # Adjusted size
-    halign: "left"
-    elevation: 4
-    md_bg_color: 1, 1, 1, 1
-    canvas:
-        Color:
-            rgba: 1, 0, 0, 1  # Red color with RGBA values
-        Line:
-            rectangle: self.x, self.y, self.width, self.height
-            width: dp(1.5)  # Adjust the width of the border
-<S_layout>:
-    orientation: 'vertical'
-    MDIcon:
-        icon: "bed-clock"
-        halign: "center"
-        theme_text_color: "Custom"
-        text_color: 0, 0, 0, 1
-        size_hint_x: None
-        width: dp(24)
-        pos_hint: {"center_x": 0.5, "center_y": 0.5}
-<S_label>:
-    font_name: "Roboto"
-    halign: "center"
-    text_color: 0, 0, 0, 1
-    theme_text_color: "Custom"
-
-
-
 <Slot_Booking>:
     BoxLayout:
         orientation: 'vertical'
@@ -53,21 +22,15 @@
                     orientation: 'vertical'
                     spacing: 0
                     size_hint_y: None
-                    height: dp(60)
+                    height: dp(100)
 
                     MDCard:
                         orientation: 'vertical'
                         size_hint: None, None
-                        size: "280dp", "60dp"
+                        size: "280dp", "100dp"
                         size_hint: (1, 1)
                         elevation: 1
                         pos_hint: {"center_x": 0.5, "center_y": 0.5}
-                        canvas.before:
-                            Rectangle:
-                                pos: self.pos
-                                size: self.size
-                                source: 'images/doctor.jpg'
-
 
                         MDLabel:
                             text: "Book a Slot"
@@ -78,119 +41,306 @@
                             bold: True
                             color: 1, 0, 0, 1
                             pos_hint: {"top": 1, "center_x": 0.5}
-
-                        MDFlatButton:
-                            size_hint: None, None
-                            size: dp(150), dp(35)  # Adjusted size
-                            halign: "left"
-                            md_bg_color: 0, 0, 0, 0
-                            on_release: root.slot_date_picker()
-
+                            canvas:
+                                Color:
+                                    rgba: 0, 0, 0, 1  # Red color with RGBA values
+                                Line:
+                                    points: [self.x, self.y - 2, self.x + self.width, self.y - 2]
+                                    width: 1
+                        BoxLayout:
+                            orientation: 'vertical'
+                            spacing: 0
+                            size_hint_y: None
+                            height: dp(70)
+                            md_bg_color: 1, 1, 1, 1
                             BoxLayout:
-                                orientation: 'horizontal'
-                                MDLabel:
-                                    id: date_choosed
-                                    text: "Choose a date"
-                                    font_name: "Roboto"
-                                    text_color: 0, 0, 0, 1
-                                    theme_text_color: "Custom"
-
-                                    canvas.before:
-                                        Color:
-                                            rgba: 0.5, 0.5, 0.5, 1
-                                        Line:
-                                            points: self.x, self.y, self.x + self.width, self.y
-                                            width: 1
-
-                                MDIcon:
-                                    icon: "calendar-month-outline"
-                                    theme_text_color: "Custom"
-                                    text_color: 1, 0, 0, 1
-                                    size_hint_x: None
-                                    width: dp(24)
-                BoxLayout:
-                    orientation: 'vertical'
-                    padding: dp(2)
-                    size_hint_y: None
-                    height: "45dp"
-                    MDLabel:
-                        text: "Select Timings"
-                        font_name: "Roboto"
-                        size_hint_x: 1
-                        halign: "center"
-                        valign: "top"
-                        bold: True
-                        color: 1, 0, 0, 1
-                        pos_hint: {"top": 1}
-
-                        canvas:
-                            Color:
-                                rgba: 0, 0, 0, 1  # Red color with RGBA values
-                            Line:
-                                points: [self.x, self.y - 2, self.x + self.width, self.y - 2]
-                                width: 1
+                                size_hint: None, None
+                                size: dp(285), dp(70)
+                                pos_hint: {"center_x": 0.5, "center_y": 1}
 
 
+                                GridLayout:
+                                    cols: 4
+                                    spacing: dp(15)
+                                    size_hint_y: None
+                                    pos_hint: {"center_x": 0.5, "x": 0}
+                                    padding: dp(0),dp(10),dp(0),dp(10)
+                                    height: self.minimum_height
+
+                                    MDRaisedButton:
+                                        size_hint: None, None
+                                        valign: "center"
+                                        size: dp(60), dp(45)
+                                        md_bg_color: 1, 1, 1, 1
+                                        line_color: 1, 0, 0, 1
+                                        line_width: "1.1dp"
+                                        on_release: app.put()
+                                        BoxLayout:
+                                            orientation: "vertical"
+                                            padding: dp(5)
+                                            spacing: dp(20)
+                                            Label:
+                                                id: day_label
+                                                text: "Mon"
+                                                bold: True
+                                                halign: "center"
+                                                color: 0, 0, 0, 1
+                                                height: self.texture_size[1]
+                                            Label:
+                                                id: date_label
+                                                text: "01"
+                                                bold: True
+                                                halign: "center"
+                                                color: 0, 0, 0, 1
+                                                height: self.texture_size[1]
+                                    MDRaisedButton:
+                                        size_hint: None, None
+                                        valign: "center"
+                                        size: dp(60), dp(45)
+                                        md_bg_color: 1, 1, 1, 1
+                                        line_color: 1, 0, 0, 1
+                                        line_width: "1.1dp"
+                                        BoxLayout:
+                                            orientation: "vertical"
+                                            padding: dp(5)
+                                            spacing: dp(20)
+                                            Label:
+                                                id: day_label
+                                                text: "Tue"
+                                                bold: True
+                                                halign: "center"
+                                                color: 0, 0, 0, 1
+                                                height: self.texture_size[1]
+                                            Label:
+                                                id: date_label
+                                                text: "02"
+                                                bold: True
+                                                halign: "center"
+                                                color: 0, 0, 0, 1
+                                                height: self.texture_size[1]
+
+                                    MDRaisedButton:
+                                        size_hint: None, None
+                                        valign: "center"
+                                        size: dp(60), dp(45)
+                                        md_bg_color: 1, 1, 1, 1
+                                        line_color: 1, 0, 0, 1
+                                        line_width: "1.1dp"
+                                        BoxLayout:
+                                            orientation: "vertical"
+                                            padding: dp(5)
+                                            spacing: dp(20)
+                                            Label:
+                                                id: day_label
+                                                text: "Wed"
+                                                bold: True
+                                                halign: "center"
+                                                color: 0, 0, 0, 1
+                                                height: self.texture_size[1]
+                                            Label:
+                                                id: date_label
+                                                text: "03"
+                                                bold: True
+                                                halign: "center"
+                                                color: 0, 0, 0, 1
+                                                height: self.texture_size[1]
+                                    MDRaisedButton:
+                                        size_hint: None, None
+                                        valign: "center"
+                                        size: dp(60), dp(45)
+                                        md_bg_color: 1, 1, 1, 1
+                                        line_color: 1, 0, 0, 1
+                                        line_width: "1.1dp"
+                                        BoxLayout:
+                                            orientation: "vertical"
+                                            padding: dp(5)
+                                            spacing: dp(20)
+                                            Label:
+                                                id: day_label
+                                                text: "Thu"
+                                                bold: True
+                                                halign: "center"
+                                                color: 0, 0, 0, 1
+                                                height: self.texture_size[1]
+                                            Label:
+                                                id: date_label
+                                                text: "04"
+                                                bold: True
+                                                halign: "center"
+                                                color: 0, 0, 0, 1
+                                                height: self.texture_size[1]
                 BoxLayout:
                     orientation: 'vertical'
                     spacing: 0
                     size_hint_y: None
-                    height: dp(214)
-                    md_bg_color: 1, 1, 1, 1
-                    BoxLayout:
+                    height: dp(170)
+
+                    MDCard:
+                        orientation: 'vertical'
                         size_hint: None, None
-                        size: dp(255), dp(214)
-                        pos_hint: {"center_x": 0.5, "center_y": 1}
+                        spacing: 5
+                        size: "280dp", "170dp"
+                        size_hint: (1, 1)
+                        elevation: 1
+                        pos_hint: {"center_x": 0.5, "center_y": 0.5}
 
-                        GridLayout:
-                            cols: 2
-                            spacing: dp(15)
+                        BoxLayout:
+                            orientation: 'horizontal'
+                            padding: dp(2)
                             size_hint_y: None
-                            pos_hint: {"center_x": 0.5, "x": 0}
-                            height: self.minimum_height
+                            height: "30dp"
+                            pos_hint: {"top": 1}
 
-                            S_button:
-                                id: 9am - 11am
-                                on_release: root.select_timings(self,FirstSlot.text)
-                                S_layout:
-                                    S_label:
-                                        id: FirstSlot
-                                        text: "9am - 11am"
-                            S_button:
-                                id: 11am - 1pm
-                                on_release: root.select_timings(self,SecondSlot.text)
-                                S_layout:
-                                    S_label:
-                                        id: SecondSlot
-                                        text: "11am - 1pm"
-                            S_button:
-                                id: 1pm - 3pm
-                                on_release: root.select_timings(self,ThirdSlot.text)
-                                S_layout:
-                                    S_label:
-                                        id: ThirdSlot
-                                        text: "1pm - 3pm"
-                            S_button:
-                                id: 3pm - 5pm
-                                on_release: root.select_timings(self,ForthSlot.text)
-                                S_layout:
-                                    S_label:
-                                        id: ForthSlot
-                                        text: "3pm - 5pm"
-                            S_button:
-                                id: 5pm - 7pm
-                                on_release: root.select_timings(self,FifthSlot.text)
-                                S_layout:
-                                    S_label:
-                                        id: FifthSlot
-                                        text: "5pm - 7pm"
-                            S_button:
-                                id: 7pm - 9pm
-                                on_release: root.select_timings(self,SixthSlot.text)
-                                S_layout:
-                                    S_label:
-                                        id: SixthSlot
-                                        text: "7pm - 9pm"
+                            MDLabel:
+                                text: "Available Slots On: Mon 01"
+                                font_name: "Roboto"
+                                size_hint_x: 1
+                                halign: "left"
+                                valign: "top"
+                                padding: dp(20)
+                                bold: True
+                                color: 1, 0, 0, 1
+                                canvas:
+                                    Color:
+                                        rgba: 0, 0, 0, 1
+                                    Line:
+                                        points: [self.x, self.y - 2, self.x + self.width, self.y - 2]
+                                        width: 1
+
+                        BoxLayout:
+                            orientation: 'vertical'
+                            spacing: 0
+                            size_hint_y: None
+                            padding: dp(10),dp(0),dp(10),dp(20)
+                            height: dp(130)
+                            md_bg_color: 1, 1, 1, 1
+#                            canvas.before:
+#                                Color:
+#                                    rgba: 1, 0, 0, 1  # Red color
+#                                Rectangle:
+#                                    pos: self.pos
+#                                    size: self.size
+                            GridLayout:
+                                cols: 3
+                                spacing: dp(15)
+                                size_hint_y: None
+                                pos_hint: {"center_x": 0.5, "x": 0}
+                                height: self.minimum_height
+#                                canvas.before:
+#                                    Color:
+#                                        rgba: 1, 0, 0, 1  # Red color
+#                                    Rectangle:
+#                                        pos: self.pos
+#                                        size: self.size
+                                MDFlatButton:
+                                    size_hint: None, None
+                                    size: dp(90), dp(40) # Adjusted size
+                                    halign: "left"
+                                    pos_hint: {'right': 1, 'y': 0}
+                                    md_bg_color: 0, 0, 0, 0
+                                    canvas.before:
+                                        Color:
+                                            rgba: 1, 0, 0, 1
+                                        Line:
+                                            width: 1.1
+                                            rounded_rectangle: (self.x, self.y, self.width, self.height, dp(30))
+                                    MDLabel:
+                                        text: "09:00 AM"
+                                        font_name: "Roboto"
+                                        halign: "center"
+                                        color: 0.5, 0.5, 0.5, 1
+                                        theme_text_color: "Custom"
+                                MDFlatButton:
+                                    size_hint: None, None
+                                    size: dp(90), dp(40) # Adjusted size
+                                    halign: "left"
+                                    pos_hint: {'right': 1, 'y': 0}
+                                    md_bg_color: 0, 0, 0, 0
+                                    canvas.before:
+                                        Color:
+                                            rgba: 1, 0, 0, 1
+                                        Line:
+                                            width: 1.1
+                                            rounded_rectangle: (self.x, self.y, self.width, self.height, dp(30))
+                                    MDLabel:
+                                        text: "11:00 AM"
+                                        font_name: "Roboto"
+                                        halign: "center"
+                                        color: 0.5, 0.5, 0.5, 1
+                                        theme_text_color: "Custom"
+                                MDFlatButton:
+                                    size_hint: None, None
+                                    size: dp(90), dp(40) # Adjusted size
+                                    halign: "left"
+                                    pos_hint: {'right': 1, 'y': 0}
+                                    md_bg_color: 0, 0, 0, 0
+                                    canvas.before:
+                                        Color:
+                                            rgba: 1, 0, 0, 1
+                                        Line:
+                                            width: 1.1
+                                            rounded_rectangle: (self.x, self.y, self.width, self.height, dp(30))
+                                    MDLabel:
+                                        text: "01:00 PM"
+                                        font_name: "Roboto"
+                                        halign: "center"
+                                        color: 0.5, 0.5, 0.5, 1
+                                        theme_text_color: "Custom"
+                                MDFlatButton:
+                                    size_hint: None, None
+                                    size: dp(90), dp(40) # Adjusted size
+                                    halign: "left"
+                                    pos_hint: {'right': 1, 'y': 0}
+                                    md_bg_color: 0, 0, 0, 0
+                                    canvas.before:
+                                        Color:
+                                            rgba: 1, 0, 0, 1
+                                        Line:
+                                            width: 1.1
+                                            rounded_rectangle: (self.x, self.y, self.width, self.height, dp(30))
+                                    MDLabel:
+                                        text: "03:00 PM"
+                                        font_name: "Roboto"
+                                        halign: "center"
+                                        color: 0.5, 0.5, 0.5, 1
+                                        theme_text_color: "Custom"
+
+                                MDFlatButton:
+                                    size_hint: None, None
+                                    size: dp(90), dp(40) # Adjusted size
+                                    halign: "left"
+                                    pos_hint: {'right': 1, 'y': 0}
+                                    md_bg_color: 0, 0, 0, 0
+                                    canvas.before:
+                                        Color:
+                                            rgba: 1, 0, 0, 1
+                                        Line:
+                                            width: 1.1
+                                            rounded_rectangle: (self.x, self.y, self.width, self.height, dp(30))
+                                    MDLabel:
+                                        text: "05:00 PM"
+                                        font_name: "Roboto"
+                                        halign: "center"
+                                        color: 0.5, 0.5, 0.5, 1
+                                        theme_text_color: "Custom"
+                                MDFlatButton:
+                                    size_hint: None, None
+                                    size: dp(90), dp(40) # Adjusted size
+                                    halign: "left"
+                                    pos_hint: {'right': 1, 'y': 0}
+                                    md_bg_color: 0, 0, 0, 0
+                                    canvas.before:
+                                        Color:
+                                            rgba: 1, 0, 0, 1
+                                        Line:
+                                            width: 1.1
+                                            rounded_rectangle: (self.x, self.y, self.width, self.height, dp(30))
+                                    MDLabel:
+                                        text: "07:00 PM"
+                                        font_name: "Roboto"
+                                        halign: "center"
+                                        color: 0.5, 0.5, 0.5, 1
+                                        theme_text_color: "Custom"
         Button:
             id: book_slot
             text: "Pay Now"
