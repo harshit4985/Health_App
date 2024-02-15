@@ -35,12 +35,13 @@
                                     BoxLayout:
                                         orientation: 'vertical'
                                         size_hint: (0.5, 1)
-                                        padding: dp(2)
+                                        padding: dp(8),dp(5),dp(5),dp(5)
                                         AsyncImage:
                                             id: organization_image
-                                            source: 'images/hospital.png'
+                                            source: 'images/hospital-building.jpg'
                                             size_hint: (1, 1)
                                             pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                                            allow_stretch: True
 
                                     BoxLayout:
                                         id: information
