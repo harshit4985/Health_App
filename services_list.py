@@ -4,7 +4,7 @@ from kivy.clock import Clock
 from kivy.core.window import Window
 from kivy.metrics import dp
 from kivymd.uix.boxlayout import MDBoxLayout
-from kivymd.uix.button import MDRectangleFlatButton
+from kivymd.uix.button import MDRectangleFlatButton, MDIconButton
 from kivymd.uix.datatables import MDDataTable
 from kivymd.uix.floatlayout import MDFloatLayout
 from kivymd.uix.screen import MDScreen
@@ -13,12 +13,12 @@ from kivymd.uix.screen import MDScreen
 class ServicesList(MDScreen):
     def __init__(self, **kwargs):
         super(ServicesList, self).__init__(**kwargs)
-        Window.bind(on_keyboard=self.on_keyboard)
+        # Window.bind(on_keyboard=self.on_keyboard)
         self.name = 'list_content'
         initial_data = self.fetch_initial_data()
         self.data_tables = MDDataTable(
             pos_hint={"center_y": 0.5, "center_x": 0.5},
-            size_hint=(.9, .6),
+            size_hint=(.9, .7),
             use_pagination=True,
             pagination_menu_pos="center",
             elevation=0,
@@ -34,17 +34,17 @@ class ServicesList(MDScreen):
         )
         # Creating control buttons.
         button_box = MDBoxLayout(
-            pos_hint={"center_x": 1, 'center_y': .2},
+            pos_hint={"center_x": 1.2, 'center_y': .15},
             size_hint=(.9, .2),
             padding="14dp",
             spacing="14dp",
         )
 
         button_box.add_widget(
-            MDRectangleFlatButton(
-                text='Delete',
+            MDIconButton(
+                icon='trash-can-outline',
                 on_release=self.on_button_press,
-                pos_hint={"center_y": .5},
+                # pos_hint={"center_y": .5},
 
             )
         )
@@ -54,14 +54,14 @@ class ServicesList(MDScreen):
         layout.add_widget(button_box)
         self.add_widget(layout)
 
-    def on_keyboard(self, instance, key, scancode, codepoint, modifier):
-        if key == 27:  # Keycode for the back button on Android
-            self.on_back_button()
-            return True
-        return False
-
-    def on_back_button(self):
-        self.manager.pop()
+    # def on_keyboard(self, instance, key, scancode, codepoint, modifier):
+    #     if key == 27:  # Keycode for the back button on Android
+    #         self.on_back_button()
+    #         return True
+    #     return False
+    #
+    # def on_back_button(self):
+    #     self.manager.pop()
 
     def on_button_press(self, instance_button):
         try:
@@ -74,11 +74,11 @@ class ServicesList(MDScreen):
     def fetch_initial_data(self):
         # Connect to your database and fetch data
         # Replace this with your actual database connection and query logic
-        connection = sqlite3.connect('user.db')
+        connection = sqlite3.connect('users.db')
         cursor = connection.cursor()
 
         # Example query: Fetch all rows from the database
-        cursor.execute("SELECT hospital_name, District FROM hospital_table")
+        cursor.execute("SELECT hospital_name, District FROM service_table")
         db_row_data = cursor.fetchall()
 
         connection.close()
@@ -92,12 +92,12 @@ class ServicesList(MDScreen):
         checked_rows = self.data_tables.get_row_checks()
 
         # Connect to the database and delete selected rows
-        connection = sqlite3.connect('user.db')
+        connection = sqlite3.connect('users.db')
         cursor = connection.cursor()
 
         for checked_row in checked_rows:
             hospital_name = checked_row[0]  # Assuming hospital_name is the first column
-            cursor.execute("DELETE FROM hospital_table WHERE hospital_name=?", (hospital_name,))
+            cursor.execute("DELETE FROM service_table WHERE hospital_name=?", (hospital_name,))
 
         connection.commit()
         connection.close()

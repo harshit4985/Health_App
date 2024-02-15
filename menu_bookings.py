@@ -11,13 +11,14 @@ class Booking(MDScreen):
     def on_keyboard(self, instance, key, scancode, codepoint, modifier):
         if key == 27:  # Keycode for the back button on Android
             self.on_back_button()
-            return True 
+            return True
         return False
 
     def on_back_button(self):
-        self.manager.pop()
+        self.manager.push_replacement("client_services","right")
+        # screen.ids.nav_drawer.set_state("close")
 
     def booking_back(self):
-        self.manager.pop()
+        self.manager.push_replacement("client_services","right")
         screen = self.manager.get_screen('client_services')
         screen.ids.nav_drawer.set_state("close")

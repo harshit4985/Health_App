@@ -1,18 +1,10 @@
-import os
-import sqlite3
 import re
-import anvil
-import requests
-from anvil import Timer
 from anvil.tables import app_tables
 from kivy.clock import Clock
 from kivy.core.window import Window
-from kivy.lang import Builder
-from kivymd.app import MDApp
 from kivymd.uix.button import MDFlatButton
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.screen import MDScreen
-from twilio.rest import Client
 
 from server import Server
 
@@ -20,6 +12,7 @@ class Signup(MDScreen):
     def __init__(self, **kwargs):
         super(Signup, self).__init__(**kwargs)
         Window.bind(on_keyboard=self.on_keyboard)
+        self.server = Server()
 
     def on_keyboard(self, instance, key, scancode, codepoint, modifier):
         if key == 27:  # Keycode for the back button on Android
@@ -28,7 +21,7 @@ class Signup(MDScreen):
         return False
 
     def on_back_button(self):
-        self.manager.pop()
+        self.manager.push_replacement("main_sc","right")
 
     # def google_sign_in(self):
     #     # Set up the OAuth 2.0 client ID and client secret obtained from the Google Cloud Console
@@ -146,37 +139,48 @@ class Signup(MDScreen):
             self.ids.signup_password.text = ""
             self.ids.signup_phone.text = ""
             self.ids.signup_pincode.text = ""
-            server = Server()
-            connection = server.get_database_connection()
-            # If validation is successful, insert into the database
+
             try:
-                if server.is_connected():
-                    rows = app_tables.users.search()
-                    # Get the number of rows
-                    id = len(rows) + 1
-                    app_tables.users.add_row(
-                        id=id,
-                        username=username,
-                        email=email,
-                        password=password,
-                        phone=float(phone),
-                        pincode=int(pincode))
-                    connection = server.sqlite3_users_db()
-                    cursor = connection.cursor()
-                    cursor.execute('''
-                                    INSERT INTO users (username, email, password, phone, pincode)
-                                    VALUES (?, ?, ?, ?, ?)
-                                ''', (username, email, password, phone, pincode))
-                    connection.commit()
-                    connection.close()
+                if self.server.is_connected():
+                    # Check if email and phone already exist in the database
+                    existing_email = app_tables.users.get(email=email)
+                    existing_phone = app_tables.users.get(phone=float(phone))
+
+                    if existing_email:
+                        self.ids.signup_email.helper_text = "Email already registered"
+                    elif existing_phone:
+                        self.ids.signup_phone.helper_text = "Phone number already registered"
+                    else:
+                        # If not present, proceed to insert the new user
+                        rows = app_tables.users.search()
+                        # Get the number of rows
+                        id = len(rows) + 1
+                        app_tables.users.add_row(
+                            id=id,
+                            username=username,
+                            email=email,
+                            password=password,
+                            phone=float(phone),
+                            pincode=int(pincode))
+
+                        # Additional SQLite insert (if needed)
+                        with self.server.sqlite3_users_db() as connection:
+                            cursor = connection.cursor()
+                            cursor.execute('''
+                                            INSERT INTO users (username, email, password, phone, pincode)
+                                            VALUES (?, ?, ?, ?, ?)
+                                        ''', (username, email, password, phone, pincode))
+                            connection.commit()
+                        # Navigate to the success screen
+                        self.manager.push("login")
                 else:
                     self.show_validation_dialog("No internet connection")
 
             except Exception as e:
                 print(e)
-                self.show_validation_dialog("No internet connection")
-            # Navigate to the success screen
-            self.manager.push("login")
+                self.show_validation_dialog("Error processing user data")
+
+
 
     # password validation
     def validate_password(self, password):

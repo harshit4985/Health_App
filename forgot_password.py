@@ -2,6 +2,7 @@ import re
 
 import anvil
 from anvil.tables import app_tables
+from kivy import platform
 from kivy.clock import Clock
 from kivy.core.window import Window
 from kivymd.app import MDApp
@@ -12,7 +13,7 @@ from twilio.rest import Client
 
 # Your Twilio credentials
 account_sid = "AC64ab0fed3c9135f8011fb5e50f969cbe"
-auth_token = "3a50206a976a26f6f9c7befcf5359fe5"
+auth_token = "2c450c5297067c3a88b338397d95beaf"
 verify_sid = "VA8937ab1f8c09c4e3842e4b32f72c8dc7"
 verified_number = "+919108340960"
 
@@ -35,7 +36,7 @@ class ForgotPassword(MDScreen):
         return False
 
     def on_back_button(self):
-        self.manager.pop()
+        self.manager.push_replacement("login","right")
 
     def show_validation_dialog(self, message):
         # Create the dialog asynchronously
@@ -81,14 +82,16 @@ class ForgotPassword(MDScreen):
 
         else:
             if record:
-                app = MDApp.get_running_app()
-                app.root.transition.direction = "left"
-                app.root.current = "login"
+                self.manager.push_replacement("login")
                 record.update(password=new_password)
                 print("changed")
 
     #
     def sent_otp(self):
+        if platform == 'android':
+            from android.permissions import request_permissions, Permission
+            request_permissions([Permission.SEND_SMS, Permission.RECEIVE_SMS])
+
         phone = self.ids.phone.text
 
         if not (phone and len(phone) == 10):

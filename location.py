@@ -17,10 +17,10 @@ class Location(MDScreen):
         return False
 
     def on_back_button(self):
-        self.manager.pop()
+        self.manager.push_replacement("client_services","right")
 
     def client_services(self):
-        self.manager.pop()
+        self.manager.push_replacement("client_services","right")
 
     def fetch_pincode(self):
         pincode = self.ids.pincode.text

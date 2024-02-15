@@ -58,10 +58,10 @@ class Slot_Booking(MDScreen):
         return False
 
     def on_back_button(self):
-        self.manager.pop()
+        self.manager.push_replacement("hospital_booking","right")
 
     def slot_booking_back_button(self, instance):
-        self.manager.pop()
+        self.manager.push_replacement("hospital_booking","right")
         self.ids.date_choosed.text = "Choose a date"
         for slots in Slot_Booking.time_slots:
             self.ids[slots].disabled = False

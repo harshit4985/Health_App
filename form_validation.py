@@ -98,7 +98,7 @@ class BaseRegistrationScreen(MDScreen):
     def exit_manager(self, *args):
         self.file_manager.close()
 
-    def validate_content(self, tablename):
+    def validate_content(self):
         extra_info = self.ids.extra_info.text
         extra_info2 = self.ids.extra_info2.text
         District = self.ids.District.text
@@ -144,49 +144,18 @@ class BaseRegistrationScreen(MDScreen):
             print(address)
             print(self.file_data1)
             print(self.file_data2)
-            if tablename == 'hospital':
-                print('HospitalService')
-                conn = sqlite3.connect("user.db")
-                cursor = conn.cursor()
-                # Inserting data into the specified table
-                cursor.execute(f''' INSERT INTO hospital_table (hospital_name ,established_year , District, State, 
-                pincode, address, doc1, doc2) VALUES (?, ?, ?, ?, ?, ?, ?, ?) ''', (extra_info, extra_info2, District,
-                                                                                    State, pincode, address,
-                                                                                    self.file_data1,
-                                                                                    self.file_data2))
 
-                conn.commit()
-                conn.close()
-                self.manager.push("service_hospital", "down")
-                return True
-            elif tablename == 'mobile_hospital':
-                print('MobileCareServices')
-                conn = sqlite3.connect("user.db")
-                cursor = conn.cursor()
-                # Inserting data into the specified table
-                cursor.execute(f'''
-                        INSERT INTO mobile_hospital_table (vehicle_no, model_year, District, State, pincode, address, doc1, doc2)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-                    ''', (extra_info, extra_info2, District, State, pincode, address, self.file_data1,
-                          self.file_data2))
 
-                conn.commit()
-                conn.close()
-                self.manager.push("service_mobile_hospital", "down")
-                return True
+            conn = sqlite3.connect("users.db")
+            cursor = conn.cursor()
+            # Inserting data into the specified table
+            cursor.execute(f''' INSERT INTO service_table (hospital_name ,established_year , District, State, 
+            pincode, address, doc1, doc2) VALUES (?, ?, ?, ?, ?, ?, ?, ?) ''', (extra_info, extra_info2, District,
+                                                                                State, pincode, address,
+                                                                                self.file_data1,
+                                                                                self.file_data2))
 
-            elif tablename == 'oxi_gym':
-                print('OxyGymServices')
-                conn = sqlite3.connect("user.db")
-                cursor = conn.cursor()
-                # Inserting data into the specified table
-                cursor.execute(f'''
-                        INSERT INTO oxi_gym_table (oxi_gym_name ,established_year , District, State, pincode, address, doc1, doc2)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-                    ''', (extra_info, extra_info2, District, State, pincode, address, self.file_data1,
-                          self.file_data2))
-
-                conn.commit()
-                conn.close()
-                self.manager.push("service_oxygym  ", "down")
-                return True
+            conn.commit()
+            conn.close()
+            self.manager.push("service_register_form2", "down")
+            return True

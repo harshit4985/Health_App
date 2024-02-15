@@ -22,7 +22,8 @@ class Payment(MDScreen):
         return False
 
     def on_back_button(self):
-        self.manager.pop()
+        self.manager.push_replacement("client_services","right")
+        # screen.ids.nav_drawer.set_state("close")
 
     # def payment_page_backButton(self):
     #     # Extract the username from menu_profile

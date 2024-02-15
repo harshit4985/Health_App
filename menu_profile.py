@@ -19,9 +19,10 @@ class Profile(MDScreen):
         return False
 
     def on_back_button(self):
-        self.manager.pop()
+        self.manager.push_replacement("client_services","right")
+        # screen.ids.nav_drawer.set_state("close")
 
     def profile_back(self):
-        self.manager.pop()
+        self.manager.push_replacement("client_services","right")
         screen = self.manager.get_screen('client_services')
         screen.ids.nav_drawer.set_state("close")

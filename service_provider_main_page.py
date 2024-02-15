@@ -15,18 +15,18 @@ from kivymd.uix.screen import MDScreen
 Builder.load_file("service_provider_main_page.kv")
 class ServiceProviderMain(MDScreen):
     menu = ObjectProperty(None)
-    def __init__(self, **kwargs):
-        super(ServiceProviderMain, self).__init__(**kwargs)
-        Window.bind(on_keyboard=self.on_keyboard)
-
-    def on_keyboard(self, instance, key, scancode, codepoint, modifier):
-        if key == 27:  # Keycode for the back button on Android
-            self.on_back_button()
-            return True
-        return False
-
-    def on_back_button(self):
-        self.manager.pop()
+    # def __init__(self, **kwargs):
+    #     super(ServiceProviderMain, self).__init__(**kwargs)
+    #     Window.bind(on_keyboard=self.on_keyboard)
+    #
+    # def on_keyboard(self, instance, key, scancode, codepoint, modifier):
+    #     if key == 27:  # Keycode for the back button on Android
+    #         self.on_back_button()
+    #         return True
+    #     return False
+    #
+    # def on_back_button(self):
+    #     self.manager.pop()
     def service_button(self,button):
         if not self.menu:
             cities = ["Settings", "Notification"]

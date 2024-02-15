@@ -14,7 +14,7 @@ class BookingInfo(MDScreen):
         return False
 
     def on_back_button(self):
-        self.manager.pop()
+        self.manager.push_replacement("client_services","right")
 
     def back_button_hospital_book(self):
-        self.manager.push("client_services", "right")
+        self.manager.push_replacement("client_services","right")
