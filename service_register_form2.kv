@@ -47,13 +47,13 @@
                     size_hint_y: None
                     height: self.minimum_height
                     padding: dp(10)
-                    spacing: dp(20)
+                    spacing: dp(10)
                     BoxLayout:
                         orientation: 'horizontal'
                         font_name: "Roboto"
                         pos_hint:{'center_x':.5}
                         spacing:dp(10)
-                        size_hint:1,None
+                        size_hint:0.9,None
                         height: "30dp"
 
                         MDFlatButton:
@@ -127,7 +127,7 @@
                         font_name: "Roboto"
                         pos_hint:{'center_x':.5}
                         spacing:dp(10)
-                        size_hint:1,None
+                        size_hint:0.9,None
                         height: "30dp"
 
                         MDFlatButton:
@@ -197,7 +197,7 @@
                         font_name: "Roboto"
                         pos_hint:{'center_x':.5}
                         spacing:dp(10)
-                        size_hint:1,None
+                        size_hint:0.9,None
                         height: "30dp"
 
                         MDFlatButton:
@@ -257,43 +257,6 @@
                                     font_name: "Roboto"
 
 
-#        BoxLayout:
-#            orientation: 'horizontal'
-#            size_hint_y: None
-#            height: self.minimum_height
-#            padding: dp(20)
-#            spacing: dp(10)
-#             # next button
-#            MDFlatButton:
-#                disabled: False
-#                size_hint: None, None
-#                size: dp(120), dp(40) # Adjusted size
-#                halign: "right"
-#                pos_hint: {'right': 1, 'bottom': 1}
-#                md_bg_color: 0, 0, 0, 0
-#                on_release: root.manager.push("services_list")
-#                canvas.before:
-#                    Color:
-#                        rgba: 1, 0, 0, 1
-#                    Line:
-#                        width: 2
-#                        rounded_rectangle: (self.x, self.y, self.width, self.height, dp(30))
-#                BoxLayout:
-#                    orientation: 'horizontal'
-#                    spacing: 0
-#                    MDLabel:
-#                        text: "Preview"
-#                        font_name: "Broboto"
-#                        halign: "center"
-#                        text_color: 1, 0, 0, 1
-#                        theme_text_color: "Custom"
-#                    MDIcon:
-#                        icon: "arrow-right-bold"
-#                        halign: "center"
-#                        theme_text_color: "Custom"
-#                        text_color: 1, 0, 0, 1
-#                        size_hint_x: None
-#                        width: dp(24)
 
         BoxLayout:
             orientation: 'vertical'
@@ -301,21 +264,15 @@
             height: self.minimum_height
             padding: dp(20)
             spacing: dp(10)
-             # next button
+             # preview button
             MDFlatButton:
                 disabled: False
                 size_hint: None, None
                 size: dp(110), dp(35) # Adjusted size
                 halign: "left"
-                pos_hint: {'right': 1, 'y': 0}
+                pos_hint: {'right': 1, 'y': 1}
                 md_bg_color: 0, 0, 0, 0
                 on_release: root.manager.push("services_list")
-#                canvas.before:
-#                    Color:
-#                        rgba: 1, 0, 0, 1
-#                    Line:
-#                        width: 1.5
-#                        rounded_rectangle: (self.x, self.y, self.width, self.height, dp(30))
                 BoxLayout:
                     orientation: 'horizontal'
                     spacing: 0
