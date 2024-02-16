@@ -1,37 +1,38 @@
 import sqlite3
-
 from kivy.clock import Clock
-from kivy.core.window import Window
 from kivy.metrics import dp
+from kivy.utils import rgba
 from kivymd.uix.boxlayout import MDBoxLayout
-from kivymd.uix.button import MDRectangleFlatButton, MDIconButton
+from kivymd.uix.button import MDRectangleFlatButton, MDIconButton, MDFlatButton
 from kivymd.uix.datatables import MDDataTable
 from kivymd.uix.floatlayout import MDFloatLayout
+from kivymd.uix.label import MDLabel
 from kivymd.uix.screen import MDScreen
 
 
 class ServicesList(MDScreen):
     def __init__(self, **kwargs):
         super(ServicesList, self).__init__(**kwargs)
-        # Window.bind(on_keyboard=self.on_keyboard)
         self.name = 'list_content'
+        self.load_data()
+
+    def load_data(self):
         initial_data = self.fetch_initial_data()
         self.data_tables = MDDataTable(
             pos_hint={"center_y": 0.5, "center_x": 0.5},
-            size_hint=(.9, .7),
+            size_hint=(1, .7),
             use_pagination=True,
             pagination_menu_pos="center",
             elevation=0,
             padding='0dp',
             check=True,
             column_data=[
-                ("Hospital Name", dp(40)),
-                ("City", dp(40)),
-
+                ("Organization Name", dp(45)),
+                ("City", dp(30)),
             ],
             row_data=initial_data,
-
         )
+
         # Creating control buttons.
         button_box = MDBoxLayout(
             pos_hint={"center_x": 1.2, 'center_y': .15},
@@ -43,25 +44,61 @@ class ServicesList(MDScreen):
         button_box.add_widget(
             MDIconButton(
                 icon='trash-can-outline',
+                text='Delete',
                 on_release=self.on_button_press,
-                # pos_hint={"center_y": .5},
-
             )
         )
+        button_layout = MDBoxLayout(
+            orientation='vertical',
+            size_hint_y=None,
+            height=dp(60),
+            padding=dp(10),
+            spacing=dp(10)
+        )
 
-        layout = MDFloatLayout()
+        confirm_button = MDFlatButton(
+            text="CONFIRM",
+            size_hint=(None, None),
+            size=(dp(200), dp(40)),
+            pos_hint={'center_x': .5, 'center_y': .5},
+            md_bg_color=(1, 0, 0, 1),
+            elevation=10,
+            font_name="Broboto",
+            halign="center",
+            text_color=(1, 1, 1, 1),
+            theme_text_color="Custom",
+            on_release=self.confirm_action
+        )
+        label=MDLabel(
+                text="Organization List ",
+                font_name="Broboto",
+                pos_hint={"center_y": .9},
+                size_hint_y=.1,
+                font_size="20sp",
+                font_style='H6',
+                halign='center')
+        button_layout.add_widget(confirm_button)
+        layout = MDFloatLayout(
+            MDIconButton(
+                icon="arrow-left",
+                pos_hint={"center_y": .95},
+                user_font_size="30sp",
+                size_hint_y=.15,
+                theme_text_color="Custom",
+                on_release=self.back,
+                text_color=rgba(26, 24, 58, 255), ),
+
+        )
         layout.add_widget(self.data_tables)
+        layout.add_widget(button_layout)
         layout.add_widget(button_box)
+        layout.add_widget(label)
+        self.clear_widgets()
         self.add_widget(layout)
-
-    # def on_keyboard(self, instance, key, scancode, codepoint, modifier):
-    #     if key == 27:  # Keycode for the back button on Android
-    #         self.on_back_button()
-    #         return True
-    #     return False
-    #
-    # def on_back_button(self):
-    #     self.manager.pop()
+    def back(self,instance):
+        self.manager.pop()
+    def confirm_action(self, instance):
+        print("Confirmation button pressed")
 
     def on_button_press(self, instance_button):
         try:
@@ -73,7 +110,6 @@ class ServicesList(MDScreen):
 
     def fetch_initial_data(self):
         # Connect to your database and fetch data
-        # Replace this with your actual database connection and query logic
         connection = sqlite3.connect('users.db')
         cursor = connection.cursor()
 
@@ -108,14 +144,3 @@ class ServicesList(MDScreen):
                 self.data_tables.row_data.remove(checked_row)
 
         Clock.schedule_once(deselect_rows)
-
-    def update_table_height(self):
-        # Calculate the height of the table based on the number of rows and other parameters
-        num_rows = len(self.data_tables.row_data)
-        row_height = 40  # Adjust this value based on your row height
-        header_height = 60  # Height of the header
-        footer_height = 50  # Height of the footer if any
-        padding = 10  # Adjust this value based on your padding
-
-        table_height = num_rows * row_height + header_height + footer_height + padding * 2
-        self.data_tables.height = table_height
