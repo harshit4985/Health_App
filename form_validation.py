@@ -75,13 +75,13 @@ class BaseRegistrationScreen(MDScreen):
                         self.file_data1 = file_data
                         self.file_name1 = file_name
                         self.field_id = None
-                        print(self.file_data1)
+                        # print(self.file_data1)
                     elif self.field_name == "file_path2":
                         setattr(self.field_id, 'text', file_name)
                         self.file_data2 = file_data
                         self.file_name2 = file_name
                         self.field_id = None
-                        print(self.file_data2)
+                        # print(self.file_data2)
             except:
                 msg = "Please select a file."
                 setattr(self.field_id, 'text', msg)
@@ -98,7 +98,7 @@ class BaseRegistrationScreen(MDScreen):
     def exit_manager(self, *args):
         self.file_manager.close()
 
-    def validate_content(self):
+    def validate_content(self,classname):
         extra_info = self.ids.extra_info.text
         extra_info2 = self.ids.extra_info2.text
         District = self.ids.District.text
@@ -157,5 +157,10 @@ class BaseRegistrationScreen(MDScreen):
 
             conn.commit()
             conn.close()
-            self.manager.push("service_register_form2", "down")
-            return True
+            if classname=='oxiclinic':
+                self.manager.push("service_hospital_doc")
+            elif classname=='oxitaxi':
+                self.manager.push("service_mobile_hospital_doc")
+            elif classname=='oxigym':
+                self.manager.push("service_oxygym_doc")
+

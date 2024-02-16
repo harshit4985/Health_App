@@ -5,6 +5,7 @@
             icon: "arrow-left"
             pos_hint: {"center_y": .95}
             user_font_size: "30sp"
+            size_hint_y:.15
             theme_text_color: "Custom"
             text_color: rgba(26, 24, 58, 255)
             on_release: root.manager.pop()
@@ -79,7 +80,6 @@
                         font_size: "14sp"
                         size_hint:.7,None
                         cursor_width: "2sp"
-                        readonly: True
                         write_tab: False
                         theme_text_color: "Custom"
                         color_mode: 'custom'
@@ -134,7 +134,7 @@
                 halign: "left"
                 pos_hint: {'right': 1, 'y': 0}
                 md_bg_color: 0, 0, 0, 0
-                on_release: root.manager.push("service_oxygym_doc")
+                on_release:root.manager.push('service_oxygym_doc')# root.validate_content()
                 canvas.before:
                     Color:
                         rgba: 1, 0, 0, 1

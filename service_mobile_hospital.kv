@@ -6,6 +6,7 @@
             icon: "arrow-left"
             pos_hint: {"center_y": .95}
             user_font_size: "30sp"
+            size_hint_y:.15
             theme_text_color: "Custom"
             text_color: rgba(26, 24, 58, 255)
             on_release: root.manager.pop()
@@ -17,7 +18,7 @@
             font_size: "18sp"
             halign:'center'
         ScrollView:
-            do_scroll_y:False
+#            do_scroll_y:False
             GridLayout:
                 id: grid
                 cols: 1
@@ -139,7 +140,7 @@
                 halign: "left"
                 pos_hint: {'right': 1, 'y': 0}
                 md_bg_color: 0, 0, 0, 0
-                on_release: root.manager.push("service_mobile_hospital_doc")
+                on_release: root.manager.push('service_mobile_hospital_doc')#root.validate_content()
                 canvas.before:
                     Color:
                         rgba: 1, 0, 0, 1
