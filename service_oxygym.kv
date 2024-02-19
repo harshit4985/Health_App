@@ -126,21 +126,15 @@
             height: self.minimum_height
             padding: dp(20)
             spacing: dp(10)
-             # next button
+            # next button
             MDFlatButton:
+                id: next_button
                 disabled: False
                 size_hint: None, None
                 size: dp(90), dp(35) # Adjusted size
                 halign: "left"
                 pos_hint: {'right': 1, 'y': 0}
-                md_bg_color: 0, 0, 0, 0
-                on_release:root.manager.push('service_oxygym_doc')# root.validate_content()
-                canvas.before:
-                    Color:
-                        rgba: 1, 0, 0, 1
-#                    Line:
-#                        width: 1.5
-#                        rounded_rectangle: (self.x, self.y, self.width, self.height, dp(30))
+                on_release: root.manager.push('service_oxygym_doc')#root.validate_content()
                 BoxLayout:
                     orientation: 'horizontal'
                     spacing: 0
