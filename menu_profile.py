@@ -1,3 +1,5 @@
+import json
+
 from kivy.core.window import Window
 from kivymd.uix.behaviors import CommonElevationBehavior
 from kivymd.uix.floatlayout import MDFloatLayout
@@ -10,6 +12,7 @@ class ProfileCard(MDFloatLayout, CommonElevationBehavior):
 class Profile(MDScreen):
     def __init__(self, **kwargs):
         super(Profile, self).__init__(**kwargs)
+        self.change()
         Window.bind(on_keyboard=self.on_keyboard)
 
     def on_keyboard(self, instance, key, scancode, codepoint, modifier):
@@ -21,6 +24,14 @@ class Profile(MDScreen):
     def on_back_button(self):
         self.manager.push_replacement("client_services","right")
         # screen.ids.nav_drawer.set_state("close")
+
+    def change(self):
+        with open('user_data.json', 'r') as file:
+            user_info = json.load(file)
+        self.ids.username.text = f"Username : {user_info['username']}"
+        self.ids.email.text = f"Email : {user_info['email']}"
+        self.ids.phone.text = f"Phone no : {user_info['phone']}"
+        self.ids.pincode.text = f"Pincode : {user_info['pincode']}"
 
     def profile_back(self):
         self.manager.push_replacement("client_services","right")

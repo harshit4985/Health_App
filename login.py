@@ -124,40 +124,9 @@ class Login(MDScreen):
                     json.dump(logged_in_data, json_file)
                 with open("user_data.json", "w") as json_file:
                     json.dump(user_info, json_file)
-                self.manager.load_screen("client_services")
-                screen = self.manager.get_screen('menu_profile')
-                screen.ids.username.text = f"Username : {user_info['username']}"
-                screen.ids.email.text = f"Email : {user_info['email']}"
-                screen.ids.phone.text = f"Phone no : {user_info['phone']}"
-                screen.ids.pincode.text = f"Pincode : {user_info['pincode']}"
-                screen1 = self.manager.get_screen('client_services')
-                screen1.ids.username.text = user_info['username']
-                screen1.ids.email.text = user_info['email']
-                # self.screen_change(username, email, password, phone, pincode)
 
             else:
                 # Login failed
                 self.ids.login_email.error = True
                 self.ids.login_email.helper_text = "Invalid email or password"
                 self.ids.login_password.error = True
-
-    # def screen_change(self,username, email, password, phone, pincode):
-    #     self.root = Root()
-    #     logged_in = True
-    #     self.root.load_screen("menu_profile")
-    #     logged_in_data = {'logged_in': logged_in}
-    #     user_info = {'username': username, 'email': email, 'phone': phone, 'pincode': pincode, 'password': password}
-    #     with open("logged_in_data.json", "w") as json_file:
-    #         json.dump(logged_in_data, json_file)
-    #     with open("user_data.json", "w") as json_file:
-    #         json.dump(user_info, json_file)
-    #     self.root.load_screen("client_services")
-    #     screen = self.root.get_screen('menu_profile')
-    #     screen.ids.username.text = f"Username : {user_info['username']}"
-    #     screen.ids.email.text = f"Email : {user_info['email']}"
-    #     screen.ids.phone.text = f"Phone no : {user_info['phone']}"
-    #     screen.ids.pincode.text = f"Pincode : {user_info['pincode']}"
-    #     screen1 = self.root.get_screen('client_services')
-    #     screen1.ids.username.text = user_info['username']
-    #     screen1.ids.email.text = user_info['email']
-
