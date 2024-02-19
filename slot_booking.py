@@ -168,6 +168,7 @@ class Slot_Booking(MDScreen):
             print("Date:", self.selected_date)
             print(CButton.slot_time)
 
+
             with open('user_data.json', 'r') as file:
                 user_info = json.load(file)
             user_info['slot_date'] = f"{self.selected_day} {self.selected_date}"
@@ -206,12 +207,13 @@ class Slot_Booking(MDScreen):
 
     def slot_booking_back_button(self, instance):
         self.manager.push_replacement("hospital_booking","right")
-        # self.ids.date_choosed.text = "Choose a date"
-        # for slots in Slot_Booking.time_slots:
-        #     self.ids[slots].disabled = False
-        #     self.ids[slots].md_bg_color = (1, 1, 1, 1)
-        # if hasattr(self, 'session_time'):
-        #     delattr(self, 'session_time')
+        self.ids.CButton.clear_widgets()
+        # reset all the buttons
+        for button_id in ['button1', 'button2', 'button3', 'button4']:
+            button = self.ids[button_id]
+            button.elevation = 0
+            button.md_bg_color = (1, 1, 1, 1)
+            button.line_color = (1, 0, 0, 1)
         print("Back To Hospital Page")
 
     def select_timings(self, button, label_text):
