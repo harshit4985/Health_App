@@ -256,82 +256,40 @@
                                     text_color: 1, 0, 0, 1
                                     font_name: "Roboto"
 
-
-#        BoxLayout:
-#            orientation: 'horizontal'
-#            size_hint_y: None
-#            height: self.minimum_height
-#            padding: dp(20)
-#            spacing: dp(10)
-#             # next button
-#            MDFlatButton:
-#                disabled: False
-#                size_hint: None, None
-#                size: dp(120), dp(40) # Adjusted size
-#                halign: "right"
-#                pos_hint: {'right': 1, 'bottom': 1}
-#                md_bg_color: 0, 0, 0, 0
-#                on_release: root.manager.push("services_list")
-#                canvas.before:
-#                    Color:
-#                        rgba: 1, 0, 0, 1
-#                    Line:
-#                        width: 2
-#                        rounded_rectangle: (self.x, self.y, self.width, self.height, dp(30))
-#                BoxLayout:
-#                    orientation: 'horizontal'
-#                    spacing: 0
-#                    MDLabel:
-#                        text: "Preview"
-#                        font_name: "Broboto"
-#                        halign: "center"
-#                        text_color: 1, 0, 0, 1
-#                        theme_text_color: "Custom"
-#                    MDIcon:
-#                        icon: "arrow-right-bold"
-#                        halign: "center"
-#                        theme_text_color: "Custom"
-#                        text_color: 1, 0, 0, 1
-#                        size_hint_x: None
-#                        width: dp(24)
-
+                    MDRectangleFlatIconButton:
+                        icon:'table'
+                        text:'Preview'
+                        disabled: False
+                        size_hint: None, None
+                        size: dp(90), dp(35) # Adjusted size
+                        halign: "left"
+                        pos_hint: {'right': 1, 'y': 1}
+                        md_bg_color: 0, 0, 0, 0
+                        text_color:1,0,0,1
+                        icon_color:1,0,0,1
+                        fill_color_focus:1,1,1,1
+                        line_color:0,0,0,0
+                        on_release:root.manager.push('services_list')
         BoxLayout:
             orientation: 'vertical'
             size_hint_y: None
-            height: self.minimum_height
-            padding: dp(20)
+            height: dp(60)
+            padding: dp(10)
             spacing: dp(10)
-             # next button
-            MDFlatButton:
+            MDRoundFlatButton:
                 disabled: False
-                size_hint: None, None
-                size: dp(110), dp(35) # Adjusted size
-                halign: "left"
-                pos_hint: {'right': 1, 'y': 0}
-                md_bg_color: 0, 0, 0, 0
-                on_release: root.manager.push("services_list")
-#                canvas.before:
-#                    Color:
-#                        rgba: 1, 0, 0, 1
-#                    Line:
-#                        width: 1.5
-#                        rounded_rectangle: (self.x, self.y, self.width, self.height, dp(30))
-                BoxLayout:
-                    orientation: 'horizontal'
-                    spacing: 0
-                    MDLabel:
-                        text: "Preview"
-                        font_name: "Broboto"
-                        halign: "center"
-                        text_color: 1, 0, 0, 1
-                        theme_text_color: "Custom"
-                    MDIcon:
-                        icon: "arrow-right-bold"
-                        halign: "center"
-                        theme_text_color: "Custom"
-                        text_color: 1, 0, 0, 1
-                        size_hint_x: None
-                        width: dp(24)
+                size_hint: .5, None
+                height:dp(40) # Adjusted size
+                pos_hint:{'center_x':.5,'center_y':.5}
+                md_bg_color: 1, 0, 0, 1
+                elevation: 10
+                text: "REGISTER"
+                font_name: "Broboto"
+                halign: "center"
+                text_color: 1, 1, 1, 1
+                line_color:0,0,0,0
+                theme_text_color: "Custom"
+
 
 <HorizontalLineWidget>:
     canvas:
