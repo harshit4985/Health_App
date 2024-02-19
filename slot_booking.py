@@ -1,10 +1,11 @@
+import json
 import sqlite3
 import threading
 from datetime import datetime, timedelta
 from anvil.tables import app_tables
 from kivy.clock import Clock
 from kivy.core.window import Window
-from kivy.properties import StringProperty
+from kivy.properties import StringProperty, ObjectProperty
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.screenmanager import SlideTransition
 from kivymd.app import MDApp
@@ -34,32 +35,36 @@ conn.commit()
 # Builder.load_file("slot_booking.kv")
 
 
-class Cbutton(MDFlatButton):
+class CButton(MDFlatButton):
     label_text = StringProperty("")
+    slot_time = None
 
     def __init__(self, **kwargs):
-        super(Cbutton, self).__init__(**kwargs)
+        super(CButton, self).__init__(**kwargs)
+
+        self.CButton_pressed = False
         self.default_md_bg_color = self.md_bg_color  # Store the default background color
         self.default_line_color = self.line_color  # Store the default line color
 
-    def Slot_Timing(self,slot_timing):
+    def Slot_Timing(self, slot_timing):
+        CButton.slot_time = slot_timing
         # Reset the colors of all buttons to their default state
         for button in self.parent.children:
-            if isinstance(button, Cbutton):
+            if isinstance(button, CButton):
                 button.md_bg_color = button.default_md_bg_color
                 button.line_color = button.default_line_color
 
         # Set the colors of the current button
         self.md_bg_color = (1, 0, 0, 0.1)  # Set background color
         self.line_color = (1, 0, 0, 0.5)  # Set line color
+        self.CButton_pressed = True
         print( f"Selected time {slot_timing}")
+
     pass
 class Alert_Label(MDLabel):
     pass
 
 class Slot_Booking(MDScreen):
-
-
 
     time_slots = ['9am - 11am', '11am - 1pm', '1pm - 3pm', '3pm - 5pm', '5pm - 7pm', '7pm - 9pm']
 
@@ -67,7 +72,8 @@ class Slot_Booking(MDScreen):
         super(Slot_Booking, self).__init__(**kwargs)
         Window.bind(on_keyboard=self.on_keyboard)
         threading.Thread(target=self.slot_days).start()
-        # Your other methods and properties here
+        self.book_slot_pressed = False
+
 
     def on_keyboard(self, instance, key, scancode, codepoint, modifier):
         if key == 27:  # Keycode for the back button on Android
@@ -102,6 +108,10 @@ class Slot_Booking(MDScreen):
 
     time_list = ['09:00 AM', '11:00 AM', '01:00 PM', '03:00 PM', '05:00 PM', '07:00 PM']
     def Book_Slot(self, button_instance, day, date):
+
+        self.book_slot_pressed = True
+        self.selected_day = day  # Store the selected day
+        self.selected_date = date
         print(day)
         print(date)
         # Check if CButton widget exists before clearing it
@@ -133,7 +143,7 @@ class Slot_Booking(MDScreen):
                     time_obj = datetime.strptime(time_str, "%I:%M %p")
                     if time_obj > current_time_obj:
                         print(time_str)
-                        custom = Cbutton(label_text=time_str)
+                        custom = CButton(label_text=time_str)
                         self.ids.CButton.add_widget(custom)
 
             else:
@@ -146,9 +156,51 @@ class Slot_Booking(MDScreen):
             time_list = ['09:00 AM', '11:00 AM', '01:00 PM', '03:00 PM', '05:00 PM', '07:00 PM']
             for time_str in self.time_list:
                 print(time_str)
-                custom = Cbutton(label_text=time_str)
+                custom = CButton(label_text=time_str)
                 self.ids.CButton.add_widget(custom)
 
+
+
+    def pay_now(self, instance, *args):
+        cbutton_pressed = any(button.CButton_pressed for button in self.ids.CButton.children if isinstance(button, CButton))
+        if self.book_slot_pressed and cbutton_pressed:
+            print("Day:", self.selected_day)
+            print("Date:", self.selected_date)
+            print(CButton.slot_time)
+
+            with open('user_data.json', 'r') as file:
+                user_info = json.load(file)
+            user_info['slot_date'] = f"{self.selected_day} {self.selected_date}"
+            user_info['slot_time'] = CButton.slot_time
+            with open("user_data.json", "w") as json_file:
+                json.dump(user_info, json_file)
+
+            self.manager.push("payment_page")
+        elif not self.book_slot_pressed and cbutton_pressed:
+            self.show_validation_dialog("Select Date")
+            print("Select Date")
+        elif self.book_slot_pressed  and not cbutton_pressed:
+            self.show_validation_dialog("Select Time")
+            print("Select Time")
+        else:
+            self.show_validation_dialog("Select Date and Time")
+            print("Select Date and Time")
+
+
+        # if not self.book_slot_pressed:
+        #     self.show_validation_dialog("Select Date")
+        #     print("Select Date")
+        #
+        # elif not cbutton_pressed:
+        #     self.show_validation_dialog("Select Time")
+        #     print("Select Time")
+        # elif not self.book_slot_pressed and not cbutton_pressed:
+        #     self.show_validation_dialog("Select Date and Time")
+        #     print("Select Date and Time")
+        # else:
+        #     print("No CButton was pressed before Pay Now")
+
+        # self.manager.push("payment_page")
 
 
 
@@ -203,8 +255,8 @@ class Slot_Booking(MDScreen):
     def slot_cancel(self, instance, value):
         print("cancel")
 
-    def pay_now(self, instance, *args):
-        self.manager.push("payment_page")
+    # def pay_now(self, instance, *args):
+    #     self.manager.push("payment_page")
         # session_date = self.ids.date_choosed.text
         # # Extract the username from menu_profile
         # screen = self.manager.get_screen('client_services')
