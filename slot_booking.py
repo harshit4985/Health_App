@@ -36,6 +36,23 @@ conn.commit()
 
 class Cbutton(MDFlatButton):
     label_text = StringProperty("")
+
+    def __init__(self, **kwargs):
+        super(Cbutton, self).__init__(**kwargs)
+        self.default_md_bg_color = self.md_bg_color  # Store the default background color
+        self.default_line_color = self.line_color  # Store the default line color
+
+    def Slot_Timing(self,slot_timing):
+        # Reset the colors of all buttons to their default state
+        for button in self.parent.children:
+            if isinstance(button, Cbutton):
+                button.md_bg_color = button.default_md_bg_color
+                button.line_color = button.default_line_color
+
+        # Set the colors of the current button
+        self.md_bg_color = (1, 0, 0, 0.1)  # Set background color
+        self.line_color = (1, 0, 0, 0.5)  # Set line color
+        print( f"Selected time {slot_timing}")
     pass
 class Alert_Label(MDLabel):
     pass
@@ -50,7 +67,7 @@ class Slot_Booking(MDScreen):
         super(Slot_Booking, self).__init__(**kwargs)
         Window.bind(on_keyboard=self.on_keyboard)
         threading.Thread(target=self.slot_days).start()
-
+        # Your other methods and properties here
 
     def on_keyboard(self, instance, key, scancode, codepoint, modifier):
         if key == 27:  # Keycode for the back button on Android
@@ -70,14 +87,11 @@ class Slot_Booking(MDScreen):
         for i in range(0, 4):
             # Calculate the date for the next day in the loop
             next_date = today_date + timedelta(days=i)
-
             # Append the date to the date list
             date_list.append(next_date.strftime('%d'))
-
             # Append the weekday to the day list
             day_list.append(next_date.strftime('%a'))
         # Now you have all dates in date_list and all weekdays in day_list
-
         print("Weekdays:", day_list)
         print("Dates:", date_list)
         day_button = ['day1', 'day2', 'day3', 'day4']
@@ -86,12 +100,12 @@ class Slot_Booking(MDScreen):
             self.ids[day_label].text = day
             self.ids[date_label].text = date
 
+    time_list = ['09:00 AM', '11:00 AM', '01:00 PM', '03:00 PM', '05:00 PM', '07:00 PM']
     def Book_Slot(self, button_instance, day, date):
         print(day)
         print(date)
         # Check if CButton widget exists before clearing it
         self.ids.CButton.clear_widgets()
-
         # reset all the buttons
         for button_id in ['button1', 'button2', 'button3', 'button4']:
             button = self.ids[button_id]
@@ -101,14 +115,13 @@ class Slot_Booking(MDScreen):
         # Set elevation color for the clicked button
         button_instance.md_bg_color = (1, 0, 0, 0.1)
         button_instance.line_color = (1, 0, 0, 0.5)
-
         # If selected  date is equal to today's date
         if date == (datetime.now().strftime('%d')):
             # Get current time in 12-hour format with AM/PM
             current_time_str = datetime.now().strftime("%I:%M %p")
             print("Current time:", current_time_str)
 
-            time_list = ['09:00 AM', '11:00 AM', '01:00 PM', '03:00 PM', '05:00 PM', '07:00 PM']
+            # time_list = ['09:00 AM', '11:00 AM', '01:00 PM', '03:00 PM', '05:00 PM', '07:00 PM']
 
             # Convert current time to a comparable format
             current_time_obj = datetime.strptime(current_time_str, "%I:%M %p")
@@ -116,27 +129,26 @@ class Slot_Booking(MDScreen):
             # Show slots which are available before '07:00 PM'
             if current_time_obj < upper_limit:
                 # Iterate over the time list and print times that come after the current time
-                for time_str in time_list:
+                for time_str in self.time_list:
                     time_obj = datetime.strptime(time_str, "%I:%M %p")
                     if time_obj > current_time_obj:
                         print(time_str)
                         custom = Cbutton(label_text=time_str)
                         self.ids.CButton.add_widget(custom)
+
             else:
-
-                self.ids.available_slots_alert.text = "Oops! No more slots available for Today"
-
-
+                # if current time is more than '07:00 PM'
+                self.ids.available_slots_alert.text = f"Oops! No more slots available on {day}"
         else:
-
+            # Update the label
             self.ids.available_slots_alert.text = "Available Slots"
-
             # selected date is not equal to Current date then
             time_list = ['09:00 AM', '11:00 AM', '01:00 PM', '03:00 PM', '05:00 PM', '07:00 PM']
-            for time_str in time_list:
+            for time_str in self.time_list:
                 print(time_str)
                 custom = Cbutton(label_text=time_str)
                 self.ids.CButton.add_widget(custom)
+
 
 
 
