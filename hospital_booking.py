@@ -1,6 +1,8 @@
 from kivy.core.window import Window
 from kivymd.uix.screen import MDScreen
 
+from slot_booking import Slot_Booking
+
 
 class BookingInfo(MDScreen):
     def __init__(self, **kwargs):
