@@ -41,30 +41,27 @@
                                 rgba: 1, 0, 0, 1
                             Line:
                                 points: self.x, self.y, self.x + self.width, self.y
-                                width: 2
+                                width: 1.5
                 MDBoxLayout:
                     orientation: 'vertical'
                     size_hint_y: None
                     height: self.minimum_height
+                    padding: dp(10)
+                    spacing: dp(20)
                     BoxLayout:
                         orientation: 'horizontal'
                         font_name: "Roboto"
                         pos_hint:{'center_x':.5}
                         spacing:dp(10)
-                        size_hint:.7,None
+                        size_hint:1,None
                         height: "30dp"
-#                        MDCheckbox:
-#                            id:hospital_manager
-#                            size_hint: None, None
-#                            size: dp(48), dp(48)
-#                            color_active: "red"
-#                            pos_hint: { 'center_y': .5}
-#                            on_active: root.on_checkbox_active(hospital_manager,'Hospital',add_hospital_button)
 
                         MDFlatButton:
                             id: add_hospital_button
                             size_hint: None, None
                             pos_hint: { 'center_y': .5}
+                            halign: "center"
+                            valign: "center"
                             spacing:0
                             padding:0
                             disabled: False
@@ -92,13 +89,20 @@
                             text: 'Oxy-Clinic'
                             font_size:'16sp'
                             font_name: "Roboto"
+#                            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                            halign: "center"
+#                            valign: "middle"
+
+
 
                         MDCard:
                             orientation: 'horizontal'
                             size_hint: (None,None)
                             width : "50dp"
                             height : "30dp"
-                            elevation: 1
+                            halign: "center"
+                            valign: "middle"
+                            elevation: 0.5
                             pos_hint: {"center_x": 0.5, "center_y": 0.5}
                             BoxLayout:
                                 orientation: 'vertical'
@@ -123,7 +127,7 @@
                         font_name: "Roboto"
                         pos_hint:{'center_x':.5}
                         spacing:dp(10)
-                        size_hint:.7,None
+                        size_hint:1,None
                         height: "30dp"
 
                         MDFlatButton:
@@ -157,6 +161,9 @@
                             text: 'Oxy-Wheel'
                             font_size:'16sp'
                             font_name: "Roboto"
+                            halign: "center"
+                            valign: "middle"
+
 
                         MDCard:
                             orientation: 'horizontal'
@@ -164,7 +171,7 @@
                             width : "50dp"
                             height : "30dp"
 #                            size : "10dp","10dp"
-                            elevation: 1
+                            elevation: 0.5
                             pos_hint: {"center_x": 0.5, "center_y": 0.5}
 
                             BoxLayout:
@@ -190,7 +197,7 @@
                         font_name: "Roboto"
                         pos_hint:{'center_x':.5}
                         spacing:dp(10)
-                        size_hint:.7,None
+                        size_hint:1,None
                         height: "30dp"
 
                         MDFlatButton:
@@ -224,14 +231,17 @@
                             text: 'Oxy-Gym'
                             font_size:'16sp'
                             font_name: "Roboto"
+                            halign: "center"
+                            valign: "middle"
+
 
                         MDCard:
                             orientation: 'horizontal'
                             size_hint: (None,None)
                             width : "50dp"
                             height : "30dp"
-                            elevation: 1
-                            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                            elevation: 0.5
+                            pos_hint: {"center_x": 1, "center_y": 0.5}
                             BoxLayout:
                                 orientation: 'vertical'
 #                                size_hint: (0.5, 1)
