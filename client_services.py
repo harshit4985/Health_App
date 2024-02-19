@@ -1,28 +1,20 @@
 import json
-
-from kivy.core.window import Window
-from kivymd.app import MDApp
 from kivymd.uix.screen import MDScreen
-
-
 
 class NavigationDrawerScreen(MDScreen):
     pass
 
 
 class Client_services(MDScreen):
-    # def __init__(self, **kwargs):
-    #     super(Client_services, self).__init__(**kwargs)
-    #     Window.bind(on_keyboard=self.on_keyboard)
-    #
-    # def on_keyboard(self, instance, key, scancode, codepoint, modifier):
-    #     if key == 27:  # Keycode for the back button on Android
-    #         self.on_back_button()
-    #         return True
-    #     return False
-    #
-    # def on_back_button(self):
-    #     self.manager.push_replacement()
+    def __init__(self, **kwargs):
+        super(Client_services, self).__init__(**kwargs)
+        self.change()
+
+    def change(self):
+        with open('user_data.json', 'r') as file:
+            user_info = json.load(file)
+        self.ids.username.text = user_info['username']
+        self.ids.email.text = user_info['email']
 
     def logout(self):
         logged_in_data = {'logged_in': False}
