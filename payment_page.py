@@ -23,6 +23,9 @@ class Payment(MDScreen):
         self.ids.user_name.text = user_info['username']
         # self.ids.email.text = user_info['email']
 
+    def on_pre_enter(self):
+        self.change()
+
     def on_keyboard(self, instance, key, scancode, codepoint, modifier):
         if key == 27:  # Keycode for the back button on Android
             self.on_back_button()
@@ -30,8 +33,23 @@ class Payment(MDScreen):
         return False
 
     def on_back_button(self):
-        self.manager.push_replacement("client_services","right")
-        # screen.ids.nav_drawer.set_state("close")
+        with open('user_data.json', 'r') as file:
+            user_info = json.load(file)
+        user_info['slot_date'] = ""
+        user_info['slot_time'] = ""
+        with open("user_data.json", "w") as json_file:
+            json.dump(user_info, json_file)
+        self.manager.push("slot_booking","right")
+
+    def change(self):
+        try:
+            with open('user_data.json', 'r') as file:
+                user_info = json.load(file)
+            self.ids.user_name.text = user_info.get('username', '')
+            self.ids.session_date.text = user_info.get('slot_date', '')
+            self.ids.session_time.text = user_info.get('slot_time', '')
+        except (FileNotFoundError, json.JSONDecodeError) as e:
+            print(f"Error reading user_data.json: {e}")
 
     # def payment_page_backButton(self):
     #     # Extract the username from menu_profile
