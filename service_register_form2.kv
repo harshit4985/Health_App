@@ -47,13 +47,13 @@
                     size_hint_y: None
                     height: self.minimum_height
                     padding: dp(10)
-                    spacing: dp(20)
+                    spacing: dp(10)
                     BoxLayout:
                         orientation: 'horizontal'
                         font_name: "Roboto"
                         pos_hint:{'center_x':.5}
                         spacing:dp(10)
-                        size_hint:1,None
+                        size_hint:0.9,None
                         height: "30dp"
 
                         MDFlatButton:
@@ -127,7 +127,7 @@
                         font_name: "Roboto"
                         pos_hint:{'center_x':.5}
                         spacing:dp(10)
-                        size_hint:1,None
+                        size_hint:0.9,None
                         height: "30dp"
 
                         MDFlatButton:
@@ -197,7 +197,7 @@
                         font_name: "Roboto"
                         pos_hint:{'center_x':.5}
                         spacing:dp(10)
-                        size_hint:1,None
+                        size_hint:0.9,None
                         height: "30dp"
 
                         MDFlatButton:
@@ -256,6 +256,7 @@
                                     text_color: 1, 0, 0, 1
                                     font_name: "Roboto"
 
+
                     MDRectangleFlatIconButton:
                         icon:'table'
                         text:'Preview'
@@ -276,6 +277,31 @@
             height: dp(60)
             padding: dp(10)
             spacing: dp(10)
+             # preview button
+            MDFlatButton:
+                disabled: False
+                size_hint: None, None
+                size: dp(110), dp(35) # Adjusted size
+                halign: "left"
+                pos_hint: {'right': 1, 'y': 1}
+                md_bg_color: 0, 0, 0, 0
+                on_release: root.manager.push("services_list")
+                BoxLayout:
+                    orientation: 'horizontal'
+                    spacing: 0
+                    MDLabel:
+                        text: "Preview"
+                        font_name: "Broboto"
+                        halign: "center"
+                        text_color: 1, 0, 0, 1
+                        theme_text_color: "Custom"
+                    MDIcon:
+                        icon: "arrow-right-bold"
+                        halign: "center"
+                        theme_text_color: "Custom"
+                        text_color: 1, 0, 0, 1
+                        size_hint_x: None
+                        width: dp(24)
             MDRoundFlatButton:
                 disabled: False
                 size_hint: .5, None
@@ -289,7 +315,6 @@
                 text_color: 1, 1, 1, 1
                 line_color:0,0,0,0
                 theme_text_color: "Custom"
-
 
 <HorizontalLineWidget>:
     canvas:
