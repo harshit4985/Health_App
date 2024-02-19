@@ -43,6 +43,7 @@
                         text_color_focus:0,0,0,1
                         hint_text_color:0,0,0,1
                         hint_text_color_focus:0,0,0,.5
+                        on_text:root.on_organization_change(*args)
                     MDTextField:
                         id:extra_info2
                         hint_text: "Established Year"
@@ -59,6 +60,7 @@
                         hint_text_color:0,0,0,1
                         hint_text_color_focus:0,0,0,.4
                         on_focus: if self.focus: root.show_date_picker(self)
+                        on_text:root.on_year_change(*args)
                     MDTextField:
                         id: State
                         hint_text: "State"
@@ -73,6 +75,7 @@
                         text_color_focus:0,0,0,1
                         hint_text_color:0,0,0,1
                         hint_text_color_focus:0,0,0,.5
+                        on_text:root.on_state_change(*args)
                     MDTextField:
                         id: District
                         hint_text: "District"
@@ -87,6 +90,7 @@
                         text_color_focus:0,0,0,1
                         hint_text_color:0,0,0,1
                         hint_text_color_focus:0,0,0,.5
+                        on_text:root.on_district_change(*args)
                     MDTextField:
                         id:pincode
                         hint_text: "PIN Code"
@@ -102,6 +106,7 @@
                         text_color_focus:0,0,0,1
                         hint_text_color:0,0,0,1
                         hint_text_color_focus:0,0,0,.5
+                        on_text:root.on_pincode_change(*args)
                     MDTextField:
                         id:address
                         hint_text: "Address"
@@ -117,6 +122,7 @@
                         text_color_focus:0,0,0,1
                         hint_text_color:0,0,0,1
                         hint_text_color_focus:0,0,0,.5
+                        on_text:root.on_address_change(*args)
 
         BoxLayout:
             orientation: 'vertical'
@@ -124,21 +130,15 @@
             height: self.minimum_height
             padding: dp(20)
             spacing: dp(10)
-             # next button
+            # next button
             MDFlatButton:
+                id: next_button
                 disabled: False
                 size_hint: None, None
                 size: dp(90), dp(35) # Adjusted size
                 halign: "left"
                 pos_hint: {'right': 1, 'y': 0}
-                md_bg_color: 0, 0, 0, 0
-                on_release:root.manager.push('service_hospital_doc')#root.validate_content()
-                canvas.before:
-                    Color:
-                        rgba: 1, 0, 0, 1
-#                    Line:
-#                        width: 1.5
-#                        rounded_rectangle: (self.x, self.y, self.width, self.height, dp(30))
+                on_release:root.manager.push('service_hospital_doc')
                 BoxLayout:
                     orientation: 'horizontal'
                     spacing: 0
