@@ -17,4 +17,4 @@ class MobileCareService(BaseRegistrationScreen):
     #     self.manager.pop()
 
     def validate_content(self):
-        return super().validate_content()
+        super().validate_content('oxitaxi')
