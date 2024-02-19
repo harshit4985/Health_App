@@ -15,13 +15,6 @@ class Payment(MDScreen):
     def __init__(self, **kwargs):
         super(Payment, self).__init__(**kwargs)
         Window.bind(on_keyboard=self.on_keyboard)
-        self.change()
-
-    def change(self):
-        with open('user_data.json', 'r') as file:
-            user_info = json.load(file)
-        self.ids.user_name.text = user_info['username']
-        # self.ids.email.text = user_info['email']
 
     def on_pre_enter(self):
         self.change()
