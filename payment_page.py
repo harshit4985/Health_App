@@ -1,3 +1,4 @@
+import json
 import webbrowser
 
 import razorpay
@@ -14,15 +15,29 @@ class Payment(MDScreen):
     def __init__(self, **kwargs):
         super(Payment, self).__init__(**kwargs)
         Window.bind(on_keyboard=self.on_keyboard)
+        self.change()
 
     def on_keyboard(self, instance, key, scancode, codepoint, modifier):
         if key == 27:  # Keycode for the back button on Android
             self.on_back_button()
             return True
         return False
+    def change(self):
+        with open('user_data.json', 'r') as file:
+            user_info = json.load(file)
+        self.ids.user_name.text = user_info['username']
+        self.ids.session_date.text = user_info['slot_date']
+        self.ids.session_time.text = user_info['slot_time']
+
 
     def on_back_button(self):
-        self.manager.push_replacement("client_services","right")
+        with open('user_data.json', 'r') as file:
+            user_info = json.load(file)
+        user_info['slot_date'] = ""
+        user_info['slot_time'] = ""
+        with open("user_data.json", "w") as json_file:
+            json.dump(user_info, json_file)
+        self.manager.push("slot_booking","right")
         # screen.ids.nav_drawer.set_state("close")
 
     # def payment_page_backButton(self):
