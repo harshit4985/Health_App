@@ -15,6 +15,8 @@ class Payment(MDScreen):
     def __init__(self, **kwargs):
         super(Payment, self).__init__(**kwargs)
         Window.bind(on_keyboard=self.on_keyboard)
+
+    def on_pre_enter(self):
         self.change()
 
     def on_keyboard(self, instance, key, scancode, codepoint, modifier):
@@ -22,13 +24,6 @@ class Payment(MDScreen):
             self.on_back_button()
             return True
         return False
-    def change(self):
-        with open('user_data.json', 'r') as file:
-            user_info = json.load(file)
-        self.ids.user_name.text = user_info['username']
-        self.ids.session_date.text = user_info['slot_date']
-        self.ids.session_time.text = user_info['slot_time']
-
 
     def on_back_button(self):
         with open('user_data.json', 'r') as file:
@@ -38,7 +33,16 @@ class Payment(MDScreen):
         with open("user_data.json", "w") as json_file:
             json.dump(user_info, json_file)
         self.manager.push("slot_booking","right")
-        # screen.ids.nav_drawer.set_state("close")
+
+    def change(self):
+        try:
+            with open('user_data.json', 'r') as file:
+                user_info = json.load(file)
+            self.ids.user_name.text = user_info.get('username', '')
+            self.ids.session_date.text = user_info.get('slot_date', '')
+            self.ids.session_time.text = user_info.get('slot_time', '')
+        except (FileNotFoundError, json.JSONDecodeError) as e:
+            print(f"Error reading user_data.json: {e}")
 
     # def payment_page_backButton(self):
     #     # Extract the username from menu_profile
