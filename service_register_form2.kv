@@ -1,14 +1,15 @@
 <ServiceRegisterForm2>:
     BoxLayout:
         orientation: 'vertical'
-
+        Widget:
+            size_hint_y:.01
         MDIconButton:
             icon: "arrow-left"
             pos_hint: {"center_y": .95}
             user_font_size: "30sp"
             theme_text_color: "Custom"
             text_color: rgba(26, 24, 58, 255)
-            on_release: root.manager.pop()
+            on_release: root.manager.push_replacement("service_register_form1", "right")
 
         ScrollView:
             GridLayout:

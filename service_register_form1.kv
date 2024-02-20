@@ -1,15 +1,15 @@
 <ServiceRegisterForm1>
     BoxLayout:
         orientation: 'vertical'
-
+        Widget:
+            size_hint_y:.01
         MDIconButton:
             icon: "arrow-left"
             pos_hint: {"center_y": .95}
             user_font_size: "30sp"
-            size_hint_y:.15
             theme_text_color: "Custom"
             text_color: rgba(26, 24, 58, 255)
-            on_release: root.manager.pop()
+            on_release: root.reset_fields()
         MDLabel:
             text: "Create new account"
             font_name: "Broboto"
@@ -34,7 +34,7 @@
                         font_name: "Roboto"
                         pos_hint:{'center_x':.5}
                         size_hint:.7,None
-                        height: "25dp"
+                        height: "30dp"
                         multiline: False
                         write_tab: False
                         color_mode: 'custom'
@@ -42,13 +42,14 @@
                         text_color_focus:0,0,0,1
                         hint_text_color:0,0,0,1
                         hint_text_color_focus:0,0,0,.5
-                        on_text: root.on_name_change(*args)
+#                        on_text: root.on_name_change(*args)
 
                     MDTextField:
                         id:service_provider_email
                         hint_text: "Email"
                         font_name: "Roboto"
                         pos_hint:{'center_x':.5}
+                        height: "30dp"
                         size_hint:.7,None
                         multiline: False
                         write_tab: False
@@ -57,7 +58,7 @@
                         text_color_focus:0,0,0,1
                         hint_text_color:0,0,0,1
                         hint_text_color_focus:0,0,0,.5
-                        on_text: root.on_email_change(*args)
+#                        on_text: root.on_email_change(*args)
 
                     MDFloatLayout:
                         size_hint:.7,None
@@ -110,7 +111,7 @@
                         text_color_focus:0,0,0,1
                         hint_text_color:0,0,0,1
                         hint_text_color_focus:0,0,0,.5
-                        on_text: root.on_phoneno_change(*args)
+#                        on_text: root.on_phoneno_change(*args)
 
                     MDTextField:
                         id:service_provider_address
@@ -126,7 +127,7 @@
                         text_color_focus:0,0,0,1
                         hint_text_color:0,0,0,1
                         hint_text_color_focus:0,0,0,.5
-                        on_text: root.on_address_change(*args)
+#                        on_text: root.on_address_change(*args)
 
         BoxLayout:
             orientation: 'vertical'
@@ -142,7 +143,7 @@
                 size: dp(90), dp(35) # Adjusted size
                 halign: "left"
                 pos_hint: {'right': 1, 'y': 0}
-                on_release: root.manager.push("service_register_form2")
+                on_release: root.register_validation()
                 BoxLayout:
                     orientation: 'horizontal'
                     spacing: 0

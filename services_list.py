@@ -3,7 +3,7 @@ from kivy.clock import Clock
 from kivy.metrics import dp
 from kivy.utils import rgba
 from kivymd.uix.boxlayout import MDBoxLayout
-from kivymd.uix.button import MDRectangleFlatButton, MDIconButton, MDFlatButton
+from kivymd.uix.button import MDRectangleFlatButton, MDIconButton, MDFlatButton, MDRoundFlatButton
 from kivymd.uix.datatables import MDDataTable
 from kivymd.uix.floatlayout import MDFloatLayout
 from kivymd.uix.label import MDLabel
@@ -56,27 +56,27 @@ class ServicesList(MDScreen):
             spacing=dp(10)
         )
 
-        confirm_button = MDFlatButton(
+        confirm_button = MDRoundFlatButton(
             text="CONFIRM",
-            size_hint=(None, None),
-            size=(dp(200), dp(40)),
+            size_hint=(0.5, None),
+            height=dp(40),
             pos_hint={'center_x': .5, 'center_y': .5},
             md_bg_color=(1, 0, 0, 1),
-            elevation=10,
             font_name="Broboto",
-            halign="center",
+            valign="center",
             text_color=(1, 1, 1, 1),
             theme_text_color="Custom",
+            line_color = (0, 0, 0, 0),
             on_release=self.confirm_action
         )
-        label=MDLabel(
-                text="Organization List ",
-                font_name="Broboto",
-                pos_hint={"center_y": .9},
-                size_hint_y=.1,
-                font_size="20sp",
-                font_style='H6',
-                halign='center')
+        label = MDLabel(
+            text="Organization List ",
+            font_name="Broboto",
+            pos_hint={"center_y": .9},
+            size_hint_y=.1,
+            font_size="20sp",
+            font_style='H6',
+            halign='center')
         button_layout.add_widget(confirm_button)
         layout = MDFloatLayout(
             MDIconButton(
@@ -95,10 +95,13 @@ class ServicesList(MDScreen):
         layout.add_widget(label)
         self.clear_widgets()
         self.add_widget(layout)
-    def back(self,instance):
-        self.manager.pop()
+
+    def back(self, instance):
+        self.manager.push_replacement("service_register_form2", "right")
+
     def confirm_action(self, instance):
         print("Confirmation button pressed")
+        self.manager.push_replacement("service_register_form2", "right")
 
     def on_button_press(self, instance_button):
         try:

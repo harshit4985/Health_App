@@ -1,6 +1,8 @@
 <MobileCareServiceDoc>:
     BoxLayout:
         orientation: 'vertical'
+        Widget:
+            size_hint_y:.01
         MDIconButton:
             icon: "arrow-left"
             pos_hint: {"center_y": .95}
@@ -8,7 +10,7 @@
             size_hint_y:.15
             theme_text_color: "Custom"
             text_color: rgba(26, 24, 58, 255)
-            on_release: root.manager.pop()
+            on_release: root.manager.push_replacement("service_mobile_hospital", "right")
         ScrollView:
             GridLayout:
                 id: grid
@@ -52,7 +54,7 @@
                         pos_hint:{'center_x':.5}
                         size_hint:.7,None
                         color_mode:'custom'
-                        height: "30dp"
+                        height: "35dp"
                         canvas.before:
                             Color:
                                 rgba: 1, 1, 1, 1  # White background color
@@ -67,9 +69,9 @@
                         MDRectangleFlatIconButton:
                             id:upload1
                             icon:'cloud-upload'
-                            text:'Choose a file...'
-                            font_name: "Roboto"
-                            font_size: "12sp"
+                            text:'Upload'
+                            font_name: "Broboto"
+                            font_size: "14sp"
                             pos_hint:{'center_x':.6,'center_y':.5}
                             size_hint:1,1
                             color_mode: 'custom'
@@ -84,7 +86,7 @@
                             text: "None selected "
                             halign:'center'
                             font_name: "Roboto"
-                            font_size: "12sp"
+                            font_size: "14sp"
                             size_hint:1,1
                             color: 0.5, 0.5, 0.5, 1
                             color_mode: 'custom'
@@ -110,7 +112,7 @@
                         pos_hint:{'center_x':.5}
                         size_hint:.7,None
                         color_mode:'custom'
-                        height: "30dp"
+                        height: "35dp"
                         canvas.before:
                             Color:
                                 rgba: 1, 1, 1, 1  # White color
@@ -125,9 +127,9 @@
                         MDRectangleFlatIconButton:
                             id:upload2
                             icon:'cloud-upload'
-                            text:'Choose a file...'
-                            font_name: "Roboto"
-                            font_size: "12sp"
+                            text:'Upload'
+                            font_name: "Broboto"
+                            font_size: "14sp"
                             pos_hint:{'center_x':.6,'center_y':.5}
                             size_hint:1,1
                             color_mode: 'custom'
@@ -142,7 +144,7 @@
                             text: "None selected "
                             halign:'center'
                             font_name: "Roboto"
-                            font_size: "12sp"
+                            font_size: "14sp"
                             size_hint:1,1
                             color: 0.5, 0.5, 0.5, 1
                             color_mode: 'custom'
@@ -167,3 +169,4 @@
                 text_color: 1, 1, 1, 1
                 line_color:0,0,0,0
                 theme_text_color: "Custom"
+                on_release:root.submit('service_mobile_hospital')
