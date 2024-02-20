@@ -27,7 +27,7 @@
             pos_hint: {"center_x": .5, "center_y": .09}
             background_color: 0, 0, 0, 0
             font_name: "Roboto"
-            color: 0, 0, 0, 1  # Set the text color to black
+            color: 0, 0, 0, 1
             on_release: root.manager.push("signup")
             canvas.before:
                 Color:
@@ -41,19 +41,7 @@
                 Line:
                     width: 1.2
                     rounded_rectangle: self.x, self.y, self.width, self.height, 5, 5, 5, 5, 100
-#            text: "SIGNUP"
-#            size_hint: .66, .065
-#            pos_hint: {"center_x": .5, "center_y": .09}
-#            background_color: 0, 0, 0, 1
-#            font_name: "Roboto"
-#            color: rgba(255, 0, 0, 255)
-#            on_release: root.manager.push("signup")
-#            canvas.before:
-#                Color:
-#                    rgb: rgba(0, 0, 0, 255)
-#                Line:
-#                    width: 1.2
-#                    rounded_rectangle: self.x, self.y, self.width, self.height, 5, 5, 5, 5, 100
+
 
 
 
