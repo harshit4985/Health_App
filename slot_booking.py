@@ -127,6 +127,7 @@ class Slot_Booking(MDScreen):
         button_instance.line_color = (1, 0, 0, 0.5)
         # If selected  date is equal to today's date
         if date == (datetime.now().strftime('%d')):
+
             # Get current time in 12-hour format with AM/PM
             current_time_str = datetime.now().strftime("%I:%M %p")
             print("Current time:", current_time_str)
@@ -142,6 +143,8 @@ class Slot_Booking(MDScreen):
                 for time_str in self.time_list:
                     time_obj = datetime.strptime(time_str, "%I:%M %p")
                     if time_obj > current_time_obj:
+                        # Update the label
+                        self.ids.available_slots_alert.text = "Available Slots"
                         print(time_str)
                         custom = CButton(label_text=time_str)
                         self.ids.CButton.add_widget(custom)
@@ -214,6 +217,7 @@ class Slot_Booking(MDScreen):
             button.elevation = 0
             button.md_bg_color = (1, 1, 1, 1)
             button.line_color = (1, 0, 0, 1)
+        self.ids.available_slots_alert.text = "Choose a Day"
         print("Back To Hospital Page")
 
     def select_timings(self, button, label_text):

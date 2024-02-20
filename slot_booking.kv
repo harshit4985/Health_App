@@ -2,7 +2,8 @@
     size_hint: None, None
     size: dp(90), dp(40) # Adjusted size
     halign: "left"
-    pos_hint: {'right': 1, 'y': 0}
+    pos_hint: {'x': 0, 'top': 1}
+#    pos_hint: {'right': 1, 'y': 0}
     md_bg_color: 1, 1, 1, 1
     elevation: 0
     color_mode: "custom"
@@ -215,18 +216,21 @@
                     orientation: 'vertical'
                     spacing: 0
                     size_hint_y: None
-                    height: dp(160)
+                    height: card.height
 
                     MDCard:
+                        id:card
                         orientation: 'vertical'
                         size_hint: None, None
                         spacing: 5
-                        size: "280dp", "170dp"
+                        padding: dp(0),dp(0),dp(0),dp(5)
+                        size: "280dp",text_box.height + box_main.height+10
                         size_hint: (1, 1)
                         elevation: 1
                         pos_hint: {"center_x": 0.5, "center_y": 0.5}
 
                         BoxLayout:
+                            id: text_box
                             orientation: 'horizontal'
                             padding: dp(2)
                             size_hint_y: None
@@ -235,7 +239,7 @@
 
                             MDLabel:
                                 id: available_slots_alert
-                                text: "Available Slots"
+                                text: "Choose a Day"
                                 font_name: "Roboto"
                                 size_hint_x: 1
                                 halign: "center"
@@ -251,17 +255,17 @@
                                         width: 1
 
                         BoxLayout:
+                            id: box_main
                             orientation: 'vertical'
                             spacing: 0
                             size_hint_y: None
-                            padding: dp(10),dp(0),dp(10),dp(20)
-                            height: dp(120)
-                            id: alert
+                            padding: dp(10),dp(0),dp(10),dp(0)
+                            height: child.height
                             BoxLayout:
+                                id: child
                                 size_hint: None, None
-                                size: dp(290), dp(90)
-                                pos_hint: {"center_x": 0.5, "center_y": 1}
-
+                                size: dp(290), CButton.height
+                                pos_hint: {"center_x": 0.5, "center_y": 0}
                                 GridLayout:
                                     cols: 3
                                     spacing: dp(10)
@@ -269,6 +273,9 @@
                                     pos_hint: {"center_x": 0.5, "x": 0}
                                     height: self.minimum_height
                                     id:CButton
+
+
+
 
 
         Button:
