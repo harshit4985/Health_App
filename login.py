@@ -124,6 +124,9 @@ class Login(MDScreen):
                     json.dump(logged_in_data, json_file)
                 with open("user_data.json", "w") as json_file:
                     json.dump(user_info, json_file)
+                screen = self.manager.get_screen("client_services")
+                screen.ids.username.text = user_info['username']
+                screen.ids.email.text = user_info['email']
 
             else:
                 # Login failed

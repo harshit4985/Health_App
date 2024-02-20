@@ -20,7 +20,7 @@ class Client_services(MDScreen):
         self.ids.email.text = user_info['email']
 
     def logout(self):
-        self.manager.push_replacement("login")
+        self.manager.push_replacement("login", "right")
         self.ids.nav_drawer.set_state("close")
         with open('user_data.json', 'r') as file:
             user_info = json.load(file)
