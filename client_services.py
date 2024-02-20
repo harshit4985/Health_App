@@ -8,8 +8,8 @@ class NavigationDrawerScreen(MDScreen):
 class Client_services(MDScreen):
     def __init__(self, **kwargs):
         super(Client_services, self).__init__(**kwargs)
+    def on_pre_enter(self):
         self.change()
-
     def change(self):
         with open('user_data.json', 'r') as file:
             user_info = json.load(file)
@@ -29,3 +29,11 @@ class Client_services(MDScreen):
 
     def location_screen(self):
         self.manager.push("location")
+
+    def book_now(self,organization_name,organization_address):
+        print(organization_name, organization_address)
+        organization_info = {'organization_name': organization_name, 'organization_address': organization_address}
+        with open("organization_data.json", "w") as json_file:
+            json.dump(organization_info, json_file)
+        self.manager.push("hospital_booking")
+

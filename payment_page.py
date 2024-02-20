@@ -11,6 +11,7 @@ from kivy.clock import Clock
 import anvil
 
 
+
 class Payment(MDScreen):
     def __init__(self, **kwargs):
         super(Payment, self).__init__(**kwargs)
@@ -32,7 +33,7 @@ class Payment(MDScreen):
         user_info['slot_time'] = ""
         with open("user_data.json", "w") as json_file:
             json.dump(user_info, json_file)
-        self.manager.push("slot_booking","right")
+        self.manager.push("slot_booking", "right")
 
     def change(self):
         try:
