@@ -2,7 +2,6 @@ import json
 from kivymd.app import MDApp
 from kivy.core.window import Window
 from libs.uix.root import Root
-from kivy.core.text import LabelBase
 
 Window.size = (320, 580)
 
@@ -18,7 +17,7 @@ class ShotApp(MDApp):
 
     def build(self):
         self.root = Root()
-        self.root.push_replacement("main_sc")
+        self.root.push("main_sc")
 
     def on_start(self):
         with open("logged_in_data.json", "r") as json_file:
@@ -35,5 +34,4 @@ class ShotApp(MDApp):
 
 # Run the app
 if __name__ == '__main__':
-    LabelBase.register(name="Broboto", fn_regular="roboto/Roboto-Bold.ttf")
     ShotApp().run()
