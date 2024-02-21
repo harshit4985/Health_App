@@ -16,6 +16,9 @@ class ServicesList(MDScreen):
         self.name = 'list_content'
         self.load_data()
 
+    def on_pre_enter(self):
+        self.load_data()
+
     def load_data(self):
         initial_data = self.fetch_initial_data()
         self.data_tables = MDDataTable(
@@ -117,7 +120,7 @@ class ServicesList(MDScreen):
         cursor = connection.cursor()
 
         # Example query: Fetch all rows from the database
-        cursor.execute("SELECT hospital_name, District FROM service_table")
+        cursor.execute("SELECT organization_name, District FROM service_table")
         db_row_data = cursor.fetchall()
 
         connection.close()
@@ -135,8 +138,8 @@ class ServicesList(MDScreen):
         cursor = connection.cursor()
 
         for checked_row in checked_rows:
-            hospital_name = checked_row[0]  # Assuming hospital_name is the first column
-            cursor.execute("DELETE FROM service_table WHERE hospital_name=?", (hospital_name,))
+            organization_name = checked_row[0]  # Assuming hospital_name is the first column
+            cursor.execute("DELETE FROM service_table WHERE organization_name=?", (organization_name,))
 
         connection.commit()
         connection.close()

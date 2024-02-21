@@ -9,23 +9,7 @@ from kivymd.uix.filemanager import MDFileManager
 from kivymd.uix.pickers import MDDatePicker
 from kivymd.uix.screen import MDScreen
 
-conn = sqlite3.connect("users.db")
-cursor = conn.cursor()
 
-# Creating the hospital_table
-cursor.execute('''
-    CREATE TABLE IF NOT EXISTS service_table (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        hospital_name TEXT,
-        established_year TEXT,
-        District TEXT,
-        State TEXT,
-        pincode TEXT,
-        address TEXT,
-        doc1 BLOB,
-        doc2 BLOB
-    )
-''')
 
 
 class BaseRegistrationScreen(MDScreen):
@@ -104,65 +88,58 @@ class BaseRegistrationScreen(MDScreen):
         self.file_manager.close()
 
     # -------------------------------validation------------------------------
+    extra_info = None
+    extra_info2 = None
+    District = None
+    State = None
+    pincode = None
+    address = None
+    capsule = None
+
     def validate_content(self, classname):
-        extra_info = self.ids.extra_info.text
-        extra_info2 = self.ids.extra_info2.text
-        District = self.ids.District.text
-        State = self.ids.State.text
-        pincode = self.ids.pincode.text
-        address = self.ids.address.text
-        # # Validation logic
-        if not extra_info:
+        self.extra_info = self.ids.extra_info.text
+        self.extra_info2 = self.ids.extra_info2.text
+        self.District = self.ids.District.text
+        self.State = self.ids.State.text
+        self.pincode = self.ids.pincode.text
+        self.address = self.ids.address.text
+        self.capsule = self.ids.capsule.text
+
+        if not self.extra_info:
             self.ids.extra_info.error = True
             self.ids.extra_info.helper_text = "This field is required."
             self.ids.extra_info.required = True
-        elif not extra_info2:
+        elif not self.extra_info2:
             self.ids.extra_info2.error = True
             self.ids.extra_info2.helper_text = "This field is required."
-        elif not State:
+        elif not self.State:
             self.ids.State.error = True
-            self.ids.State.helper_text = "Please select a state."
-            # self.ids.dropdown_state.required = True
-        elif not District:
+            self.ids.State.helper_text = "This field is required."
+        elif not self.District:
             self.ids.District.error = True
-            self.ids.District.helper_text = "Please select a District."
-        elif not pincode or len(pincode) != 6:
+            self.ids.District.helper_text = "This field is required."
+        elif not self.pincode or len(self.pincode) != 6:
             self.ids.pincode.error = True
             self.ids.pincode.helper_text = "Invalid pincode (6 digits required)."
             self.ids.pincode.required = True
-        elif not address:
+        elif not self.address:
             self.ids.address.error = True
             self.ids.address.helper_text = "This field is required."
             self.ids.address.required = True
+        elif not self.capsule:
+            self.ids.capsule.error = True
+            self.ids.capsule.helper_text = "This field is required."
+            self.ids.capsule.required = True
         else:
             print('validation success')
 
-            print(extra_info)
-            print(extra_info2)
-            print(State)
-            print(District)
-            print(pincode)
-            print(address)
-            print(self.file_data1)
-            print(self.file_data2)
-
-            conn = sqlite3.connect("users.db")
-            cursor = conn.cursor()
-            # Inserting data into the specified table
-            cursor.execute(f''' INSERT INTO service_table (hospital_name ,established_year , District, State,
-            pincode, address, doc1, doc2) VALUES (?, ?, ?, ?, ?, ?, ?, ?) ''', (extra_info, extra_info2, District,
-                                                                                State, pincode, address,
-                                                                                self.file_data1,
-                                                                                self.file_data2))
-
-            conn.commit()
-            conn.close()
             if classname == 'oxiclinic':
                 self.manager.push("service_hospital_doc")
             elif classname == 'oxitaxi':
                 self.manager.push("service_mobile_hospital_doc")
             elif classname == 'oxigym':
                 self.manager.push("service_oxygym_doc")
+
     def reset_fields(self):
         self.ids.address.text = ""
         self.ids.District.text = ""
@@ -170,14 +147,42 @@ class BaseRegistrationScreen(MDScreen):
         self.ids.pincode.text = ""
         self.ids.extra_info.text = ""
         self.ids.extra_info2.text = ""
+        self.ids.capsule.text = ""
+
     def reset_field(self):
         self.manager.push_replacement("service_register_form2", "right")
         self.reset_fields()
 
-
-    def submit(self,classname):
+    def submit(self, classname):
         self.manager.push_replacement("service_register_form2", "right")
+        print(self.extra_info)
+        print(self.extra_info2)
+        print(self.State)
+        print(self.District)
+        print(self.pincode)
+        print(self.address)
+        print(self.capsule)
+        print(self.file_data1)
+        print(self.file_data2)
+        self.cursor.execute('''
+                INSERT INTO service_table (organization_name, established_year, District, State, pincode, address, capsules, doc1, doc2) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)''',
+                            (self.extra_info, self.extra_info2, self.District,
+                             self.State, self.pincode, self.address, self.capsule, self.file_data1, self.file_data2))
+
+        self.conn.commit()
+        self.cursor.close()
+        self.conn.close()
+
+        print(self.extra_info)
+        print(self.extra_info2)
+        print(self.State)
+        print(self.District)
+        print(self.pincode)
+        print(self.address)
+        print(self.capsule)
+        print(self.file_data1)
+        print(self.file_data2)
         screen_to_clear = self.manager.get_screen(classname)
         if screen_to_clear:
             screen_to_clear.reset_fields()
-
