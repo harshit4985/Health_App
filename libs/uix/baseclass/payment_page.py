@@ -9,6 +9,7 @@ from kivymd.uix.button import MDFlatButton
 from kivymd.uix.dialog import MDDialog
 from kivy.clock import Clock
 import anvil
+from server import Server
 
 
 
@@ -16,6 +17,7 @@ class Payment(MDScreen):
     def __init__(self, **kwargs):
         super(Payment, self).__init__(**kwargs)
         Window.bind(on_keyboard=self.on_keyboard)
+        self.server = Server()
 
     def on_pre_enter(self):
         self.change()
@@ -54,7 +56,7 @@ class Payment(MDScreen):
         with open("user_data.json", "w") as json_file:
             json.dump(user_info, json_file)
 
-    def razor_pay(self, instance):
+    def razor_pay(self):
         client = razorpay.Client(auth=('rzp_test_kOpS7Ythlfb1Ho', 'OzPZyPbsOV0AlADilk4wkgv9'))
 
         # Create an order
@@ -79,26 +81,53 @@ class Payment(MDScreen):
             self.open_payment_gateway(payment_url)
             self.show_validation_dialog("Payment Successful")
             anvil.server.connect("server_UY47LMUKBDUJMU4EA3RKLXCC-LP5NLIEYMCLMZ4NU")
-            screen = self.manager.get_screen('client_services')
-            email = screen.ids.email.text
-            user_name = self.ids.user_name.text
-            book_date = self.ids.session_date.text
-            book_time = self.ids.session_time.text
-            user = app_tables.users.get(email=email)
-            user_id = user['id']
-            row = app_tables.book_slot.search()
-            slot_id = len(row) + 1
-            app_tables.book_slot.add_row(
-                slot_id=slot_id,
-                user_id=user_id,
-                username=user_name,
-                book_date=book_date,
-                book_time=book_time
-            )
+            # with open('user_data.json', 'r') as file:
+            #     user_info = json.load(file)
+            # email = user_info.get('email', '')
+            # user_name = user_info.get('username', '')
+            # book_date = user_info.get('slot_date', '')
+            # book_time = user_info.get('slot_time', '')
+            # user = app_tables.users.get(email=email)
+            # user_id = user['id']
+            # row = app_tables.book_slot.search()
+            # slot_id = len(row) + 1
+            # app_tables.book_slot.add_row(
+            #     slot_id=slot_id,
+            #     user_id=user_id,
+            #     username=user_name,
+            #     book_date=book_date,
+            #     book_time=book_time
+            # )
         except Exception as e:
             print("An error occurred while creating the order:", str(e))
 
     def open_payment_gateway(self):
+        with open('user_data.json', 'r') as file:
+            user_info = json.load(file)
+        email = user_info.get('email', '')
+        user_name = user_info.get('username', '')
+        book_date = user_info.get('slot_date', '')
+        book_time = user_info.get('slot_time', '')
+
+        try:
+            if self.server.is_connected():
+                user = app_tables.users.get(email=email)
+                user_id = user['id']
+                row = app_tables.book_slot.search()
+                slot_id = len(row) + 1
+                app_tables.book_slot.add_row(
+                    slot_id=slot_id,
+                    user_id=user_id,
+                    username=user_name,
+                    book_date=book_date,
+                    book_time=book_time
+                )
+            else:
+                self.show_validation_dialog("No internet connection")
+
+        except Exception as e:
+            print(e)
+            self.show_validation_dialog("Error processing user data")
         # Replace this with actual code to open the payment gateway URL
         print(f"Opening Razorpay payment gateway")
         website_url = 'https://rzp.io/l/iJyrLCI'

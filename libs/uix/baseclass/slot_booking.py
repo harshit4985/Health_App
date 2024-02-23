@@ -15,6 +15,8 @@ from kivymd.uix.label import MDLabel
 from kivymd.uix.pickers import MDDatePicker
 from kivymd.uix.screen import MDScreen
 
+from server import Server
+
 # Create the BookSlot table if it doesn't exist
 
 conn = sqlite3.connect("users.db")
@@ -46,6 +48,7 @@ class CButton(MDFlatButton):
         self.default_md_bg_color = self.md_bg_color  # Store the default background color
         self.default_line_color = self.line_color  # Store the default line color
 
+
     def Slot_Timing(self, slot_timing):
         CButton.slot_time = slot_timing
         # Reset the colors of all buttons to their default state
@@ -58,7 +61,7 @@ class CButton(MDFlatButton):
         self.md_bg_color = (1, 0, 0, 0.1)  # Set background color
         self.line_color = (1, 0, 0, 0.5)  # Set line color
         self.CButton_pressed = True
-        print( f"Selected time {slot_timing}")
+        print( f"Selected time: {slot_timing}")
 
     pass
 class Alert_Label(MDLabel):
@@ -73,6 +76,7 @@ class Slot_Booking(MDScreen):
         Window.bind(on_keyboard=self.on_keyboard)
         threading.Thread(target=self.slot_days).start()
         self.book_slot_pressed = False
+        self.server = Server()
 
 
     def on_keyboard(self, instance, key, scancode, codepoint, modifier):
@@ -84,9 +88,10 @@ class Slot_Booking(MDScreen):
     def on_back_button(self):
         self.manager.push_replacement("hospital_booking","right")
 
+    date_list = []
     def slot_days(self):
         # Initialize empty lists to store dates and weekdays
-        date_list = []
+        # date_list = []
         day_list = []
         # Get today's date
         today_date = datetime.now()
@@ -94,15 +99,16 @@ class Slot_Booking(MDScreen):
             # Calculate the date for the next day in the loop
             next_date = today_date + timedelta(days=i)
             # Append the date to the date list
-            date_list.append(next_date.strftime('%d'))
+            self.date_list.append(next_date.strftime('%d-%m-%Y'))
             # Append the weekday to the day list
             day_list.append(next_date.strftime('%a'))
         # Now you have all dates in date_list and all weekdays in day_list
+        dates = [date.split('-')[0] for date in self.date_list]
         print("Weekdays:", day_list)
-        print("Dates:", date_list)
+        print("Dates:", self.date_list)
         day_button = ['day1', 'day2', 'day3', 'day4']
         date_button = ['date1', 'date2', 'date3', 'date4']
-        for day_label, day, date_label, date in zip(day_button, day_list, date_button, date_list):
+        for day_label, day, date_label, date in zip(day_button, day_list, date_button, dates):
             self.ids[day_label].text = day
             self.ids[date_label].text = date
 
@@ -111,9 +117,15 @@ class Slot_Booking(MDScreen):
 
         self.book_slot_pressed = True
         self.selected_day = day  # Store the selected day
-        self.selected_date = date
-        print(day)
-        print(date)
+
+        for d in self.date_list:
+            # Extract the day part from the date in Dates list
+            day_part = d.split('-')[0]
+            # Compare the day part with the given date
+            if day_part == date:
+                self.selected_date = d
+                break  # Stop iterating if a match is found
+
         # Check if CButton widget exists before clearing it
         self.ids.CButton.clear_widgets()
         # reset all the buttons
@@ -132,8 +144,6 @@ class Slot_Booking(MDScreen):
             current_time_str = datetime.now().strftime("%I:%M %p")
             print("Current time:", current_time_str)
 
-            # time_list = ['09:00 AM', '11:00 AM', '01:00 PM', '03:00 PM', '05:00 PM', '07:00 PM']
-
             # Convert current time to a comparable format
             current_time_obj = datetime.strptime(current_time_str, "%I:%M %p")
             upper_limit = datetime.strptime('07:00 PM', "%I:%M %p")
@@ -143,11 +153,18 @@ class Slot_Booking(MDScreen):
                 for time_str in self.time_list:
                     time_obj = datetime.strptime(time_str, "%I:%M %p")
                     if time_obj > current_time_obj:
+                        print(self.selected_date)
+                        #
+                        # book_slot = app_tables.book_slot.search(book_date=self.selected_date)
+                        # book_times = [row['book_time'] for row in book_slot]
+                        # print(book_times)
+
+
                         # Update the label
                         self.ids.available_slots_alert.text = "Available Slots"
-                        print(time_str)
                         custom = CButton(label_text=time_str)
                         self.ids.CButton.add_widget(custom)
+
 
             else:
                 # if current time is more than '07:00 PM'
@@ -156,9 +173,8 @@ class Slot_Booking(MDScreen):
             # Update the label
             self.ids.available_slots_alert.text = "Available Slots"
             # selected date is not equal to Current date then
-            time_list = ['09:00 AM', '11:00 AM', '01:00 PM', '03:00 PM', '05:00 PM', '07:00 PM']
             for time_str in self.time_list:
-                print(time_str)
+                print(self.selected_date)
                 custom = CButton(label_text=time_str)
                 self.ids.CButton.add_widget(custom)
 
@@ -167,14 +183,12 @@ class Slot_Booking(MDScreen):
     def pay_now(self, instance, *args):
         cbutton_pressed = any(button.CButton_pressed for button in self.ids.CButton.children if isinstance(button, CButton))
         if self.book_slot_pressed and cbutton_pressed:
-            print("Day:", self.selected_day)
             print("Date:", self.selected_date)
-            print(CButton.slot_time)
-
+            print("Time:", CButton.slot_time)
 
             with open('user_data.json', 'r') as file:
                 user_info = json.load(file)
-            user_info['slot_date'] = f"{self.selected_day} {self.selected_date}"
+            user_info['slot_date'] = self.selected_date
             user_info['slot_time'] = CButton.slot_time
             with open("user_data.json", "w") as json_file:
                 json.dump(user_info, json_file)
@@ -190,21 +204,6 @@ class Slot_Booking(MDScreen):
             self.show_validation_dialog("Select Date and Time")
             print("Select Date and Time")
 
-
-        # if not self.book_slot_pressed:
-        #     self.show_validation_dialog("Select Date")
-        #     print("Select Date")
-        #
-        # elif not cbutton_pressed:
-        #     self.show_validation_dialog("Select Time")
-        #     print("Select Time")
-        # elif not self.book_slot_pressed and not cbutton_pressed:
-        #     self.show_validation_dialog("Select Date and Time")
-        #     print("Select Date and Time")
-        # else:
-        #     print("No CButton was pressed before Pay Now")
-
-        # self.manager.push("payment_page")
 
 
 
