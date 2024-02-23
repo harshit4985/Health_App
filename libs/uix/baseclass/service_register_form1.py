@@ -1,9 +1,29 @@
 import re
+import sqlite3
 
 from kivymd.icon_definitions import md_icons
 from kivymd.uix.screen import MDScreen
 from kivy.properties import BooleanProperty
 from kivy.clock import Clock
+
+conn = sqlite3.connect("users.db")
+cursor = conn.cursor()
+
+# Creating the hospital_table
+cursor.execute('''
+    CREATE TABLE IF NOT EXISTS service_table (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        organization_name TEXT,
+        established_year TEXT,
+        District TEXT,
+        State TEXT,
+        pincode TEXT,
+        address TEXT,
+        capsules INT,
+        doc1 BLOB,
+        doc2 BLOB
+    )
+''')
 
 
 class ServiceRegisterForm1(MDScreen):
