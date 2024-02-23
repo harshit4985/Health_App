@@ -113,6 +113,7 @@ class Slot_Booking(MDScreen):
             self.ids[date_label].text = date
 
     time_list = ['09:00 AM', '11:00 AM', '01:00 PM', '03:00 PM', '05:00 PM', '07:00 PM']
+    time_list_2 = ['09:00 AM', '11:00 AM', '01:00 PM', '03:00 PM', '05:00 PM', '07:00 PM']
     def Book_Slot(self, button_instance, day, date):
 
         self.book_slot_pressed = True
@@ -148,33 +149,39 @@ class Slot_Booking(MDScreen):
             current_time_obj = datetime.strptime(current_time_str, "%I:%M %p")
             upper_limit = datetime.strptime('07:00 PM', "%I:%M %p")
             # Show slots which are available before '07:00 PM'
+            book_slot = app_tables.book_slot.search(book_date=self.selected_date)
+            book_times = [row['book_time'] for row in book_slot]
+            print(book_times)
+            today_list = self.time_list
+            for time_slot in today_list:
+                count_time_slot = book_times.count(time_slot)
+                if count_time_slot == 3:
+                    today_list.remove(time_slot)
             if current_time_obj < upper_limit:
                 # Iterate over the time list and print times that come after the current time
-                for time_str in self.time_list:
+                # Update the label
+                self.ids.available_slots_alert.text = "Available Slots"
+                for time_str in today_list:
                     time_obj = datetime.strptime(time_str, "%I:%M %p")
                     if time_obj > current_time_obj:
-                        print(self.selected_date)
-                        #
-                        # book_slot = app_tables.book_slot.search(book_date=self.selected_date)
-                        # book_times = [row['book_time'] for row in book_slot]
-                        # print(book_times)
-
-
-                        # Update the label
-                        self.ids.available_slots_alert.text = "Available Slots"
                         custom = CButton(label_text=time_str)
                         self.ids.CButton.add_widget(custom)
-
-
             else:
                 # if current time is more than '07:00 PM'
                 self.ids.available_slots_alert.text = f"Oops! No more slots available on {day}"
         else:
+
+            book_slot = app_tables.book_slot.search(book_date=self.selected_date)
+            book_times = [row['book_time'] for row in book_slot]
+            print(book_times)
+            for time_slot in self.time_list_2:
+                count_time_slot = book_times.count(time_slot)
+                if count_time_slot == 2:
+                    self.time_list_2.remove(time_slot)
             # Update the label
             self.ids.available_slots_alert.text = "Available Slots"
             # selected date is not equal to Current date then
-            for time_str in self.time_list:
-                print(self.selected_date)
+            for time_str in self.time_list_2:
                 custom = CButton(label_text=time_str)
                 self.ids.CButton.add_widget(custom)
 
