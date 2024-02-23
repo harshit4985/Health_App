@@ -33,10 +33,10 @@ class Server:
             return anvil.server.connect("server_UY47LMUKBDUJMU4EA3RKLXCC-LP5NLIEYMCLMZ4NU")
         else:
             # Use SQLite database connection
-            return sqlite3.connect('../../../users.db')
+            return sqlite3.connect('users.db')
 
     def sqlite3_users_db(self):
-        conn = sqlite3.connect("../../../users.db")
+        conn = sqlite3.connect("users.db")
         cursor = conn.cursor()
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS users (

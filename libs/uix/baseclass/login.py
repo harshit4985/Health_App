@@ -110,11 +110,19 @@ class Login(MDScreen):
             if user_anvil or user_sqlite:
                 print("Login successful.")
                 self.manager.push("client_services")
-                username = str(user_anvil["username"])
-                email = str(user_anvil["email"])
-                password = str(user_anvil["password"])
-                phone = str(user_anvil["phone"])
-                pincode = str(user_anvil["pincode"])
+                if user_anvil:
+                    username = str(user_anvil["username"])
+                    email = str(user_anvil["email"])
+                    password = str(user_anvil["password"])
+                    phone = str(user_anvil["phone"])
+                    pincode = str(user_anvil["pincode"])
+                if user_sqlite:
+                    username = user_sqlite[1]
+                    email = user_sqlite[2]
+                    password = user_sqlite[3]
+                    phone = user_sqlite[4]
+                    pincode = user_sqlite[0]
+                    print(f"hi {username}")
                 logged_in = True
                 self.manager.load_screen("menu_profile")
                 logged_in_data = {'logged_in': logged_in}

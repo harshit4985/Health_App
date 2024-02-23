@@ -62,7 +62,7 @@ class ServicesList(MDScreen):
             height=dp(40),
             pos_hint={'center_x': .5, 'center_y': .5},
             md_bg_color=(1, 0, 0, 1),
-            font_name="Broboto",
+            font_name="Roboto-Bold",
             valign="center",
             text_color=(1, 1, 1, 1),
             theme_text_color="Custom",
@@ -71,7 +71,7 @@ class ServicesList(MDScreen):
         )
         label = MDLabel(
             text="Organization List ",
-            font_name="Broboto",
+            font_name="Roboto-Bold",
             pos_hint={"center_y": .9},
             size_hint_y=.1,
             font_size="20sp",
