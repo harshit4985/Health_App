@@ -152,10 +152,10 @@ class Slot_Booking(MDScreen):
             book_slot = app_tables.book_slot.search(book_date=self.selected_date)
             book_times = [row['book_time'] for row in book_slot]
             print(book_times)
-            today_list = self.time_list
+            today_list = self.time_list.copy()  # Make a copy of time_list
             for time_slot in today_list:
                 count_time_slot = book_times.count(time_slot)
-                if count_time_slot == 3:
+                if count_time_slot == 2:
                     today_list.remove(time_slot)
             if current_time_obj < upper_limit:
                 # Iterate over the time list and print times that come after the current time
@@ -174,16 +174,19 @@ class Slot_Booking(MDScreen):
             book_slot = app_tables.book_slot.search(book_date=self.selected_date)
             book_times = [row['book_time'] for row in book_slot]
             print(book_times)
-            for time_slot in self.time_list_2:
+            next_day_list = self.time_list.copy()  # Make a copy of time_list
+            for time_slot in next_day_list:
                 count_time_slot = book_times.count(time_slot)
                 if count_time_slot == 2:
-                    self.time_list_2.remove(time_slot)
+                    next_day_list.remove(time_slot)
             # Update the label
             self.ids.available_slots_alert.text = "Available Slots"
             # selected date is not equal to Current date then
-            for time_str in self.time_list_2:
+            for time_str in next_day_list:
                 custom = CButton(label_text=time_str)
                 self.ids.CButton.add_widget(custom)
+
+
 
 
 
