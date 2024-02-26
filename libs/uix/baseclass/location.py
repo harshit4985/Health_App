@@ -37,19 +37,10 @@ class Location(MDScreen):
 
     def get_location(self):
         try:
-            import requests
-            r = requests.get('https://get.geojs.io/')
-            ip_request = requests.get('https://get.geojs.io/v1/ip.json')
-            ipAdd = ip_request.json()['ip']
-            print(ipAdd)
-            url = 'https://get.geojs.io/v1/ip/geo/' + ipAdd + '.json'
-            geo_request = requests.get(url)
-            geo_data = geo_request.json()
-            print(geo_data)
-            # pincode = data["postal"]
-            # self.ids.pincode.text = pincode
+            pincode = 560092
+            self.ids.pincode.text = pincode
         except Exception:
-            self.show_validation_dialog("No Internet Connection")
+            self.show_validation_dialog("Error fetching pincode Please type manually")
 
     def show_validation_dialog(self, message):
         # Create the dialog asynchronously
