@@ -9,7 +9,7 @@
             size_hint_y:.15
             theme_text_color: "Custom"
             text_color: rgba(26, 24, 58, 255)
-            on_release: root.manager.push_replacement("service_mobile_hospital", "right")
+            on_release: root.doc_reset_field()
         ScrollView:
             GridLayout:
                 id: grid
@@ -148,7 +148,15 @@
                             color: 0.5, 0.5, 0.5, 1
                             color_mode: 'custom'
                             pos_hint: {"center_x": .5,'center_y':.5}
-
+                    MDLabel:
+                        id:hint_label
+                        text:''
+                        halign:'center'
+                        font_name: "Roboto"
+                        font_size: "12sp"
+                        size_hint:.7,None
+                        height: "35dp"
+                        color:1,0,0,1
         BoxLayout:
             orientation: 'vertical'
             size_hint_y: None
