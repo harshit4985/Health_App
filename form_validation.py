@@ -10,12 +10,7 @@ from kivymd.uix.pickers import MDDatePicker
 from kivymd.uix.screen import MDScreen
 
 
-
-
 class BaseRegistrationScreen(MDScreen):
-    conn = sqlite3.connect("users.db")
-    cursor = conn.cursor()
-
     def show_date_picker(self, arg):
         date_dialog = MDDatePicker(size_hint=(None, None), size=(150, 150))
         date_dialog.bind(on_save=self.on_save, on_cancel=self.on_cancel)
@@ -95,42 +90,51 @@ class BaseRegistrationScreen(MDScreen):
     pincode = None
     address = None
     capsule = None
+    className = None
 
     def validate_content(self, classname):
-        self.extra_info = self.ids.extra_info.text
-        self.extra_info2 = self.ids.extra_info2.text
-        self.District = self.ids.District.text
-        self.State = self.ids.State.text
-        self.pincode = self.ids.pincode.text
-        self.address = self.ids.address.text
-        self.capsule = self.ids.capsule.text
 
-        if not self.extra_info:
+        extra_info = self.ids.extra_info.text
+        extra_info2 = self.ids.extra_info2.text
+        District = self.ids.District.text
+        State = self.ids.State.text
+        pincode = self.ids.pincode.text
+        address = self.ids.address.text
+        capsule = self.ids.capsule.text
+
+        if not extra_info:
             self.ids.extra_info.error = True
             self.ids.extra_info.helper_text = "This field is required."
             self.ids.extra_info.required = True
-        elif not self.extra_info2:
+        elif not extra_info2:
             self.ids.extra_info2.error = True
             self.ids.extra_info2.helper_text = "This field is required."
-        elif not self.State:
+        elif not State:
             self.ids.State.error = True
             self.ids.State.helper_text = "This field is required."
-        elif not self.District:
+        elif not District:
             self.ids.District.error = True
             self.ids.District.helper_text = "This field is required."
-        elif not self.pincode or len(self.pincode) != 6:
+        elif not pincode or len(pincode) != 6:
             self.ids.pincode.error = True
             self.ids.pincode.helper_text = "Invalid pincode (6 digits required)."
             self.ids.pincode.required = True
-        elif not self.address:
+        elif not address:
             self.ids.address.error = True
             self.ids.address.helper_text = "This field is required."
             self.ids.address.required = True
-        elif not self.capsule:
+        elif not capsule:
             self.ids.capsule.error = True
             self.ids.capsule.helper_text = "This field is required."
             self.ids.capsule.required = True
         else:
+            self.extra_info = extra_info
+            self.extra_info2 = extra_info2
+            self.State = State
+            self.District = District
+            self.pincode = pincode
+            self.address = address
+            self.capsule = capsule
             print('validation success')
 
             if classname == 'oxiclinic':
@@ -139,6 +143,9 @@ class BaseRegistrationScreen(MDScreen):
                 self.manager.push("service_mobile_hospital_doc")
             elif classname == 'oxigym':
                 self.manager.push("service_oxygym_doc")
+
+    def form_data(self):
+        return [self.extra_info, self.extra_info2, self.District, self.State, self.pincode, self.address, self.capsule]
 
     def reset_fields(self):
         self.ids.address.text = ""
@@ -149,40 +156,53 @@ class BaseRegistrationScreen(MDScreen):
         self.ids.extra_info2.text = ""
         self.ids.capsule.text = ""
 
+
     def reset_field(self):
         self.manager.push_replacement("service_register_form2", "right")
         self.reset_fields()
 
+    def doc_reset_field(self):
+        self.manager.pop()
+        self.ids.file_path.text = 'None selected'
+        self.ids.file_path2.text = 'None selected'
+        self.file_data1 = None
+        self.file_name1 = None
+        self.file_data2 = None
+        self.file_name2 = None
+
     def submit(self, classname):
-        self.manager.push_replacement("service_register_form2", "right")
-        print(self.extra_info)
-        print(self.extra_info2)
-        print(self.State)
-        print(self.District)
-        print(self.pincode)
-        print(self.address)
-        print(self.capsule)
-        print(self.file_data1)
-        print(self.file_data2)
-        self.cursor.execute('''
-                INSERT INTO service_table (organization_name, established_year, District, State, pincode, address, capsules, doc1, doc2) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)''',
-                            (self.extra_info, self.extra_info2, self.District,
-                             self.State, self.pincode, self.address, self.capsule, self.file_data1, self.file_data2))
-
-        self.conn.commit()
-        self.cursor.close()
-        self.conn.close()
-
-        print(self.extra_info)
-        print(self.extra_info2)
-        print(self.State)
-        print(self.District)
-        print(self.pincode)
-        print(self.address)
-        print(self.capsule)
-        print(self.file_data1)
-        print(self.file_data2)
+        conn = sqlite3.connect("users.db")
+        cursor = conn.cursor()
         screen_to_clear = self.manager.get_screen(classname)
+        doc1 = self.file_data1
+        doc2 = self.file_data2
+        data = screen_to_clear.form_data()
+        if doc1 is not None and doc2 is not None:
+            data.append(doc1)
+            data.append(doc2)
+            self.file_data1 = None
+            self.file_name1 = None
+            self.ids.file_path.text = 'None selected'
+
+            self.file_data2 = None
+            self.file_name2 = None
+            self.ids.file_path2.text = 'None selected'
+
+            print("Data:", data)
+
+            try:
+                cursor.execute('''
+                        INSERT INTO service_table (organization_name, established_year, District, State, pincode, address, capsules, doc1, doc2) 
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)''', data)
+                conn.commit()
+                print("Data inserted successfully")  # Print success message
+            except sqlite3.Error as e:
+                print("Error inserting data:", e)
+                conn.rollback()
+            self.manager.push_replacement("service_register_form2", "right")
+        else:
+            self.ids.hint_label.text = "Both documents are required"
+        cursor.close()
+        conn.close()
         if screen_to_clear:
             screen_to_clear.reset_fields()
