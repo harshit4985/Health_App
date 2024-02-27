@@ -85,8 +85,17 @@ class Slot_Booking(MDScreen):
             return True
         return False
 
-    def on_back_button(self):
-        self.manager.push_replacement("hospital_booking","right")
+    def on_back_button(self, instance):
+        self.manager.push_replacement("hospital_booking", "right")
+        self.ids.CButton.clear_widgets()
+        # reset all the buttons
+        for button_id in ['button1', 'button2', 'button3', 'button4']:
+            button = self.ids[button_id]
+            button.elevation = 0
+            button.md_bg_color = (1, 1, 1, 1)
+            button.line_color = (1, 0, 0, 1)
+        self.ids.available_slots_alert.text = "Choose a Day"
+        print("Back To Hospital Page")
 
     # Book slot button logic
     date_list = []
@@ -223,21 +232,6 @@ class Slot_Booking(MDScreen):
         else:
             self.show_validation_dialog("Select Date and Time")
             print("Select Date and Time")
-
-
-
-
-    def slot_booking_back_button(self, instance):
-        self.manager.push_replacement("hospital_booking","right")
-        self.ids.CButton.clear_widgets()
-        # reset all the buttons
-        for button_id in ['button1', 'button2', 'button3', 'button4']:
-            button = self.ids[button_id]
-            button.elevation = 0
-            button.md_bg_color = (1, 1, 1, 1)
-            button.line_color = (1, 0, 0, 1)
-        self.ids.available_slots_alert.text = "Choose a Day"
-        print("Back To Hospital Page")
 
     def select_timings(self, button, label_text):
         self.session_time = label_text

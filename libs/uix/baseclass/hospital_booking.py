@@ -18,9 +18,6 @@ class BookingInfo(MDScreen):
         return False
 
     def on_back_button(self):
-        self.manager.push_replacement("client_services","right")
-
-    def back_button_hospital_book(self):
         with open('organization_data.json', 'r') as file:
             organization_info = json.load(file)
         organization_info['organization_name'] = ""

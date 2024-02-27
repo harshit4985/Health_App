@@ -47,15 +47,6 @@ class Payment(MDScreen):
         except (FileNotFoundError, json.JSONDecodeError) as e:
             print(f"Error reading user_data.json: {e}")
 
-    def payment_page_backButton(self):
-        self.manager.push("slot_booking", "right")
-        with open('user_data.json', 'r') as file:
-            user_info = json.load(file)
-        user_info['slot_date'] = ""
-        user_info['slot_time'] = ""
-        with open("user_data.json", "w") as json_file:
-            json.dump(user_info, json_file)
-
     def razor_pay(self):
         client = razorpay.Client(auth=('rzp_test_kOpS7Ythlfb1Ho', 'OzPZyPbsOV0AlADilk4wkgv9'))
 

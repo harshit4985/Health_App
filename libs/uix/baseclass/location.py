@@ -19,9 +19,6 @@ class Location(MDScreen):
     def on_back_button(self):
         self.manager.push_replacement("client_services","right")
 
-    def client_services(self):
-        self.manager.push_replacement("client_services","right")
-
     def fetch_pincode(self):
         pincode = self.ids.pincode.text
         if not pincode or len(pincode) != 6:

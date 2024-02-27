@@ -11,13 +11,9 @@ class SupportPage(MDScreen):
 
     def on_keyboard(self, instance, key, scancode, codepoint, modifier):
         if key == 27:  # Keycode for the back button on Android
-            self.on_back_button()
+            self.support_back()
             return True
         return False
-
-    def on_back_button(self):
-        self.manager.push_replacement("client_services","right")
-        # screen.ids.nav_drawer.set_state("close")
 
     def support_back(self):
         self.manager.push_replacement("client_services","right")

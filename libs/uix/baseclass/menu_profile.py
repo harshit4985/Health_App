@@ -16,16 +16,12 @@ class Profile(MDScreen):
 
     def on_keyboard(self, instance, key, scancode, codepoint, modifier):
         if key == 27:  # Keycode for the back button on Android
-            self.on_back_button()
+            self.profile_back()
             return True
 
         return False
     def on_pre_enter(self):
         self.change()
-
-    def on_back_button(self):
-        self.manager.push_replacement("client_services","right")
-        # screen.ids.nav_drawer.set_state("close")
 
     def change(self):
         with open('user_data.json', 'r') as file:

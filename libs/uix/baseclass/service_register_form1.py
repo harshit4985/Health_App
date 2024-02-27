@@ -17,7 +17,7 @@ cursor.execute('''
         established_year TEXT,
         District TEXT,
         State TEXT,
-        pincode TEXT,
+        pincode TEXT,0
         address TEXT,
         capsules INT,
         doc1 BLOB,
