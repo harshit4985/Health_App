@@ -9,7 +9,7 @@
             user_font_size: "30sp"
             theme_text_color: "Custom"
             text_color: rgba(26, 24, 58, 255)
-            on_release: root.manager.push_replacement("service_register_form1", "right")
+            on_release: root.on_back_button()
 
         ScrollView:
             GridLayout:
@@ -293,6 +293,7 @@
                 text_color: 1, 1, 1, 1
                 line_color:0,0,0,0
                 theme_text_color: "Custom"
+                on_release: root.register()
 
 <HorizontalLineWidget>:
     canvas:

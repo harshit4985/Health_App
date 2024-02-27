@@ -157,7 +157,7 @@ class BaseRegistrationScreen(MDScreen):
         self.ids.capsule.text = ""
 
 
-    def reset_field(self):
+    def on_back_button(self):
         self.manager.push_replacement("service_register_form2", "right")
         self.reset_fields()
 

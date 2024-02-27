@@ -15,6 +15,7 @@ from kivymd.uix.screen import MDScreen
 # Builder.load_file("../kv/service_provider_main_page.kv")
 class ServiceProviderMain(MDScreen):
     menu = ObjectProperty(None)
+
     # def __init__(self, **kwargs):
     #     super(ServiceProviderMain, self).__init__(**kwargs)
     #     Window.bind(on_keyboard=self.on_keyboard)
@@ -26,7 +27,7 @@ class ServiceProviderMain(MDScreen):
     #     return False
     #
     # def on_back_button(self):
-    #     self.manager.pop()
+    #     self.manager.push_replacement("main_sc", "right")
     def service_button(self,button):
         if not self.menu:
             cities = ["Settings", "Notification"]

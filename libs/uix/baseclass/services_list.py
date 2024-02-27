@@ -1,5 +1,6 @@
 import sqlite3
 from kivy.clock import Clock
+from kivy.core.window import Window
 from kivy.metrics import dp
 from kivy.utils import rgba
 from kivymd.uix.boxlayout import MDBoxLayout
@@ -11,10 +12,20 @@ from kivymd.uix.screen import MDScreen
 
 
 class ServicesList(MDScreen):
+
     def __init__(self, **kwargs):
         super(ServicesList, self).__init__(**kwargs)
+        Window.bind(on_keyboard=self.on_keyboard)
         self.name = 'list_content'
         self.load_data()
+    def on_keyboard(self, instance, key, scancode, codepoint, modifier):
+        if key == 27:  # Keycode for the back button on Android
+            self.on_back_button()
+            return True
+        return False
+
+    def on_back_button(self):
+        self.manager.push_replacement("main_sc", "right")
 
     def on_pre_enter(self):
         self.load_data()
