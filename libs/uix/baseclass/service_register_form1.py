@@ -1,6 +1,8 @@
+import json
 import re
 import sqlite3
-
+import random
+import string
 from kivy.core.window import Window
 from kivymd.uix.screen import MDScreen
 from kivy.properties import BooleanProperty
@@ -11,9 +13,9 @@ cursor = conn.cursor()
 
 # Creating the hospital_table
 cursor.execute('''
-    CREATE TABLE IF NOT EXISTS service_table (
+    CREATE TABLE IF NOT EXISTS oxiclinicservice (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        organization_name TEXT,
+        oxiclinic_name TEXT ,
         established_year TEXT,
         District TEXT,
         State TEXT,
@@ -21,7 +23,45 @@ cursor.execute('''
         address TEXT,
         capsules INT,
         doc1 BLOB,
-        doc2 BLOB
+        doc2 BLOB,
+        servese_provider_id TEXT,
+        FOREIGN KEY (servese_provider_id) REFERENCES organizations(id)
+    )
+''')
+
+# For oxiwheel table
+cursor.execute('''
+    CREATE TABLE IF NOT EXISTS oxiwheel (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        oxiwheel_name TEXT ,
+        model_year TEXT,
+        District TEXT,
+        State TEXT,
+        pincode TEXT,
+        address TEXT,
+        capsules INT,
+        doc1 BLOB,
+        doc2 BLOB,
+        servese_provider_id TEXT,
+        FOREIGN KEY (servese_provider_id) REFERENCES organizations(id)
+    )
+''')
+
+# For oxigym table
+cursor.execute('''
+    CREATE TABLE IF NOT EXISTS oxigym (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        oxigym_name TEXT,
+        established_year TEXT,
+        District TEXT,
+        State TEXT,
+        pincode TEXT,
+        address TEXT,
+        capsules INT,
+        doc1 BLOB,
+        doc2 BLOB,
+        servese_provider_id TEXT,
+        FOREIGN KEY (servese_provider_id) REFERENCES organizations(id)
     )
 ''')
 
@@ -82,6 +122,8 @@ class ServiceRegisterForm1(MDScreen):
         service_provider_password = self.ids.service_provider_password.text
         service_provider_phoneno = self.ids.service_provider_phoneno.text
         service_provider_address = self.ids.service_provider_address.text
+        random_code = self.generate_random_code()
+        print(random_code)
 
         # Validation logic
         email_regex = r'^[\w\.-]+@[\w\.-]+\.\w+$'
@@ -109,6 +151,11 @@ class ServiceRegisterForm1(MDScreen):
             self.ids.service_provider_address.required = True
 
         else:
+            service_register_data = {'id': random_code, 'name': service_provider_name, 'email': service_provider_email,
+                                     'phone': service_provider_phoneno, 'address': service_provider_address,
+                                     'password': service_provider_password, }
+            with open("service_register_data.json", "w") as json_file:
+                json.dump(service_register_data, json_file)
             self.manager.push("service_register_form2")
 
     # password validation
@@ -136,3 +183,12 @@ class ServiceRegisterForm1(MDScreen):
 
         # All checks passed; the password is valid
         return True, "Password is valid"
+
+    def generate_random_code(self):
+        prefix = "SP"
+        random_numbers = ''.join(random.choices(string.digits, k=5))
+        code = prefix + random_numbers
+
+        return code
+
+
