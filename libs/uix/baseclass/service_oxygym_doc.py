@@ -45,7 +45,7 @@ class OxyGymServiceDoc(BaseRegistrationScreen):
             # print("Data:", data)
 
             try:
-                cursor.execute('''INSERT INTO oxigym (oxigym_name, established_year, District, State, pincode, 
+                cursor.execute('''INSERT INTO oxigym (Oxigyms_Name, established_year, District, State, pincode, 
                 address, capsules, doc1, doc2, servese_provider_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''', data)
                 conn.commit()
                 print("Data inserted successfully")  # Print success message

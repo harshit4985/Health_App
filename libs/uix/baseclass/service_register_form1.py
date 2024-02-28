@@ -13,9 +13,9 @@ cursor = conn.cursor()
 
 # Creating the hospital_table
 cursor.execute('''
-    CREATE TABLE IF NOT EXISTS oxiclinicservice (
+    CREATE TABLE IF NOT EXISTS oxiclinic (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        oxiclinic_name TEXT ,
+        Oxiclinics_Name TEXT ,
         established_year TEXT,
         District TEXT,
         State TEXT,
@@ -33,7 +33,7 @@ cursor.execute('''
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS oxiwheel (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        oxiwheel_name TEXT ,
+        Oxiwheels_Name TEXT ,
         model_year TEXT,
         District TEXT,
         State TEXT,
@@ -51,7 +51,7 @@ cursor.execute('''
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS oxigym (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        oxigym_name TEXT,
+        Oxigyms_Name TEXT,
         established_year TEXT,
         District TEXT,
         State TEXT,
