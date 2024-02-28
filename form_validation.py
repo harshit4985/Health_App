@@ -73,6 +73,7 @@ class BaseRegistrationScreen(MDScreen):
         else:
             msg = "Please select a JPG, PNG, or PDF file."
             setattr(self.field_id, 'text', msg)
+        self.ids.hint_label.text = ""
         self.file_manager.close()
 
     def read_file(self, file_path):
@@ -169,6 +170,7 @@ class BaseRegistrationScreen(MDScreen):
         self.file_name1 = None
         self.file_data2 = None
         self.file_name2 = None
+        self.ids.hint_label.text = ""
 
 
 

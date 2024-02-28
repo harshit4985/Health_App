@@ -46,7 +46,7 @@ class HospitalServiceDoc(BaseRegistrationScreen):
             # print("Data:", data)
 
             try:
-                cursor.execute('''INSERT INTO oxiclinicservice (oxiclinic_name, established_year, District, State, 
+                cursor.execute('''INSERT INTO oxiclinic (Oxiclinics_Name, established_year, District, State, 
                 pincode, address, capsules, doc1, doc2, servese_provider_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 
                 ?)''', data)
                 conn.commit()
@@ -55,7 +55,7 @@ class HospitalServiceDoc(BaseRegistrationScreen):
                 print("Error inserting data:", e)
                 conn.rollback()
             self.manager.push_replacement("service_register_form2", "right")
-            self.ids.hint_label.text = " "
+            self.ids.hint_label.text = ""
             if screen_to_clear:
                 screen_to_clear.reset_fields()
         else:

@@ -152,10 +152,13 @@
                         id:hint_label
                         text:''
                         halign:'center'
+                        pos_hint: {"center_x": .5,'center_y':.5}
                         font_name: "Roboto"
                         font_size: "12sp"
-                        color_mode: 'custom'
-                        text_color:1,0,0,1
+                        size_hint:.7,None
+                        height: "35dp"
+                        color:1,0,0,1
+
         BoxLayout:
             orientation: 'vertical'
             size_hint_y: None
