@@ -3,6 +3,8 @@ import re
 import sqlite3
 import random
 import string
+
+from kivy import platform
 from kivy.core.window import Window
 from kivymd.uix.screen import MDScreen
 from kivy.properties import BooleanProperty
@@ -73,6 +75,10 @@ class ServiceRegisterForm1(MDScreen):
         super(ServiceRegisterForm1, self).__init__(**kwargs)
         Window.bind(on_keyboard=self.on_keyboard)
         Clock.schedule_interval(self.auto_validate, 0.5)
+        if platform == 'android':
+            from android.permissions import request_permissions, Permission
+            request_permissions([Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE])
+        
 
     def on_keyboard(self, instance, key, scancode, codepoint, modifier):
         if key == 27:  # Keycode for the back button on Android
