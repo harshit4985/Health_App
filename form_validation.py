@@ -3,14 +3,20 @@ import sqlite3
 
 from kivy.app import App
 from kivy.clock import Clock
+from kivy.core.window import Window
 from kivy.properties import BooleanProperty
-from kivy import app
+from kivy import app, platform
+from kivymd.toast import toast
 from kivymd.uix.filemanager import MDFileManager
 from kivymd.uix.pickers import MDDatePicker
 from kivymd.uix.screen import MDScreen
 
 
 class BaseRegistrationScreen(MDScreen):
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        Window.bind(on_keyboard=self.events)
     def show_date_picker(self, arg):
         date_dialog = MDDatePicker(size_hint=(None, None), size=(150, 150))
         date_dialog.bind(on_save=self.on_save, on_cancel=self.on_cancel)
@@ -43,15 +49,30 @@ class BaseRegistrationScreen(MDScreen):
             # use_saf=True,
 
         )
-        self.file_manager.show('/')  # Initial directory when the file manager is opened
+        if platform == 'android':
+            from android.storage import primary_external_storage_path
+            primary_ext_storage = primary_external_storage_path()
+            self.file_manager.show(primary_ext_storage)  # output manager to the screen
+            self.manager_open = True
+        elif platform == 'win':
+            self.file_manager.show('/')  # output manager to the screen
+            self.manager_open = True
+
 
     def select_path(self, path):
         if path.lower().endswith(('.jpg', '.jpeg', '.png', '.pdf')):
             self.path = path
+
             try:
                 file_path = path
                 if file_path:
                     file_name = os.path.basename(file_path)
+                    # Check file size
+                    max_size_mb = 2
+                    max_size_bytes = max_size_mb * 1024 * 1024
+                    if os.path.getsize(path) > max_size_bytes:
+                        toast(f"File size should be less than {max_size_mb}MB.")
+                        return
                     file_data = self.read_file(file_path)
                     if self.field_name == "file_path":
                         setattr(self.field_id, 'text', file_name)
@@ -82,6 +103,13 @@ class BaseRegistrationScreen(MDScreen):
 
     def exit_manager(self, *args):
         self.file_manager.close()
+
+    def events(self, instance, keyboard, keycode, text, modifiers):
+        '''Called when buttons are pressed on the mobile device.'''
+        if keyboard in (1001, 27):
+            if self.manager_open:
+                self.file_manager.back()
+        return True
 
     # -------------------------------validation------------------------------
     extra_info = None
