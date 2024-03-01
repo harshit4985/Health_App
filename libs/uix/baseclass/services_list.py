@@ -99,7 +99,7 @@ class ServicesList(MDScreen):
         columns = cursor.fetchall()
         connection.close()
         if columns:
-            return columns[1][1]  # First column name
+            return columns[0][1]  # First column name
         else:
             return "Organization Name"
 
