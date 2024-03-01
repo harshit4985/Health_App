@@ -1,12 +1,18 @@
 import os
 import sqlite3
+import os
+from textwrap import dedent
+
+from kivymd.toast import toast
+from plyer import filechooser
 
 from kivy.app import App
 from kivy.clock import Clock
 from kivy.core.window import Window
-from kivy.properties import BooleanProperty
+from kivy.properties import BooleanProperty, ListProperty
 from kivy import app, platform
-from kivymd.toast import toast
+
+
 from kivymd.uix.filemanager import MDFileManager
 from kivymd.uix.pickers import MDDatePicker
 from kivymd.uix.screen import MDScreen
@@ -30,7 +36,24 @@ class BaseRegistrationScreen(MDScreen):
     def on_cancel(self, instance, value):
         # print("cancel")
         instance.dismiss()
+    #----------------------------------file-chooser-----------------------
+    selection = ListProperty([])
+    def choose(self):
+        filters = [("Files", "*.jpg;*.jpeg;*.png;*.gif;*.pdf")]
+        filechooser.open_file(filters=filters, on_selection=self.handle_selection)
 
+    def handle_selection(self, selection):
+        self.selection = selection
+        if selection:
+            selected_file = selection[0]
+            if os.path.exists(selected_file):
+                with open(selected_file, 'rb') as file:
+                    file_contents = file.read()
+                    # Process the file_contents as needed, e.g., display it
+                    print(file_contents)
+
+    def on_selection(self, *a, **k):
+        App.get_running_app().root.ids.result.text = str(self.selection)
     # ------------------------------upload--docs--------------------------
     field_id = None
     field_name = None

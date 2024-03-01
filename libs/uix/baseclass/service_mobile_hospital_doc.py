@@ -27,14 +27,14 @@ class MobileCareServiceDoc(BaseRegistrationScreen):
         screen_to_clear = self.manager.get_screen(classname)
         doc1 = self.file_data1
         doc2 = self.file_data2
-        with open('service_register_data.json', 'r') as file:
-            register_data = json.load(file)
-        service_provider_id = register_data['id']
+        # with open('service_register_data.json', 'r') as file:
+        #     register_data = json.load(file)
+        # service_provider_id = register_data['id']
         data = screen_to_clear.form_data()
         if doc1 is not None and doc2 is not None:
             data.append(doc1)
             data.append(doc2)
-            data.append(service_provider_id)
+            # data.append(service_provider_id)
             self.file_data1 = None
             self.file_name1 = None
             self.ids.file_path.text = 'None selected'
@@ -47,7 +47,7 @@ class MobileCareServiceDoc(BaseRegistrationScreen):
 
             try:
                 cursor.execute('''INSERT INTO oxiwheel (Oxiwheels_Name, model_year, District, State, pincode, address, 
-                capsules, doc1, doc2, servese_provider_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''', data)
+                capsules, doc1, doc2) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)''', data)
                 conn.commit()
                 print("Data inserted successfully")  # Print success message
             except sqlite3.Error as e:

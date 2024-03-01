@@ -13,59 +13,52 @@ from kivy.clock import Clock
 conn = sqlite3.connect("users.db")
 cursor = conn.cursor()
 
-# Creating the hospital_table
+# Creating the oxiclinic table
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS oxiclinic (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        Oxiclinics_Name TEXT ,
+        Oxiclinics_Name TEXT,
         established_year TEXT,
         District TEXT,
         State TEXT,
         pincode TEXT,
         address TEXT,
-        capsules INT,
+        capsules INTEGER,
         doc1 BLOB,
-        doc2 BLOB,
-        servese_provider_id TEXT,
-        FOREIGN KEY (servese_provider_id) REFERENCES organizations(id)
+        doc2 BLOB
     )
 ''')
 
-# For oxiwheel table
+# Creating the oxiwheel table
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS oxiwheel (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
         Oxiwheels_Name TEXT ,
         model_year TEXT,
         District TEXT,
         State TEXT,
         pincode TEXT,
         address TEXT,
-        capsules INT,
+        capsules INTEGER,
         doc1 BLOB,
-        doc2 BLOB,
-        servese_provider_id TEXT,
-        FOREIGN KEY (servese_provider_id) REFERENCES organizations(id)
+        doc2 BLOB
     )
 ''')
 
-# For oxigym table
+# Creating the oxigym table
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS oxigym (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
         Oxigyms_Name TEXT,
         established_year TEXT,
         District TEXT,
         State TEXT,
         pincode TEXT,
         address TEXT,
-        capsules INT,
+        capsules INTEGER,
         doc1 BLOB,
-        doc2 BLOB,
-        servese_provider_id TEXT,
-        FOREIGN KEY (servese_provider_id) REFERENCES organizations(id)
+        doc2 BLOB
     )
 ''')
+conn.commit()
+conn.close()
 
 
 class ServiceRegisterForm1(MDScreen):
@@ -78,7 +71,7 @@ class ServiceRegisterForm1(MDScreen):
         if platform == 'android':
             from android.permissions import request_permissions, Permission
             request_permissions([Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE])
-        
+
 
     def on_keyboard(self, instance, key, scancode, codepoint, modifier):
         if key == 27:  # Keycode for the back button on Android
